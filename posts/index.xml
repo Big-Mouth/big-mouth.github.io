@@ -1,0 +1,60 @@
+<rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
+  <channel>
+    <title>Posts on My New Hugo Site</title>
+    <link>https://big-mouth.github.io/posts/</link>
+    <description>Recent content in Posts on My New Hugo Site</description>
+    <generator>Hugo -- gohugo.io</generator>
+    <language>en-us</language>
+    <lastBuildDate>Thu, 24 Sep 2020 13:21:50 +0800</lastBuildDate>
+    
+        <atom:link href="https://big-mouth.github.io/posts/index.xml" rel="self" type="application/rss+xml" />
+    
+    
+    <item>
+      <title>Blog</title>
+      <link>https://big-mouth.github.io/posts/blog/</link>
+      <pubDate>Thu, 24 Sep 2020 13:21:50 +0800</pubDate>
+      
+      <guid>https://big-mouth.github.io/posts/blog/</guid>
+      <description>&lt;p&gt;//形式一&lt;/p&gt;
+&lt;ul&gt;
+&lt;li&gt;a&lt;/li&gt;
+&lt;li&gt;b&lt;/li&gt;
+&lt;li&gt;c
+//形式二&lt;/li&gt;
+&lt;/ul&gt;
+&lt;ul&gt;
+&lt;li&gt;d&lt;/li&gt;
+&lt;li&gt;e&lt;/li&gt;
+&lt;li&gt;f
+//形式三&lt;/li&gt;
+&lt;/ul&gt;
+&lt;ul&gt;
+&lt;li&gt;g&lt;/li&gt;
+&lt;li&gt;h&lt;/li&gt;
+&lt;li&gt;i&lt;/li&gt;
+&lt;/ul&gt;
+&lt;p&gt;facebook = &amp;quot;&amp;quot;
+googleplus = &amp;quot;&amp;quot;
+linkedin = &amp;quot;&amp;quot;
+gaID = &amp;ldquo;Google Analytics Tracking ID&amp;rdquo;
+[params]
+Description = &amp;ldquo;text under logo&amp;rdquo;&lt;/p&gt;
+&lt;h1 id=&#34;optional&#34;&gt;Optional&lt;/h1&gt;
+&lt;p&gt;disqusShortname = &amp;quot;&amp;quot;
+gaID = &amp;ldquo;Google Analytics Tracking ID&amp;rdquo;
+highlight_theme = &amp;ldquo;tomorrow-night&amp;rdquo;
+notoc = true&lt;/p&gt;
+&lt;p&gt;@@ -1,14 +1,14 @@&lt;/p&gt;
+&lt;!-- raw HTML omitted --&gt;
+&lt;!-- raw HTML omitted --&gt;
+&lt;p&gt;{{ if .Site.Author.gaID }}
+{{ if .Site.Params.gaID }}&lt;/p&gt;
+&lt;!-- raw HTML omitted --&gt;
+&lt;!-- raw HTML omitted --&gt;
+&lt;p&gt;{{ end }}&lt;/p&gt;
+</description>
+    </item>
+    
+  </channel>
+</rss>

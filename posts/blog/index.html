@@ -1,11 +1,10 @@
 <!DOCTYPE html>
 <html>
 <head>
-	<meta name="generator" content="Hugo 0.75.1" />
   <meta charset="utf-8"/>
-  <title>My New Hugo Site</title>
+  <title>Blog</title>
 
-  <meta name="description" content="My New Hugo Site"/>
+  <meta name="description" content="Blog"/>
   <meta name="author" content=""/>
   <meta name="viewport" content="width=device-width, initial-scale=1"/>
   <base href="https://big-mouth.github.io" />
@@ -35,33 +34,64 @@
   <div id="container">
 
 
-<div class="posts">
+<div id="post-header">
+  <p class="post-infos">
+    <time>2020-09-24 13:21</time>
+    
+
+  </p>
+  <h1>Blog</h1>
+</div>
+
+
+<div class="toc">
+  <small class="toc-label">Contents</small>
+  <nav id="TableOfContents"></nav>
+</div>
+
+
+<div class="post">
+  <p>//形式一</p>
+<ul>
+<li>a</li>
+<li>b</li>
+<li>c
+//形式二</li>
+</ul>
+<ul>
+<li>d</li>
+<li>e</li>
+<li>f
+//形式三</li>
+</ul>
+<ul>
+<li>g</li>
+<li>h</li>
+<li>i</li>
+</ul>
+<p>facebook = &quot;&quot;
+googleplus = &quot;&quot;
+linkedin = &quot;&quot;
+gaID = &ldquo;Google Analytics Tracking ID&rdquo;
+[params]
+Description = &ldquo;text under logo&rdquo;</p>
+<h1 id="optional">Optional</h1>
+<p>disqusShortname = &quot;&quot;
+gaID = &ldquo;Google Analytics Tracking ID&rdquo;
+highlight_theme = &ldquo;tomorrow-night&rdquo;
+notoc = true</p>
+<p>@@ -1,14 +1,14 @@</p>
+<!-- raw HTML omitted -->
+<!-- raw HTML omitted -->
+<p>{{ if .Site.Author.gaID }}
+{{ if .Site.Params.gaID }}</p>
+<!-- raw HTML omitted -->
+<!-- raw HTML omitted -->
+<p>{{ end }}</p>
 
 </div>
 
-<hr />
 
-<div class="posts">
-
-<section class="post">
-  <header class="post-header">
-    <p class="post-infos">
-      <time datetime="2020-09-24T13:21:50&#43;08:00">24 Sep 24240, 13:21</time>
-    </p>
-    <h2><a href="/posts/blog/">Blog</a></h2>
-  </header>
-  <div class="post-description">
-  //形式一
- a b c //形式二   d e f //形式三   g h i  facebook = &quot;&quot; googleplus = &quot;&quot; linkedin = &quot;&quot; gaID = &ldquo;Google Analytics Tracking ID&rdquo; [params] Description = &ldquo;text under logo&rdquo;
-Optional disqusShortname = &quot;&quot; gaID = &ldquo;Google Analytics Tracking ID&rdquo; highlight_theme = &ldquo;tomorrow-night&rdquo; notoc = true
-@@ -1,14 +1,14 @@
-{{ if .Site.Author.gaID }} {{ if .Site.Params.gaID }}
-{{ end }}
-  
-  </div>
-</section>
-
-</div>
 
 <footer>
   <p class="footnote">Copyright &copy; 2020: All rights reserved by <a href="mailto:"></a></p>

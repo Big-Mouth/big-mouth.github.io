@@ -3,11 +3,22 @@
   xmlns:xhtml="http://www.w3.org/1999/xhtml">
   
   <url>
-    <loc>https://big-mouth.github.io/categories/</loc>
+    <loc>https://big-mouth.github.io/posts/blog/</loc>
+    <lastmod>2020-09-24T13:21:50+08:00</lastmod>
   </url>
   
   <url>
     <loc>https://big-mouth.github.io/</loc>
+    <lastmod>2020-09-24T13:21:50+08:00</lastmod>
+  </url>
+  
+  <url>
+    <loc>https://big-mouth.github.io/posts/</loc>
+    <lastmod>2020-09-24T13:21:50+08:00</lastmod>
+  </url>
+  
+  <url>
+    <loc>https://big-mouth.github.io/categories/</loc>
   </url>
   
   <url>
