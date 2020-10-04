@@ -1,0 +1,408 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <meta charset="utf-8"/>
+  <title></title>
+
+  <meta name="description" content=""/>
+  <meta name="author" content=""/>
+  <meta name="viewport" content="width=device-width, initial-scale=1"/>
+  <base href="https://Big-Mouth.github.io" />
+
+  <link rel="stylesheet" href="css/fonts.css"/>
+  <link rel="stylesheet" href="css/normalize.css"/>
+  <link rel="stylesheet" href="css/skeleton.css"/>
+  <link rel="stylesheet" href="css/custom.css"/>
+  <link rel="stylesheet" href="genericons/genericons.css"/>
+  
+  
+  <link rel="stylesheet" href="highlight/tomorrow-night.css"/>
+
+  <link href="index.xml" rel="alternate" type="application/rss+xml" title="Posts + Links" />
+  <link href="links/index.xml" rel="alternate" type="application/rss+xml" title="Links" />
+  <link href="posts/index.xml" rel="alternate" type="application/rss+xml" title="Posts" />
+
+  
+</head>
+<body>
+
+<div id="flex-container">
+  <input type="checkbox" id="sidebar-menu-checkbox" />
+  <label for="sidebar-menu-checkbox" id="sidebar-menu"></label>
+
+  <div id="fake-sidebar"></div>
+  <div id="container">
+
+
+<div id="post-header">
+  <p class="post-infos">
+    <time>0001-01-01 00:00</time>
+    
+
+  </p>
+  <h1></h1>
+</div>
+
+
+<div class="toc">
+  <small class="toc-label">Contents</small>
+  <nav id="TableOfContents">
+  <ul>
+    <li><a href="#markdown的简介">markdown的简介</a></li>
+    <li><a href="#标题">标题</a></li>
+    <li><a href="#段落">段落</a></li>
+    <li><a href="#四列表">四、列表</a></li>
+    <li><a href="#六代码块的显示">六、代码块的显示</a></li>
+    <li><a href="#链接">链接</a></li>
+    <li><a href="#图片插入">图片插入</a></li>
+    <li><a href="#表格">表格</a></li>
+    <li><a href="#十其他操作">十、其他操作</a></li>
+  </ul>
+</nav>
+</div>
+
+
+<div class="post">
+  <h2 id="markdown的简介">markdown的简介</h2>
+<blockquote>
+<p>markdown是一种轻量级的标记语言 理念Mark</p>
+<p>超级文本标签</p>
+</blockquote>
+<h2 id="标题">标题</h2>
+<p><a href="www.baidu.com">百度一下</a></p>
+<blockquote>
+<p>ctrl+数字+1-5可以快速选中文字变成对应的标题</p>
+<ul>
+<li>ctrl+加号对标题进行加</li>
+</ul>
+</blockquote>
+<h2 id="段落">段落</h2>
+<blockquote>
+<p>语法：直接进行文字编辑 如需直接换行或在段落中回车</p>
+</blockquote>
+<p>2.字体</p>
+<blockquote>
+<p>语法：</p>
+<p>1.粗体： <strong>这是粗体</strong></p>
+<p>2.删除线：用一对双票号进行包裹</p>
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-text" data-lang="text">
+
+这是一对删除线 ~~
+</code></pre></div></blockquote>
+<blockquote>
+<p><del>这是一对删除线</del></p>
+<p><!-- raw HTML omitted --> 这是一条下划线<!-- raw HTML omitted --></p>
+<blockquote>
+<p>加粗 ctrl + B</p>
+<p>斜体 ctrl + I</p>
+<p>下划线 ctrl+ u</p>
+</blockquote>
+<p><strong>这是加粗ctrl+B</strong></p>
+<p><em>这是斜体 ctrl+I</em></p>
+<p><!-- raw HTML omitted -->这是下划线 ctrl+u<!-- raw HTML omitted --></p>
+<blockquote>
+<blockquote>
+<p>下面给大家讲一下分隔符</p>
+<p>分割线</p>
+<p>语法：</p>
+<p>分割线： 三个减号回车</p>
+<hr>
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-text" data-lang="text">--- + enter
+</code></pre></div></blockquote>
+<p>3.脚注的注释</p>
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-text" data-lang="text">[^键入文本]
+</code></pre></div><p>效果：</p>
+<p>这是一个技术<sup id="fnref:1"><a href="#fn:1" class="footnote-ref" role="doc-noteref">1</a></sup></p>
+</blockquote>
+<h2 id="四列表">四、列表</h2>
+<p>1、无序列表</p>
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-text" data-lang="text">* 空格
+</code></pre></div><p>效果：</p>
+<ol>
+<li>只有同一级别</li>
+</ol>
+<ul>
+<li>一级分类
+<ul>
+<li>苹果</li>
+<li>香蕉</li>
+<li>橘子</li>
+</ul>
+</li>
+<li>1.这是第一个
+<ul>
+<li>这是子内容</li>
+<li>这是子内容</li>
+</ul>
+</li>
+<li>2.这是第二个</li>
+<li>第三个标题</li>
+</ul>
+<p>我是一个大闸蟹<sup id="fnref:2"><a href="#fn:2" class="footnote-ref" role="doc-noteref">2</a></sup></p>
+<ul>
+<li>
+<p>spring boot 技术</p>
+</li>
+<li>
+<blockquote>
+<p>请相信我</p>
+</blockquote>
+<ul>
+<li>二级分类</li>
+<li>这是内容</li>
+</ul>
+</li>
+</ul>
+<h2 id="六代码块的显示">六、代码块的显示</h2>
+<p>代码：</p>
+<pre><code class="language-text/java/c++/c#/js" data-lang="text/java/c++/c#/js">​``` C++
+
+</code></pre><p>效果：</p>
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-C++" data-lang="C++"><span style="color:#66d9ef">int</span> <span style="color:#a6e22e">main</span>(){
+    cout <span style="color:#f92672">&lt;&lt;</span> <span style="color:#e6db74">&#34;hello world&#34;</span> <span style="color:#f92672">&lt;&lt;</span> endl;
+}
+</code></pre></div><p>效果：</p>
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-java" data-lang="java">pubic <span style="color:#66d9ef">class</span> <span style="color:#a6e22e">text</span><span style="color:#f92672">(){</span>
+    <span style="color:#66d9ef">public</span> <span style="color:#66d9ef">static</span> <span style="color:#66d9ef">void</span> <span style="color:#a6e22e">main</span><span style="color:#f92672">()</span>
+<span style="color:#f92672">}</span>
+</code></pre></div><h2 id="链接">链接</h2>
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-text" data-lang="text">www.buidu.com
+
+</code></pre></div><p>效果</p>
+<p><a href="www.baidu.com">百度一下</a></p>
+<h2 id="图片插入">图片插入</h2>
+<pre><code>![自定义图片名称](图片的路径)
+</code></pre><p>![这是picture](C:\Users\Administrator\Pictures\Camera Roll\20200910154111.png)</p>
+</blockquote>
+<h2 id="表格">表格</h2>
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-text" data-lang="text">|表头|表头|表头|
+|---|---|---|
+|1|2|23|3|
+</code></pre></div><table>
+<thead>
+<tr>
+<th>表头</th>
+<th>表头</th>
+<th>表头</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>1</td>
+<td>2</td>
+<td>23</td>
+</tr>
+</tbody>
+</table>
+<blockquote>
+<p>快捷键：</p>
+<p>ctrl +T（table)</p>
+</blockquote>
+<h2 id="十其他操作">十、其他操作</h2>
+<pre><code>``
+</code></pre><p><code>ctrl</code>+<code>shift</code>+<code>R</code></p>
+<p><code>ctrl</code>+<code>shift</code>+<code>/</code>：注释</p>
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-C++" data-lang="C++"><span style="color:#66d9ef">int</span> <span style="color:#a6e22e">main</span>(){
+    cout <span style="color:#f92672">&lt;&lt;</span> it <span style="color:#f92672">&lt;&lt;</span> endl;
+}
+</code></pre></div><p>![这是一张萌图](C:\Users\Administrator\Pictures\Camera Roll\timg (2).jpg)</p>
+<table>
+<thead>
+<tr>
+<th style="text-align:center"></th>
+<th></th>
+<th></th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td style="text-align:center"></td>
+<td></td>
+<td></td>
+</tr>
+<tr>
+<td style="text-align:center"></td>
+<td></td>
+<td></td>
+</tr>
+<tr>
+<td style="text-align:center"></td>
+<td></td>
+<td></td>
+</tr>
+</tbody>
+</table>
+<table>
+<thead>
+<tr>
+<th></th>
+<th></th>
+<th></th>
+<th></th>
+<th></th>
+<th></th>
+<th></th>
+<th></th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td></td>
+<td></td>
+<td></td>
+<td></td>
+<td></td>
+<td></td>
+<td></td>
+<td></td>
+</tr>
+<tr>
+<td></td>
+<td></td>
+<td></td>
+<td></td>
+<td></td>
+<td></td>
+<td></td>
+<td></td>
+</tr>
+<tr>
+<td></td>
+<td></td>
+<td></td>
+<td></td>
+<td></td>
+<td></td>
+<td></td>
+<td></td>
+</tr>
+<tr>
+<td></td>
+<td></td>
+<td></td>
+<td></td>
+<td></td>
+<td></td>
+<td></td>
+<td></td>
+</tr>
+<tr>
+<td></td>
+<td></td>
+<td></td>
+<td></td>
+<td></td>
+<td></td>
+<td></td>
+<td></td>
+</tr>
+<tr>
+<td></td>
+<td></td>
+<td></td>
+<td></td>
+<td></td>
+<td></td>
+<td></td>
+<td></td>
+</tr>
+<tr>
+<td></td>
+<td></td>
+<td></td>
+<td></td>
+<td></td>
+<td></td>
+<td></td>
+<td></td>
+</tr>
+<tr>
+<td></td>
+<td></td>
+<td></td>
+<td></td>
+<td></td>
+<td></td>
+<td></td>
+<td></td>
+</tr>
+<tr>
+<td></td>
+<td></td>
+<td></td>
+<td></td>
+<td></td>
+<td></td>
+<td></td>
+<td></td>
+</tr>
+</tbody>
+</table>
+<section class="footnotes" role="doc-endnotes">
+<hr>
+<ol>
+<li id="fn:1" role="doc-endnote">
+<p>这是一个非常好用的框架 <a href="#fnref:1" class="footnote-backref" role="doc-backlink">&#x21a9;&#xfe0e;</a></p>
+</li>
+<li id="fn:2" role="doc-endnote">
+<p>这是啥，你猜呀 <a href="#fnref:2" class="footnote-backref" role="doc-backlink">&#x21a9;&#xfe0e;</a></p>
+</li>
+</ol>
+</section>
+
+</div>
+
+
+
+<footer>
+  <p class="footnote">Copyright &copy; 2020: All rights reserved by <a href="mailto:"></a></p>
+</footer>
+
+  </div>
+  <div id="container-mask"></div>
+<div id="sidebar">
+<div class="sidebar">
+  <div class="sidebar-about">
+    <a href="https://Big-Mouth.github.io">
+      <img src="media/me.jpg" title="" alt="Me" />
+      <h4 class="sidebar-title">My New Hugo Site</h4>
+    </a>
+    <span class="sidebar-tagline"></span>
+  </div>
+  <nav class="sidebar-nav">
+    <ul class="sidebar-nav-list">
+      <li class="sidebar-nav-item nav-home">
+        <span class="genericon genericon-home"></span><a class="sidebar-link" href="https://Big-Mouth.github.io">Home</a>
+      </li>
+      <li class="sidebar-nav-item">
+        <a class="genericon genericon-feed" href="posts/index.xml"></a><a class="sidebar-link" href="posts/">Posts/</a>
+      </li>
+      <li class="sidebar-nav-item">
+        <a class="genericon genericon-feed" href="links/index.xml"></a><a class="sidebar-link" href="links/">Links/</a>
+      </li>
+    </ul>
+  </nav>
+  <div class="sidebar-externals">
+  
+  | <a class="genericon genericon-mail" href="mailto:"></a>
+  </div>
+  <div class="sidebar-bottom">
+    <hr />
+    <p>Powered by <a href="http://gohugo.io">Hugo</a>.</p> <p>Theme: <a href="https://github.com/TiTi/hurock">Hurock</a>.</p>
+    <p>Copyright &copy; 2020.</p> <p>All rights reserved.</p>
+  </div>
+</div>
+</div>
+
+</div>
+
+<script src="highlight/highlight.pack.js"></script>
+<script>hljs.initHighlightingOnLoad();</script>
+
+
+
+
+
+</body>
+</html>
+
