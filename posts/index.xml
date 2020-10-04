@@ -5,54 +5,52 @@
     <description>Recent content in Posts on My New Hugo Site</description>
     <generator>Hugo -- gohugo.io</generator>
     <language>en-us</language>
-    <lastBuildDate>Thu, 24 Sep 2020 13:21:50 +0800</lastBuildDate>
+    <lastBuildDate>Sun, 04 Oct 2020 11:52:17 +0800</lastBuildDate>
     
         <atom:link href="https://Big-Mouth.github.io/posts/index.xml" rel="self" type="application/rss+xml" />
     
     
     <item>
-      <title>Blog</title>
-      <link>https://Big-Mouth.github.io/posts/blog/</link>
-      <pubDate>Thu, 24 Sep 2020 13:21:50 +0800</pubDate>
+      <title>Jjjj</title>
+      <link>https://Big-Mouth.github.io/posts/jjjj/</link>
+      <pubDate>Sun, 04 Oct 2020 11:52:17 +0800</pubDate>
       
-      <guid>https://Big-Mouth.github.io/posts/blog/</guid>
-      <description>&lt;p&gt;//形式一&lt;/p&gt;
+      <guid>https://Big-Mouth.github.io/posts/jjjj/</guid>
+      <description>&lt;h2 id=&#34;hhhhh&#34;&gt;hhhhh&lt;/h2&gt;
+</description>
+    </item>
+    
+    <item>
+      <title></title>
+      <link>https://Big-Mouth.github.io/posts/leetcode_5515/</link>
+      <pubDate>Mon, 01 Jan 0001 00:00:00 +0000</pubDate>
+      
+      <guid>https://Big-Mouth.github.io/posts/leetcode_5515/</guid>
+      <description>&lt;p&gt;请你给一个停车场设计一个停车系统。停车场总共有三种不同大小的车位：大，中和小，每种尺寸分别有固定数目的车位。&lt;/p&gt;
+&lt;p&gt;请你实现 &lt;code&gt;ParkingSystem&lt;/code&gt; 类：&lt;/p&gt;
 &lt;ul&gt;
-&lt;li&gt;a&lt;/li&gt;
-&lt;li&gt;b&lt;/li&gt;
-&lt;li&gt;c
-//形式二&lt;/li&gt;
+&lt;li&gt;ParkingSystem(int big, int medium, int small) 初始化 ParkingSystem 类，三个参数分别对应每种停车位的数目。&lt;/li&gt;
+&lt;li&gt;bool addCar(int carType) 检车是否有 carType 对应的停车位。 carType 有三种类型：大，中，小，分别用数字 1， 2 和 3 表示。一辆车只能停在  carType 对应尺寸的停车位中。如果没有空车位，请返回 false ，否则将该车停入车位并返回 true 。&lt;/li&gt;
 &lt;/ul&gt;
-&lt;ul&gt;
-&lt;li&gt;d&lt;/li&gt;
-&lt;li&gt;e&lt;/li&gt;
-&lt;li&gt;f
-//形式三&lt;/li&gt;
-&lt;/ul&gt;
-&lt;ul&gt;
-&lt;li&gt;g&lt;/li&gt;
-&lt;li&gt;h&lt;/li&gt;
-&lt;li&gt;i&lt;/li&gt;
-&lt;/ul&gt;
-&lt;p&gt;facebook = &amp;quot;&amp;quot;
-googleplus = &amp;quot;&amp;quot;
-linkedin = &amp;quot;&amp;quot;
-gaID = &amp;ldquo;Google Analytics Tracking ID&amp;rdquo;
-[params]
-Description = &amp;ldquo;text under logo&amp;rdquo;&lt;/p&gt;
-&lt;h1 id=&#34;optional&#34;&gt;Optional&lt;/h1&gt;
-&lt;p&gt;disqusShortname = &amp;quot;&amp;quot;
-gaID = &amp;ldquo;Google Analytics Tracking ID&amp;rdquo;
-highlight_theme = &amp;ldquo;tomorrow-night&amp;rdquo;
-notoc = true&lt;/p&gt;
-&lt;p&gt;@@ -1,14 +1,14 @@&lt;/p&gt;
-&lt;!-- raw HTML omitted --&gt;
-&lt;!-- raw HTML omitted --&gt;
-&lt;p&gt;{{ if .Site.Author.gaID }}
-{{ if .Site.Params.gaID }}&lt;/p&gt;
-&lt;!-- raw HTML omitted --&gt;
-&lt;!-- raw HTML omitted --&gt;
-&lt;p&gt;{{ end }}&lt;/p&gt;
+&lt;p&gt;来源：力扣（LeetCode）
+链接：https://leetcode-cn.com/problems/design-parking-system&lt;/p&gt;
+&lt;div class=&#34;highlight&#34;&gt;&lt;pre style=&#34;color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4&#34;&gt;&lt;code class=&#34;language-text&#34; data-lang=&#34;text&#34;&gt;输入：
+[&amp;#34;ParkingSystem&amp;#34;, &amp;#34;addCar&amp;#34;, &amp;#34;addCar&amp;#34;, &amp;#34;addCar&amp;#34;, &amp;#34;addCar&amp;#34;]
+[[1, 1, 0], [1], [2], [3], [1]]
+输出：
+[null, true, true, false, false]
+
+解释：
+ParkingSystem parkingSystem = new ParkingSystem(1, 1, 0);
+parkingSystem.addCar(1); // 返回 true ，因为有 1 个空的大车位
+parkingSystem.addCar(2); // 返回 true ，因为有 1 个空的中车位
+parkingSystem.addCar(3); // 返回 false ，因为没有空的小车位
+parkingSystem.addCar(1); // 返回 false ，因为没有空的大车位，唯一一个大车位已经被占据了
+
+来源：力扣（LeetCode）
+链接：https://leetcode-cn.com/problems/design-parking-system
+著作权归领扣网络所有。商业转载请联系官方授权，非商业转载请注明出处。
+&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;p&gt;这道题可以直接用&lt;/p&gt;
 </description>
     </item>
     
@@ -348,6 +346,24 @@ notoc = true&lt;/p&gt;
 &lt;/li&gt;
 &lt;/ol&gt;
 &lt;/section&gt;
+</description>
+    </item>
+    
+    <item>
+      <title></title>
+      <link>https://Big-Mouth.github.io/posts/update/</link>
+      <pubDate>Mon, 01 Jan 0001 00:00:00 +0000</pubDate>
+      
+      <guid>https://Big-Mouth.github.io/posts/update/</guid>
+      <description>&lt;div class=&#34;highlight&#34;&gt;&lt;pre style=&#34;color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4&#34;&gt;&lt;code class=&#34;language-text&#34; data-lang=&#34;text&#34;&gt;cd e:\myblog
+&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;pre&gt;&lt;code&gt;hugo new post/FileName.md
+&lt;/code&gt;&lt;/pre&gt;&lt;div class=&#34;highlight&#34;&gt;&lt;pre style=&#34;color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4&#34;&gt;&lt;code class=&#34;language-text&#34; data-lang=&#34;text&#34;&gt;hugo --theme=hurock --baseUrl=&amp;#34;https://Big-Mouth.github.io&amp;#34; --buildDrafts
+&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;div class=&#34;highlight&#34;&gt;&lt;pre style=&#34;color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4&#34;&gt;&lt;code class=&#34;language-text&#34; data-lang=&#34;text&#34;&gt;cd public
+&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;div class=&#34;highlight&#34;&gt;&lt;pre style=&#34;color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4&#34;&gt;&lt;code class=&#34;language-text&#34; data-lang=&#34;text&#34;&gt;git add .
+git commit -m &amp;#34;yyyy/mm/dd-hh:mm&amp;#34;
+git push -u origin master
+&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;p&gt;其中 &lt;em&gt;&lt;strong&gt;yyyy/mm/dd-hh:mm&lt;/strong&gt;&lt;/em&gt; 为每次提交的名称，引号内可以随意更改，yyyy/mm/dd-hh:mm 是我个人采用的格式，以时间做标记可&lt;strong&gt;保证不会重复&lt;/strong&gt;&lt;/p&gt;
+&lt;h4 id=&#34;现在刷新github登陆个人博客查看即可&#34;&gt;&lt;strong&gt;现在刷新GitHub，登陆个人博客查看即可&lt;/strong&gt;&lt;/h4&gt;
 </description>
     </item>
     

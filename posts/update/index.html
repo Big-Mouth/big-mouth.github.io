@@ -2,9 +2,9 @@
 <html>
 <head>
   <meta charset="utf-8"/>
-  <title>Posts</title>
+  <title></title>
 
-  <meta name="description" content="Posts"/>
+  <meta name="description" content=""/>
   <meta name="author" content=""/>
   <meta name="viewport" content="width=device-width, initial-scale=1"/>
   <base href="https://Big-Mouth.github.io" />
@@ -34,19 +34,44 @@
   <div id="container">
 
 
-<div class="section">
-  <ul class="posts">
+<div id="post-header">
+  <p class="post-infos">
+    <time>0001-01-01 00:00</time>
     
-    
-    <li><a href="/post/update/">Update</a><time datetime="2020-10-04T11:16:02&#43;08:00">Sun, Oct 4, 2020</time></li>
-    
-    
-    
-    <li><a href="/post/markdown_start/">Markdown_start</a><time datetime="2020-10-04T10:52:10&#43;08:00">Sun, Oct 4, 2020</time></li>
-    
-    
-  </ul>
+
+  </p>
+  <h1></h1>
 </div>
+
+
+<div class="toc">
+  <small class="toc-label">Contents</small>
+  <nav id="TableOfContents">
+  <ul>
+    <li>
+      <ul>
+        <li></li>
+      </ul>
+    </li>
+  </ul>
+</nav>
+</div>
+
+
+<div class="post">
+  <div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-text" data-lang="text">cd e:\myblog
+</code></pre></div><pre><code>hugo new post/FileName.md
+</code></pre><div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-text" data-lang="text">hugo --theme=hurock --baseUrl=&#34;https://Big-Mouth.github.io&#34; --buildDrafts
+</code></pre></div><div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-text" data-lang="text">cd public
+</code></pre></div><div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-text" data-lang="text">git add .
+git commit -m &#34;yyyy/mm/dd-hh:mm&#34;
+git push -u origin master
+</code></pre></div><p>其中 <em><strong>yyyy/mm/dd-hh:mm</strong></em> 为每次提交的名称，引号内可以随意更改，yyyy/mm/dd-hh:mm 是我个人采用的格式，以时间做标记可<strong>保证不会重复</strong></p>
+<h4 id="现在刷新github登陆个人博客查看即可"><strong>现在刷新GitHub，登陆个人博客查看即可</strong></h4>
+
+</div>
+
+
 
 <footer>
   <p class="footnote">Copyright &copy; 2020: All rights reserved by <a href="mailto:"></a></p>
