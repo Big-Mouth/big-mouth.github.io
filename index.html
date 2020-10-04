@@ -51,7 +51,9 @@
     <h2><a href="/posts/jjjj/">Jjjj</a></h2>
   </header>
   <div class="post-description">
-  hhhhh 
+  代码宏定义 #include&lt;bits/stdc++.h&gt;#define ios std::ios::sync_with_stdio(false) #define sd(n) scanf(&#34;%d&#34;,&amp;n) #define sdd(n,m) scanf(&#34;%d%d&#34;,&amp;n,&amp;m) #define sddd(n,m,k) scanf(&#34;%d%d%d&#34;,&amp;n,&amp;m,&amp;k) #define pd(n) printf(&#34;%d\n&#34;, (n)) #define pdd(n,m) printf(&#34;%d %d\n&#34;, n, m) #define pld(n) printf(&#34;%lld\n&#34;, n) #define pldd(n,m) printf(&#34;%lld %lld\n&#34;, n, m) #define sld(n) scanf(&#34;%lld&#34;,&amp;n) #define sldd(n,m) scanf(&#34;%lld%lld&#34;,&amp;n,&amp;m) #define slddd(n,m,k) scanf(&#34;%lld%lld%lld&#34;,&amp;n,&amp;m,&amp;k) #define sf(n) scanf(&#34;%lf&#34;,&amp;n) #define sff(n,m) scanf(&#34;%lf%lf&#34;,&amp;n,&amp;m) #define sfff(n,m,k) scanf(&#34;%lf%lf%lf&#34;,&amp;n,&amp;m,&amp;k) #define rep(i,a,n) for (int i=a;i&lt;=n;i++) #define per(i,n,a) for (int i=n;i&gt;=a;i--) #define mm(a,n) memset(a, n, sizeof(a)) #define pb push_back #define all(x) (x).
+  
+  <br /><a class="readmore" href="/posts/jjjj/"><span class="genericon genericon-reply"></span> Read more�</a>
   
   </div>
 </section>
@@ -121,7 +123,13 @@
     <h2><a href="/posts/update/"></a></h2>
   </header>
   <div class="post-description">
-  cd e:\myblog hugo new post/FileName.mdhugo --theme=hurock --baseUrl=&#34;https://Big-Mouth.github.io&#34; --buildDrafts cd public git add . git commit -m &#34;yyyy/mm/dd-hh:mm&#34; git push -u origin master 其中 yyyy/mm/dd-hh:mm 为每次提交的名称，引号内可以随意更改，yyyy/mm/dd-hh:mm 是我个人采用的格式，以时间做标记可保证不会重复
+  cd e:\myblog hugo new post/FileName.mdhugo --theme=hurock --baseUrl=&#34;https://Big-Mouth.github.io&#34; --buildDrafts cd public git add . git commit -m &#34;yyyy/mm/dd-hh:mm&#34; git push -u origin master	如果上面的最后一步报出如下错误：
+! [rejected] master -&gt; master (fetch first) error: failed to push some refs to 出现这个问题的原因是什么呢？
+github中的README.md文件不在本地代码目录中因此，可以通过下面的命令进行代码合并
+git pull --rebase origin master 第二个问题是：
+! [remote rejected] master -&gt; master (pre-receive hook declined)在推送代码时报错如上，网上搜到的方法说是项目的setting中master是受保护的项目，所以开发者无法推送，解决方法是修改protected的设置，或者新建一个分支，推送到自己的分支上。
+其他问题看这里
+其中 yyyy/mm/dd-hh:mm 为每次提交的名称，引号内可以随意更改，yyyy/mm/dd-hh:mm 是我个人采用的格式，以时间做标记可保证不会重复
 现在刷新GitHub，登陆个人博客查看即可 
   
   </div>

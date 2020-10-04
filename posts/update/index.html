@@ -65,8 +65,18 @@
 </code></pre></div><div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-text" data-lang="text">cd public
 </code></pre></div><div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-text" data-lang="text">git add .
 git commit -m &#34;yyyy/mm/dd-hh:mm&#34;
-git push -u origin master
-</code></pre></div><p>其中 <em><strong>yyyy/mm/dd-hh:mm</strong></em> 为每次提交的名称，引号内可以随意更改，yyyy/mm/dd-hh:mm 是我个人采用的格式，以时间做标记可<strong>保证不会重复</strong></p>
+git push -u origin master	
+</code></pre></div><p>如果上面的最后一步报出如下错误：</p>
+<pre><code>! [rejected] master -&gt; master (fetch first) error: failed to push some refs to 
+</code></pre><p>出现这个问题的原因是什么呢？</p>
+<pre><code>github中的README.md文件不在本地代码目录中
+</code></pre><p>因此，可以通过下面的命令进行代码合并</p>
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-js" data-lang="js"><span style="color:#a6e22e">git</span> <span style="color:#a6e22e">pull</span> <span style="color:#f92672">--</span><span style="color:#a6e22e">rebase</span> <span style="color:#a6e22e">origin</span> <span style="color:#a6e22e">master</span>
+</code></pre></div><p>第二个问题是：</p>
+<pre><code>! [remote rejected] master -&gt; master (pre-receive hook declined)
+</code></pre><p>在推送代码时报错如上，网上搜到的方法说是项目的setting中master是受保护的项目，所以开发者无法推送，解决方法是修改protected的设置，或者新建一个分支，推送到自己的分支上。</p>
+<p><a href="https://blog.csdn.net/weixin_43264399/article/details/87350219">其他问题看这里</a></p>
+<p>其中 <em><strong>yyyy/mm/dd-hh:mm</strong></em> 为每次提交的名称，引号内可以随意更改，yyyy/mm/dd-hh:mm 是我个人采用的格式，以时间做标记可<strong>保证不会重复</strong></p>
 <h4 id="现在刷新github登陆个人博客查看即可"><strong>现在刷新GitHub，登陆个人博客查看即可</strong></h4>
 
 </div>
