@@ -1,0 +1,324 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <meta charset="utf-8"/>
+  <title></title>
+
+  <meta name="description" content=""/>
+  <meta name="author" content=""/>
+  <meta name="viewport" content="width=device-width, initial-scale=1"/>
+  <base href="https://Big-Mouth.github.io" />
+
+  <link rel="stylesheet" href="css/fonts.css"/>
+  <link rel="stylesheet" href="css/normalize.css"/>
+  <link rel="stylesheet" href="css/skeleton.css"/>
+  <link rel="stylesheet" href="css/custom.css"/>
+  <link rel="stylesheet" href="genericons/genericons.css"/>
+  
+  
+  <link rel="stylesheet" href="highlight/tomorrow-night.css"/>
+
+  <link href="index.xml" rel="alternate" type="application/rss+xml" title="Posts + Links" />
+  <link href="links/index.xml" rel="alternate" type="application/rss+xml" title="Links" />
+  <link href="posts/index.xml" rel="alternate" type="application/rss+xml" title="Posts" />
+
+  
+</head>
+<body>
+
+<div id="flex-container">
+  <input type="checkbox" id="sidebar-menu-checkbox" />
+  <label for="sidebar-menu-checkbox" id="sidebar-menu"></label>
+
+  <div id="fake-sidebar"></div>
+  <div id="container">
+
+
+<div id="post-header">
+  <p class="post-infos">
+    <time>0001-01-01 00:00</time>
+    
+
+  </p>
+  <h1></h1>
+</div>
+
+
+<div class="toc">
+  <small class="toc-label">Contents</small>
+  <nav id="TableOfContents">
+  <ul>
+    <li>
+      <ul>
+        <li><a href="#题目描述">题目描述</a></li>
+        <li><a href="#题目分析">题目分析</a></li>
+      </ul>
+    </li>
+  </ul>
+</nav>
+</div>
+
+
+<div class="post">
+  <h1 id="经典并查集">经典并查集</h1>
+<p><strong>在算法笔记上有一道这样的题目</strong></p>
+<h3 id="题目描述">题目描述</h3>
+<p>有一个叫作“数码世界”的奇异空间，在数码世界里生活着许许多多的数码宝贝，其中有些数码宝贝之间可能是好朋友。并且数码世界有两条不成文的规定：
+第一，数码宝贝A和数码宝贝B是好朋友等价于数码宝贝B和数码宝贝A是好朋友。
+第二，如果数码宝贝A和数码宝贝C是好朋友，而数码宝贝B和数码宝贝C也是好朋友，那么A和B也是好朋友。</p>
+<p>现在给出这些数码宝贝中所有好朋友的信息，问：可以把这些数码宝贝分成多少组，满足每组中的任意两只数码宝贝都是好朋友，且任意两组之间的数码宝贝都不是好朋友。</p>
+<h3 id="题目分析">题目分析</h3>
+<p>首先，可以看到这是一个分组类型的题目，把相互之间有关系的元素放在一起（并），查询小组数（查）以及合并后的集合（集）</p>
+<p>因此，这就是一个并查集的模型。可以把题目中给出的好友的关系视为两结点之间的边，那么在输入这些好友关系时，就可以同时把他们合并（这就要求我们写一个合并函数）这样处理完毕之后就得到了一些集合，而集合的个数呢，就是我们所要求的组数。</p>
+<p>那集合的个数要怎么求呢？我们通过观察可以很容易发现：<strong>对于同一个集合来说，只存在唯一的根节点，且将其作为所属集合的标识</strong></p>
+<p>所以呢，我们只要用一个bool数组来存储根结点即可，当然要考虑一些细节，比如说，可以在给结点编号的同时，初始化isroot数组为false，那什么时候让它为true呢？</p>
+<p>当然是要写一个findfather函数，在此函数中，可以做两件事情：</p>
+<ol>
+<li>寻找根节点</li>
+<li>压缩路径</li>
+</ol>
+<p>当然，这个直接套模板即可，毫无技术含量。</p>
+<p>在找到了根节点之后，我们就遍历每一个结点，判断如果它是根节点的话，那么直接让他的bool值为true;</p>
+<p>另外，如果还要求分成的组数（但不要求每个集合的元素）的话，就用一个set存储每个根结点的儿子数（每个集合的元素个数）最后输出即可。代码如下：</p>
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-C++" data-lang="C++"><span style="color:#75715e">#include</span><span style="color:#75715e">&lt;iostream&gt;</span><span style="color:#75715e">
+</span><span style="color:#75715e">#include</span><span style="color:#75715e">&lt;cstdio&gt;</span><span style="color:#75715e">
+</span><span style="color:#75715e">#include</span><span style="color:#75715e">&lt;map&gt;</span><span style="color:#75715e">
+</span><span style="color:#75715e">#include</span><span style="color:#75715e">&lt;set&gt;</span><span style="color:#75715e">
+</span><span style="color:#75715e"></span><span style="color:#66d9ef">using</span> <span style="color:#66d9ef">namespace</span> std;
+
+<span style="color:#66d9ef">const</span> <span style="color:#66d9ef">int</span> N <span style="color:#f92672">=</span> <span style="color:#ae81ff">110</span>;
+<span style="color:#66d9ef">int</span> father[N];
+<span style="color:#66d9ef">bool</span> isroot[N];
+
+<span style="color:#66d9ef">int</span> <span style="color:#a6e22e">findfather</span>(<span style="color:#66d9ef">int</span> x) {<span style="color:#75715e">//查找每个节点所在集合的根节点
+</span><span style="color:#75715e"></span>	<span style="color:#66d9ef">int</span> a <span style="color:#f92672">=</span> x;<span style="color:#75715e">//
+</span><span style="color:#75715e"></span>	<span style="color:#66d9ef">while</span> (x <span style="color:#f92672">!=</span> father[x]) {
+		x <span style="color:#f92672">=</span> father[x];
+	}
+	<span style="color:#75715e">//路径压缩
+</span><span style="color:#75715e"></span>	<span style="color:#66d9ef">while</span> (a <span style="color:#f92672">!=</span> father[a]) {
+		<span style="color:#66d9ef">int</span> z <span style="color:#f92672">=</span> a;<span style="color:#75715e">//因为a要被father[a]覆盖掉，所以这里先把原来结点存下来，用于修改father[a]的值
+</span><span style="color:#75715e"></span>		a <span style="color:#f92672">=</span> father[a];<span style="color:#75715e">//a不断地回溯父亲结点
+</span><span style="color:#75715e"></span>		father[z] <span style="color:#f92672">=</span> x;<span style="color:#75715e">//将原来结点的父亲结点改为根结点
+</span><span style="color:#75715e"></span>	}
+	<span style="color:#66d9ef">return</span> x;
+}
+
+<span style="color:#66d9ef">void</span> <span style="color:#a6e22e">Union</span>(<span style="color:#66d9ef">int</span> a, <span style="color:#66d9ef">int</span> b) {
+	<span style="color:#66d9ef">if</span> (findfather(a) <span style="color:#f92672">==</span> findfather(b)) <span style="color:#66d9ef">return</span>;
+	a <span style="color:#f92672">=</span> findfather(a);
+	b <span style="color:#f92672">=</span> findfather(b);
+	father[a] <span style="color:#f92672">=</span> b;
+	
+}
+
+<span style="color:#66d9ef">void</span> <span style="color:#a6e22e">init</span>(<span style="color:#66d9ef">int</span> n) {
+	<span style="color:#66d9ef">for</span> (<span style="color:#66d9ef">int</span> i <span style="color:#f92672">=</span> <span style="color:#ae81ff">1</span>; i <span style="color:#f92672">&lt;=</span> n; i<span style="color:#f92672">++</span>) {
+		father[i] <span style="color:#f92672">=</span> i;
+		isroot[i] <span style="color:#f92672">=</span> false;
+	}
+}
+
+<span style="color:#75715e">/*
+</span><span style="color:#75715e">7 5
+</span><span style="color:#75715e">1 2
+</span><span style="color:#75715e">2 3
+</span><span style="color:#75715e">3 1
+</span><span style="color:#75715e">1 4
+</span><span style="color:#75715e">5 6
+</span><span style="color:#75715e">*/</span>
+<span style="color:#66d9ef">int</span> <span style="color:#a6e22e">main</span>() {
+	<span style="color:#66d9ef">int</span> n, m, a, b;
+	scanf(<span style="color:#e6db74">&#34;%d%d&#34;</span>, <span style="color:#f92672">&amp;</span>n, <span style="color:#f92672">&amp;</span>m);
+	init(n);
+	<span style="color:#66d9ef">for</span> (<span style="color:#66d9ef">int</span> i <span style="color:#f92672">=</span> <span style="color:#ae81ff">1</span>; i <span style="color:#f92672">&lt;=</span> m; i<span style="color:#f92672">++</span>) {
+		scanf(<span style="color:#e6db74">&#34;%d%d&#34;</span>, <span style="color:#f92672">&amp;</span>a, <span style="color:#f92672">&amp;</span>b);
+		Union(a, b);
+	}
+	<span style="color:#66d9ef">int</span> ans[N] <span style="color:#f92672">=</span> { <span style="color:#ae81ff">0</span> };
+	<span style="color:#66d9ef">for</span> (<span style="color:#66d9ef">int</span> i <span style="color:#f92672">=</span> <span style="color:#ae81ff">1</span>; i <span style="color:#f92672">&lt;=</span> n; i<span style="color:#f92672">++</span>) {
+		isroot[findfather(i)] <span style="color:#f92672">=</span> true;
+	}
+	<span style="color:#66d9ef">for</span> (<span style="color:#66d9ef">int</span> i <span style="color:#f92672">=</span> <span style="color:#ae81ff">1</span>; i <span style="color:#f92672">&lt;=</span> n; i<span style="color:#f92672">++</span>) {
+		<span style="color:#66d9ef">if</span> (father[i] <span style="color:#f92672">==</span> findfather(i))
+			ans[findfather(i)]<span style="color:#f92672">++</span>;
+	}
+	set<span style="color:#f92672">&lt;</span><span style="color:#66d9ef">int</span><span style="color:#f92672">&gt;</span> root;
+	<span style="color:#66d9ef">for</span> (<span style="color:#66d9ef">int</span> i <span style="color:#f92672">=</span> <span style="color:#ae81ff">1</span>; i <span style="color:#f92672">&lt;=</span> n; i<span style="color:#f92672">++</span>)
+	{
+		<span style="color:#66d9ef">if</span> (isroot[i]) {
+			root.insert(i);
+		}
+	}
+	vector<span style="color:#f92672">&lt;</span><span style="color:#66d9ef">int</span><span style="color:#f92672">&gt;</span> result;
+	<span style="color:#66d9ef">for</span> (<span style="color:#66d9ef">int</span> i <span style="color:#f92672">=</span> <span style="color:#ae81ff">1</span>; i <span style="color:#f92672">&lt;=</span> n; i<span style="color:#f92672">++</span>)
+		<span style="color:#66d9ef">if</span> (father[i] <span style="color:#f92672">==</span> findfather(i))
+			result.push_back(i);
+	<span style="color:#66d9ef">for</span> (<span style="color:#66d9ef">auto</span> it <span style="color:#f92672">=</span> root.begin(); it <span style="color:#f92672">!=</span> root.end(); it<span style="color:#f92672">++</span>) {
+		printf(<span style="color:#e6db74">&#34;%d %d</span><span style="color:#ae81ff">\n</span><span style="color:#e6db74">&#34;</span>, <span style="color:#f92672">*</span>it, ans[<span style="color:#f92672">*</span>it]);
+	}
+		
+	<span style="color:#66d9ef">return</span> <span style="color:#ae81ff">0</span>;
+}
+
+</code></pre></div><p>但是，如果题目要求每个集合的根节点以及对应的子节点的话，就需要用map存储每个跟结点对应的子节点（容易看出，这是<strong>一对多</strong>，因此，我们用一个vector数组来存所有的子节点）</p>
+<p>代码如下：</p>
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-C++" data-lang="C++"><span style="color:#75715e">#include</span><span style="color:#75715e">&lt;iostream&gt;</span><span style="color:#75715e">
+</span><span style="color:#75715e">#include</span><span style="color:#75715e">&lt;vector&gt;</span><span style="color:#75715e">
+</span><span style="color:#75715e">#include</span><span style="color:#75715e">&lt;map&gt;</span><span style="color:#75715e">
+</span><span style="color:#75715e"></span><span style="color:#66d9ef">using</span> <span style="color:#66d9ef">namespace</span> std;
+
+<span style="color:#66d9ef">const</span> <span style="color:#66d9ef">int</span> max_union_find_set <span style="color:#f92672">=</span> <span style="color:#ae81ff">110</span>;
+<span style="color:#66d9ef">int</span> father[max_union_find_set] <span style="color:#f92672">=</span> { <span style="color:#ae81ff">0</span> };
+
+<span style="color:#75715e">//初始化
+</span><span style="color:#75715e"></span><span style="color:#66d9ef">void</span> <span style="color:#a6e22e">init_father</span>(<span style="color:#66d9ef">int</span> n) {<span style="color:#75715e">//n 表示共有多少个数字
+</span><span style="color:#75715e"></span>	<span style="color:#66d9ef">for</span> (<span style="color:#66d9ef">int</span> i <span style="color:#f92672">=</span> <span style="color:#ae81ff">1</span>; i <span style="color:#f92672">&lt;=</span> n;i<span style="color:#f92672">++</span>)
+	{
+		father[i] <span style="color:#f92672">=</span> i;
+	}
+}
+
+<span style="color:#75715e">//查找x所在集合的父结点
+</span><span style="color:#75715e"></span><span style="color:#66d9ef">int</span> <span style="color:#a6e22e">find_father</span>(<span style="color:#66d9ef">int</span> x) {
+	<span style="color:#66d9ef">int</span> current_temp <span style="color:#f92672">=</span> x;<span style="color:#75715e">//current_temp为最初查找结点
+</span><span style="color:#75715e"></span>	<span style="color:#66d9ef">while</span> (x <span style="color:#f92672">!=</span> father[x])
+	{
+		x <span style="color:#f92672">=</span> father[x];
+	}
+	<span style="color:#75715e">//当前 x 为根结点
+</span><span style="color:#75715e"></span>
+	<span style="color:#75715e">//路径压缩
+</span><span style="color:#75715e"></span>	<span style="color:#66d9ef">while</span> (current_temp <span style="color:#f92672">!=</span> father[current_temp])
+	{
+		<span style="color:#66d9ef">int</span> temp <span style="color:#f92672">=</span> current_temp;<span style="color:#75715e">//临时保存当前结点
+</span><span style="color:#75715e"></span>		current_temp <span style="color:#f92672">=</span> father[temp];<span style="color:#75715e">//往上查找
+</span><span style="color:#75715e"></span>		father[temp] <span style="color:#f92672">=</span> x;<span style="color:#75715e">//进行路径压缩
+</span><span style="color:#75715e"></span>	}
+	<span style="color:#66d9ef">return</span> x;
+}
+
+<span style="color:#75715e">//合并两个元素到一个集合
+</span><span style="color:#75715e"></span><span style="color:#66d9ef">void</span> <span style="color:#a6e22e">union_father</span>(<span style="color:#66d9ef">int</span> a, <span style="color:#66d9ef">int</span> b) {
+	<span style="color:#66d9ef">int</span> father_a <span style="color:#f92672">=</span> find_father(a);
+	<span style="color:#66d9ef">int</span> father_b <span style="color:#f92672">=</span> find_father(b);
+	<span style="color:#66d9ef">if</span> (father_a <span style="color:#f92672">!=</span> father_b)
+	{
+		father[father_a] <span style="color:#f92672">=</span> father_b;
+	}
+}
+
+<span style="color:#66d9ef">int</span> <span style="color:#a6e22e">main</span>() {
+
+	
+	<span style="color:#66d9ef">int</span> n, m;<span style="color:#75715e">//n 表示共有多少个数字，m 表示好朋友的组数
+</span><span style="color:#75715e"></span>	cin <span style="color:#f92672">&gt;&gt;</span> n <span style="color:#f92672">&gt;&gt;</span> m;
+	<span style="color:#75715e">//初始化 father 数组
+</span><span style="color:#75715e"></span>	init_father(n);
+	<span style="color:#66d9ef">int</span> a, b;<span style="color:#75715e">// a ，b 分别表示输入的具体数字，即 a 和 b 为好朋友
+</span><span style="color:#75715e"></span>	<span style="color:#66d9ef">for</span> (<span style="color:#66d9ef">int</span> i <span style="color:#f92672">=</span> <span style="color:#ae81ff">0</span>; i <span style="color:#f92672">&lt;</span> m; i<span style="color:#f92672">++</span>)
+	{
+		cin <span style="color:#f92672">&gt;&gt;</span> a <span style="color:#f92672">&gt;&gt;</span> b;
+		union_father(a, b);<span style="color:#75715e">//合并两个数字
+</span><span style="color:#75715e"></span>	}
+	map<span style="color:#f92672">&lt;</span><span style="color:#66d9ef">int</span>, vector<span style="color:#f92672">&lt;</span><span style="color:#66d9ef">int</span><span style="color:#f92672">&gt;&gt;</span> root_map;<span style="color:#75715e">//保存每个根结点及其子结点
+</span><span style="color:#75715e"></span>
+	vector<span style="color:#f92672">&lt;</span><span style="color:#66d9ef">int</span><span style="color:#f92672">&gt;</span> result;<span style="color:#75715e">// 存放根结点
+</span><span style="color:#75715e"></span>
+	<span style="color:#66d9ef">for</span> (<span style="color:#66d9ef">int</span> i <span style="color:#f92672">=</span> <span style="color:#ae81ff">1</span>;i <span style="color:#f92672">&lt;=</span> n;i<span style="color:#f92672">++</span>)
+	{
+		<span style="color:#66d9ef">int</span> root <span style="color:#f92672">=</span> find_father(i);
+		result.push_back(root);<span style="color:#75715e">//这里注意重复的元素也要加入result中，因为下面要用map一一对应
+</span><span style="color:#75715e"></span>	}
+	<span style="color:#75715e">//此处vector&lt;int&gt;::iterator建议改用auto
+</span><span style="color:#75715e"></span>	<span style="color:#66d9ef">for</span> (vector<span style="color:#f92672">&lt;</span><span style="color:#66d9ef">int</span><span style="color:#f92672">&gt;::</span>iterator it <span style="color:#f92672">=</span> result.begin();it <span style="color:#f92672">!=</span> result.end();it<span style="color:#f92672">++</span>)<span style="color:#75715e">//得出根结点和每个根结点对应的子节点
+</span><span style="color:#75715e"></span>	{
+		<span style="color:#66d9ef">int</span> root <span style="color:#f92672">=</span> (<span style="color:#f92672">*</span>it);
+		vector<span style="color:#f92672">&lt;</span><span style="color:#66d9ef">int</span><span style="color:#f92672">&gt;</span> child;
+		<span style="color:#66d9ef">for</span> (<span style="color:#66d9ef">int</span> i <span style="color:#f92672">=</span> <span style="color:#ae81ff">1</span>;i <span style="color:#f92672">&lt;=</span> n;i<span style="color:#f92672">++</span>)
+		{
+			<span style="color:#66d9ef">if</span> (father[i] <span style="color:#f92672">==</span> root <span style="color:#f92672">&amp;&amp;</span> i <span style="color:#f92672">!=</span> root)<span style="color:#75715e">//一定要注明：这里i不能为自身，因为它指的是子节点
+</span><span style="color:#75715e"></span>			{
+				child.push_back(i);
+			}
+		}
+		root_map.insert(pair<span style="color:#f92672">&lt;</span><span style="color:#66d9ef">int</span>, vector<span style="color:#f92672">&lt;</span><span style="color:#66d9ef">int</span><span style="color:#f92672">&gt;&gt;</span>(root, child));<span style="color:#75715e">//注意map包含里面用的是pair，把这个写法记一下
+</span><span style="color:#75715e"></span>	}
+
+	cout <span style="color:#f92672">&lt;&lt;</span> <span style="color:#e6db74">&#34;组数为：&#34;</span> <span style="color:#f92672">&lt;&lt;</span> root_map.size() <span style="color:#f92672">&lt;&lt;</span> endl;
+
+	<span style="color:#66d9ef">for</span> (map<span style="color:#f92672">&lt;</span><span style="color:#66d9ef">int</span>,vector<span style="color:#f92672">&lt;</span><span style="color:#66d9ef">int</span><span style="color:#f92672">&gt;</span> <span style="color:#f92672">&gt;::</span>iterator it <span style="color:#f92672">=</span> root_map.begin();it <span style="color:#f92672">!=</span> root_map.end();it<span style="color:#f92672">++</span>)
+	{
+		cout <span style="color:#f92672">&lt;&lt;</span> <span style="color:#e6db74">&#34;根结点为：&#34;</span> <span style="color:#f92672">&lt;&lt;</span> (<span style="color:#f92672">*</span>it).first <span style="color:#f92672">&lt;&lt;</span> endl;
+		<span style="color:#66d9ef">if</span> ((<span style="color:#f92672">*</span>it).second.size() <span style="color:#f92672">!=</span> <span style="color:#ae81ff">0</span>)<span style="color:#75715e">//要存在孩子结点才输出
+</span><span style="color:#75715e"></span>		{
+			cout <span style="color:#f92672">&lt;&lt;</span> <span style="color:#e6db74">&#34;其子结点分别为：&#34;</span>;
+		}
+		<span style="color:#66d9ef">for</span> (vector<span style="color:#f92672">&lt;</span><span style="color:#66d9ef">int</span><span style="color:#f92672">&gt;::</span>iterator vit <span style="color:#f92672">=</span> (<span style="color:#f92672">*</span>it).second.begin();vit <span style="color:#f92672">!=</span>(<span style="color:#f92672">*</span>it).second.end();vit<span style="color:#f92672">++</span>)<span style="color:#75715e">//这里要特别注意，这里的vit可千万不能写成it，我就是在这里犯了个低级错误导致浪费了我好多时间去debug。也要注意这里的写法
+</span><span style="color:#75715e"></span>		{
+			cout <span style="color:#f92672">&lt;&lt;</span> (<span style="color:#f92672">*</span>vit) <span style="color:#f92672">&lt;&lt;</span> <span style="color:#e6db74">&#34; &#34;</span>;
+		}
+		cout <span style="color:#f92672">&lt;&lt;</span> endl;
+	}
+	system(<span style="color:#e6db74">&#34;pause&#34;</span>);
+	<span style="color:#66d9ef">return</span> <span style="color:#ae81ff">0</span>;
+}
+</code></pre></div><p>运行结果图如下：</p>
+<p>![](C:\Users\Administrator\Pictures\Camera Roll\QQ截图20201005203128.png)</p>
+
+</div>
+
+
+
+<footer>
+  <p class="footnote">Copyright &copy; 2020: All rights reserved by <a href="mailto:"></a></p>
+</footer>
+
+  </div>
+  <div id="container-mask"></div>
+<div id="sidebar">
+<div class="sidebar">
+  <div class="sidebar-about">
+    <a href="https://Big-Mouth.github.io">
+      <img src="media/me.jpg" title="" alt="Me" />
+      <h4 class="sidebar-title">My New Hugo Site</h4>
+    </a>
+    <span class="sidebar-tagline"></span>
+  </div>
+  <nav class="sidebar-nav">
+    <ul class="sidebar-nav-list">
+      <li class="sidebar-nav-item nav-home">
+        <span class="genericon genericon-home"></span><a class="sidebar-link" href="https://Big-Mouth.github.io">Home</a>
+      </li>
+      <li class="sidebar-nav-item">
+        <a class="genericon genericon-feed" href="posts/index.xml"></a><a class="sidebar-link" href="posts/">Posts/</a>
+      </li>
+      <li class="sidebar-nav-item">
+        <a class="genericon genericon-feed" href="links/index.xml"></a><a class="sidebar-link" href="links/">Links/</a>
+      </li>
+    </ul>
+  </nav>
+  <div class="sidebar-externals">
+  
+  | <a class="genericon genericon-mail" href="mailto:"></a>
+  </div>
+  <div class="sidebar-bottom">
+    <hr />
+    <p>Powered by <a href="http://gohugo.io">Hugo</a>.</p> <p>Theme: <a href="https://github.com/TiTi/hurock">Hurock</a>.</p>
+    <p>Copyright &copy; 2020.</p> <p>All rights reserved.</p>
+  </div>
+</div>
+</div>
+
+</div>
+
+<script src="highlight/highlight.pack.js"></script>
+<script>hljs.initHighlightingOnLoad();</script>
+
+
+
+
+
+</body>
+</html>
+

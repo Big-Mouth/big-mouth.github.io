@@ -139,8 +139,33 @@ parkingSystem.addCar(1); // 返回 false ，因为没有空的大车位，唯一
 来源：力扣（LeetCode）
 链接：https://leetcode-cn.com/problems/design-parking-system
 著作权归领扣网络所有。商业转载请联系官方授权，非商业转载请注明出处。
-&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;p&gt;这道题可以直接用&lt;/p&gt;
-</description>
+&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;div class=&#34;highlight&#34;&gt;&lt;pre style=&#34;color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4&#34;&gt;&lt;code class=&#34;language-python&#34; data-lang=&#34;python&#34;&gt;&lt;span style=&#34;color:#66d9ef&#34;&gt;class&lt;/span&gt; &lt;span style=&#34;color:#a6e22e&#34;&gt;ParkingSystem&lt;/span&gt;:
+    &lt;span style=&#34;color:#66d9ef&#34;&gt;def&lt;/span&gt; __init__(self, big: int, medium: int, small: int):  
+        self&lt;span style=&#34;color:#f92672&#34;&gt;.&lt;/span&gt;big &lt;span style=&#34;color:#f92672&#34;&gt;=&lt;/span&gt; big
+        self&lt;span style=&#34;color:#f92672&#34;&gt;.&lt;/span&gt;medium &lt;span style=&#34;color:#f92672&#34;&gt;=&lt;/span&gt; medium
+        self&lt;span style=&#34;color:#f92672&#34;&gt;.&lt;/span&gt;small &lt;span style=&#34;color:#f92672&#34;&gt;=&lt;/span&gt; small
+    &lt;span style=&#34;color:#66d9ef&#34;&gt;def&lt;/span&gt; &lt;span style=&#34;color:#a6e22e&#34;&gt;addCar&lt;/span&gt;(self, carType: int) &lt;span style=&#34;color:#f92672&#34;&gt;-&amp;gt;&lt;/span&gt; bool:
+        &lt;span style=&#34;color:#66d9ef&#34;&gt;if&lt;/span&gt; carType &lt;span style=&#34;color:#f92672&#34;&gt;==&lt;/span&gt; &lt;span style=&#34;color:#ae81ff&#34;&gt;1&lt;/span&gt;:
+            &lt;span style=&#34;color:#66d9ef&#34;&gt;if&lt;/span&gt; self&lt;span style=&#34;color:#f92672&#34;&gt;.&lt;/span&gt;big &lt;span style=&#34;color:#f92672&#34;&gt;&amp;gt;&lt;/span&gt; &lt;span style=&#34;color:#ae81ff&#34;&gt;0&lt;/span&gt;:
+                self&lt;span style=&#34;color:#f92672&#34;&gt;.&lt;/span&gt;big &lt;span style=&#34;color:#f92672&#34;&gt;-=&lt;/span&gt; &lt;span style=&#34;color:#ae81ff&#34;&gt;1&lt;/span&gt;
+                &lt;span style=&#34;color:#66d9ef&#34;&gt;return&lt;/span&gt; True
+            &lt;span style=&#34;color:#66d9ef&#34;&gt;else&lt;/span&gt;:
+                &lt;span style=&#34;color:#66d9ef&#34;&gt;return&lt;/span&gt; False
+        &lt;span style=&#34;color:#66d9ef&#34;&gt;elif&lt;/span&gt; carType &lt;span style=&#34;color:#f92672&#34;&gt;==&lt;/span&gt; &lt;span style=&#34;color:#ae81ff&#34;&gt;2&lt;/span&gt;:
+            &lt;span style=&#34;color:#66d9ef&#34;&gt;if&lt;/span&gt; self&lt;span style=&#34;color:#f92672&#34;&gt;.&lt;/span&gt;medium &lt;span style=&#34;color:#f92672&#34;&gt;&amp;gt;&lt;/span&gt; &lt;span style=&#34;color:#ae81ff&#34;&gt;0&lt;/span&gt;:
+                self&lt;span style=&#34;color:#f92672&#34;&gt;.&lt;/span&gt;medium &lt;span style=&#34;color:#f92672&#34;&gt;-=&lt;/span&gt; &lt;span style=&#34;color:#ae81ff&#34;&gt;1&lt;/span&gt;
+                &lt;span style=&#34;color:#66d9ef&#34;&gt;return&lt;/span&gt; True
+            &lt;span style=&#34;color:#66d9ef&#34;&gt;else&lt;/span&gt;:
+                &lt;span style=&#34;color:#66d9ef&#34;&gt;return&lt;/span&gt; False
+        &lt;span style=&#34;color:#66d9ef&#34;&gt;elif&lt;/span&gt; carType &lt;span style=&#34;color:#f92672&#34;&gt;==&lt;/span&gt; &lt;span style=&#34;color:#ae81ff&#34;&gt;3&lt;/span&gt;:
+            &lt;span style=&#34;color:#66d9ef&#34;&gt;if&lt;/span&gt; self&lt;span style=&#34;color:#f92672&#34;&gt;.&lt;/span&gt;small &lt;span style=&#34;color:#f92672&#34;&gt;&amp;gt;&lt;/span&gt; &lt;span style=&#34;color:#ae81ff&#34;&gt;0&lt;/span&gt;:
+                self&lt;span style=&#34;color:#f92672&#34;&gt;.&lt;/span&gt;small &lt;span style=&#34;color:#f92672&#34;&gt;-=&lt;/span&gt; &lt;span style=&#34;color:#ae81ff&#34;&gt;1&lt;/span&gt;
+                &lt;span style=&#34;color:#66d9ef&#34;&gt;return&lt;/span&gt; True
+            &lt;span style=&#34;color:#66d9ef&#34;&gt;else&lt;/span&gt;:
+                &lt;span style=&#34;color:#66d9ef&#34;&gt;return&lt;/span&gt; False
+        &lt;span style=&#34;color:#66d9ef&#34;&gt;return&lt;/span&gt; False
+
+&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;</description>
     </item>
     
     <item>
@@ -463,6 +488,220 @@ git push -u origin master
 &lt;p&gt;&lt;a href=&#34;https://blog.csdn.net/weixin_43264399/article/details/87350219&#34;&gt;其他问题看这里&lt;/a&gt;&lt;/p&gt;
 &lt;p&gt;其中 &lt;em&gt;&lt;strong&gt;yyyy/mm/dd-hh:mm&lt;/strong&gt;&lt;/em&gt; 为每次提交的名称，引号内可以随意更改，yyyy/mm/dd-hh:mm 是我个人采用的格式，以时间做标记可&lt;strong&gt;保证不会重复&lt;/strong&gt;&lt;/p&gt;
 &lt;h4 id=&#34;现在刷新github登陆个人博客查看即可&#34;&gt;&lt;strong&gt;现在刷新GitHub，登陆个人博客查看即可&lt;/strong&gt;&lt;/h4&gt;
+</description>
+    </item>
+    
+    <item>
+      <title></title>
+      <link>https://Big-Mouth.github.io/posts/%E7%BB%8F%E5%85%B8%E5%B9%B6%E6%9F%A5%E9%9B%86/</link>
+      <pubDate>Mon, 01 Jan 0001 00:00:00 +0000</pubDate>
+      
+      <guid>https://Big-Mouth.github.io/posts/%E7%BB%8F%E5%85%B8%E5%B9%B6%E6%9F%A5%E9%9B%86/</guid>
+      <description>&lt;h1 id=&#34;经典并查集&#34;&gt;经典并查集&lt;/h1&gt;
+&lt;p&gt;&lt;strong&gt;在算法笔记上有一道这样的题目&lt;/strong&gt;&lt;/p&gt;
+&lt;h3 id=&#34;题目描述&#34;&gt;题目描述&lt;/h3&gt;
+&lt;p&gt;有一个叫作“数码世界”的奇异空间，在数码世界里生活着许许多多的数码宝贝，其中有些数码宝贝之间可能是好朋友。并且数码世界有两条不成文的规定：
+第一，数码宝贝A和数码宝贝B是好朋友等价于数码宝贝B和数码宝贝A是好朋友。
+第二，如果数码宝贝A和数码宝贝C是好朋友，而数码宝贝B和数码宝贝C也是好朋友，那么A和B也是好朋友。&lt;/p&gt;
+&lt;p&gt;现在给出这些数码宝贝中所有好朋友的信息，问：可以把这些数码宝贝分成多少组，满足每组中的任意两只数码宝贝都是好朋友，且任意两组之间的数码宝贝都不是好朋友。&lt;/p&gt;
+&lt;h3 id=&#34;题目分析&#34;&gt;题目分析&lt;/h3&gt;
+&lt;p&gt;首先，可以看到这是一个分组类型的题目，把相互之间有关系的元素放在一起（并），查询小组数（查）以及合并后的集合（集）&lt;/p&gt;
+&lt;p&gt;因此，这就是一个并查集的模型。可以把题目中给出的好友的关系视为两结点之间的边，那么在输入这些好友关系时，就可以同时把他们合并（这就要求我们写一个合并函数）这样处理完毕之后就得到了一些集合，而集合的个数呢，就是我们所要求的组数。&lt;/p&gt;
+&lt;p&gt;那集合的个数要怎么求呢？我们通过观察可以很容易发现：&lt;strong&gt;对于同一个集合来说，只存在唯一的根节点，且将其作为所属集合的标识&lt;/strong&gt;&lt;/p&gt;
+&lt;p&gt;所以呢，我们只要用一个bool数组来存储根结点即可，当然要考虑一些细节，比如说，可以在给结点编号的同时，初始化isroot数组为false，那什么时候让它为true呢？&lt;/p&gt;
+&lt;p&gt;当然是要写一个findfather函数，在此函数中，可以做两件事情：&lt;/p&gt;
+&lt;ol&gt;
+&lt;li&gt;寻找根节点&lt;/li&gt;
+&lt;li&gt;压缩路径&lt;/li&gt;
+&lt;/ol&gt;
+&lt;p&gt;当然，这个直接套模板即可，毫无技术含量。&lt;/p&gt;
+&lt;p&gt;在找到了根节点之后，我们就遍历每一个结点，判断如果它是根节点的话，那么直接让他的bool值为true;&lt;/p&gt;
+&lt;p&gt;另外，如果还要求分成的组数（但不要求每个集合的元素）的话，就用一个set存储每个根结点的儿子数（每个集合的元素个数）最后输出即可。代码如下：&lt;/p&gt;
+&lt;div class=&#34;highlight&#34;&gt;&lt;pre style=&#34;color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4&#34;&gt;&lt;code class=&#34;language-C++&#34; data-lang=&#34;C++&#34;&gt;&lt;span style=&#34;color:#75715e&#34;&gt;#include&lt;/span&gt;&lt;span style=&#34;color:#75715e&#34;&gt;&amp;lt;iostream&amp;gt;&lt;/span&gt;&lt;span style=&#34;color:#75715e&#34;&gt;
+&lt;/span&gt;&lt;span style=&#34;color:#75715e&#34;&gt;#include&lt;/span&gt;&lt;span style=&#34;color:#75715e&#34;&gt;&amp;lt;cstdio&amp;gt;&lt;/span&gt;&lt;span style=&#34;color:#75715e&#34;&gt;
+&lt;/span&gt;&lt;span style=&#34;color:#75715e&#34;&gt;#include&lt;/span&gt;&lt;span style=&#34;color:#75715e&#34;&gt;&amp;lt;map&amp;gt;&lt;/span&gt;&lt;span style=&#34;color:#75715e&#34;&gt;
+&lt;/span&gt;&lt;span style=&#34;color:#75715e&#34;&gt;#include&lt;/span&gt;&lt;span style=&#34;color:#75715e&#34;&gt;&amp;lt;set&amp;gt;&lt;/span&gt;&lt;span style=&#34;color:#75715e&#34;&gt;
+&lt;/span&gt;&lt;span style=&#34;color:#75715e&#34;&gt;&lt;/span&gt;&lt;span style=&#34;color:#66d9ef&#34;&gt;using&lt;/span&gt; &lt;span style=&#34;color:#66d9ef&#34;&gt;namespace&lt;/span&gt; std;
+
+&lt;span style=&#34;color:#66d9ef&#34;&gt;const&lt;/span&gt; &lt;span style=&#34;color:#66d9ef&#34;&gt;int&lt;/span&gt; N &lt;span style=&#34;color:#f92672&#34;&gt;=&lt;/span&gt; &lt;span style=&#34;color:#ae81ff&#34;&gt;110&lt;/span&gt;;
+&lt;span style=&#34;color:#66d9ef&#34;&gt;int&lt;/span&gt; father[N];
+&lt;span style=&#34;color:#66d9ef&#34;&gt;bool&lt;/span&gt; isroot[N];
+
+&lt;span style=&#34;color:#66d9ef&#34;&gt;int&lt;/span&gt; &lt;span style=&#34;color:#a6e22e&#34;&gt;findfather&lt;/span&gt;(&lt;span style=&#34;color:#66d9ef&#34;&gt;int&lt;/span&gt; x) {&lt;span style=&#34;color:#75715e&#34;&gt;//查找每个节点所在集合的根节点
+&lt;/span&gt;&lt;span style=&#34;color:#75715e&#34;&gt;&lt;/span&gt;	&lt;span style=&#34;color:#66d9ef&#34;&gt;int&lt;/span&gt; a &lt;span style=&#34;color:#f92672&#34;&gt;=&lt;/span&gt; x;&lt;span style=&#34;color:#75715e&#34;&gt;//
+&lt;/span&gt;&lt;span style=&#34;color:#75715e&#34;&gt;&lt;/span&gt;	&lt;span style=&#34;color:#66d9ef&#34;&gt;while&lt;/span&gt; (x &lt;span style=&#34;color:#f92672&#34;&gt;!=&lt;/span&gt; father[x]) {
+		x &lt;span style=&#34;color:#f92672&#34;&gt;=&lt;/span&gt; father[x];
+	}
+	&lt;span style=&#34;color:#75715e&#34;&gt;//路径压缩
+&lt;/span&gt;&lt;span style=&#34;color:#75715e&#34;&gt;&lt;/span&gt;	&lt;span style=&#34;color:#66d9ef&#34;&gt;while&lt;/span&gt; (a &lt;span style=&#34;color:#f92672&#34;&gt;!=&lt;/span&gt; father[a]) {
+		&lt;span style=&#34;color:#66d9ef&#34;&gt;int&lt;/span&gt; z &lt;span style=&#34;color:#f92672&#34;&gt;=&lt;/span&gt; a;&lt;span style=&#34;color:#75715e&#34;&gt;//因为a要被father[a]覆盖掉，所以这里先把原来结点存下来，用于修改father[a]的值
+&lt;/span&gt;&lt;span style=&#34;color:#75715e&#34;&gt;&lt;/span&gt;		a &lt;span style=&#34;color:#f92672&#34;&gt;=&lt;/span&gt; father[a];&lt;span style=&#34;color:#75715e&#34;&gt;//a不断地回溯父亲结点
+&lt;/span&gt;&lt;span style=&#34;color:#75715e&#34;&gt;&lt;/span&gt;		father[z] &lt;span style=&#34;color:#f92672&#34;&gt;=&lt;/span&gt; x;&lt;span style=&#34;color:#75715e&#34;&gt;//将原来结点的父亲结点改为根结点
+&lt;/span&gt;&lt;span style=&#34;color:#75715e&#34;&gt;&lt;/span&gt;	}
+	&lt;span style=&#34;color:#66d9ef&#34;&gt;return&lt;/span&gt; x;
+}
+
+&lt;span style=&#34;color:#66d9ef&#34;&gt;void&lt;/span&gt; &lt;span style=&#34;color:#a6e22e&#34;&gt;Union&lt;/span&gt;(&lt;span style=&#34;color:#66d9ef&#34;&gt;int&lt;/span&gt; a, &lt;span style=&#34;color:#66d9ef&#34;&gt;int&lt;/span&gt; b) {
+	&lt;span style=&#34;color:#66d9ef&#34;&gt;if&lt;/span&gt; (findfather(a) &lt;span style=&#34;color:#f92672&#34;&gt;==&lt;/span&gt; findfather(b)) &lt;span style=&#34;color:#66d9ef&#34;&gt;return&lt;/span&gt;;
+	a &lt;span style=&#34;color:#f92672&#34;&gt;=&lt;/span&gt; findfather(a);
+	b &lt;span style=&#34;color:#f92672&#34;&gt;=&lt;/span&gt; findfather(b);
+	father[a] &lt;span style=&#34;color:#f92672&#34;&gt;=&lt;/span&gt; b;
+	
+}
+
+&lt;span style=&#34;color:#66d9ef&#34;&gt;void&lt;/span&gt; &lt;span style=&#34;color:#a6e22e&#34;&gt;init&lt;/span&gt;(&lt;span style=&#34;color:#66d9ef&#34;&gt;int&lt;/span&gt; n) {
+	&lt;span style=&#34;color:#66d9ef&#34;&gt;for&lt;/span&gt; (&lt;span style=&#34;color:#66d9ef&#34;&gt;int&lt;/span&gt; i &lt;span style=&#34;color:#f92672&#34;&gt;=&lt;/span&gt; &lt;span style=&#34;color:#ae81ff&#34;&gt;1&lt;/span&gt;; i &lt;span style=&#34;color:#f92672&#34;&gt;&amp;lt;=&lt;/span&gt; n; i&lt;span style=&#34;color:#f92672&#34;&gt;++&lt;/span&gt;) {
+		father[i] &lt;span style=&#34;color:#f92672&#34;&gt;=&lt;/span&gt; i;
+		isroot[i] &lt;span style=&#34;color:#f92672&#34;&gt;=&lt;/span&gt; false;
+	}
+}
+
+&lt;span style=&#34;color:#75715e&#34;&gt;/*
+&lt;/span&gt;&lt;span style=&#34;color:#75715e&#34;&gt;7 5
+&lt;/span&gt;&lt;span style=&#34;color:#75715e&#34;&gt;1 2
+&lt;/span&gt;&lt;span style=&#34;color:#75715e&#34;&gt;2 3
+&lt;/span&gt;&lt;span style=&#34;color:#75715e&#34;&gt;3 1
+&lt;/span&gt;&lt;span style=&#34;color:#75715e&#34;&gt;1 4
+&lt;/span&gt;&lt;span style=&#34;color:#75715e&#34;&gt;5 6
+&lt;/span&gt;&lt;span style=&#34;color:#75715e&#34;&gt;*/&lt;/span&gt;
+&lt;span style=&#34;color:#66d9ef&#34;&gt;int&lt;/span&gt; &lt;span style=&#34;color:#a6e22e&#34;&gt;main&lt;/span&gt;() {
+	&lt;span style=&#34;color:#66d9ef&#34;&gt;int&lt;/span&gt; n, m, a, b;
+	scanf(&lt;span style=&#34;color:#e6db74&#34;&gt;&amp;#34;%d%d&amp;#34;&lt;/span&gt;, &lt;span style=&#34;color:#f92672&#34;&gt;&amp;amp;&lt;/span&gt;n, &lt;span style=&#34;color:#f92672&#34;&gt;&amp;amp;&lt;/span&gt;m);
+	init(n);
+	&lt;span style=&#34;color:#66d9ef&#34;&gt;for&lt;/span&gt; (&lt;span style=&#34;color:#66d9ef&#34;&gt;int&lt;/span&gt; i &lt;span style=&#34;color:#f92672&#34;&gt;=&lt;/span&gt; &lt;span style=&#34;color:#ae81ff&#34;&gt;1&lt;/span&gt;; i &lt;span style=&#34;color:#f92672&#34;&gt;&amp;lt;=&lt;/span&gt; m; i&lt;span style=&#34;color:#f92672&#34;&gt;++&lt;/span&gt;) {
+		scanf(&lt;span style=&#34;color:#e6db74&#34;&gt;&amp;#34;%d%d&amp;#34;&lt;/span&gt;, &lt;span style=&#34;color:#f92672&#34;&gt;&amp;amp;&lt;/span&gt;a, &lt;span style=&#34;color:#f92672&#34;&gt;&amp;amp;&lt;/span&gt;b);
+		Union(a, b);
+	}
+	&lt;span style=&#34;color:#66d9ef&#34;&gt;int&lt;/span&gt; ans[N] &lt;span style=&#34;color:#f92672&#34;&gt;=&lt;/span&gt; { &lt;span style=&#34;color:#ae81ff&#34;&gt;0&lt;/span&gt; };
+	&lt;span style=&#34;color:#66d9ef&#34;&gt;for&lt;/span&gt; (&lt;span style=&#34;color:#66d9ef&#34;&gt;int&lt;/span&gt; i &lt;span style=&#34;color:#f92672&#34;&gt;=&lt;/span&gt; &lt;span style=&#34;color:#ae81ff&#34;&gt;1&lt;/span&gt;; i &lt;span style=&#34;color:#f92672&#34;&gt;&amp;lt;=&lt;/span&gt; n; i&lt;span style=&#34;color:#f92672&#34;&gt;++&lt;/span&gt;) {
+		isroot[findfather(i)] &lt;span style=&#34;color:#f92672&#34;&gt;=&lt;/span&gt; true;
+	}
+	&lt;span style=&#34;color:#66d9ef&#34;&gt;for&lt;/span&gt; (&lt;span style=&#34;color:#66d9ef&#34;&gt;int&lt;/span&gt; i &lt;span style=&#34;color:#f92672&#34;&gt;=&lt;/span&gt; &lt;span style=&#34;color:#ae81ff&#34;&gt;1&lt;/span&gt;; i &lt;span style=&#34;color:#f92672&#34;&gt;&amp;lt;=&lt;/span&gt; n; i&lt;span style=&#34;color:#f92672&#34;&gt;++&lt;/span&gt;) {
+		&lt;span style=&#34;color:#66d9ef&#34;&gt;if&lt;/span&gt; (father[i] &lt;span style=&#34;color:#f92672&#34;&gt;==&lt;/span&gt; findfather(i))
+			ans[findfather(i)]&lt;span style=&#34;color:#f92672&#34;&gt;++&lt;/span&gt;;
+	}
+	set&lt;span style=&#34;color:#f92672&#34;&gt;&amp;lt;&lt;/span&gt;&lt;span style=&#34;color:#66d9ef&#34;&gt;int&lt;/span&gt;&lt;span style=&#34;color:#f92672&#34;&gt;&amp;gt;&lt;/span&gt; root;
+	&lt;span style=&#34;color:#66d9ef&#34;&gt;for&lt;/span&gt; (&lt;span style=&#34;color:#66d9ef&#34;&gt;int&lt;/span&gt; i &lt;span style=&#34;color:#f92672&#34;&gt;=&lt;/span&gt; &lt;span style=&#34;color:#ae81ff&#34;&gt;1&lt;/span&gt;; i &lt;span style=&#34;color:#f92672&#34;&gt;&amp;lt;=&lt;/span&gt; n; i&lt;span style=&#34;color:#f92672&#34;&gt;++&lt;/span&gt;)
+	{
+		&lt;span style=&#34;color:#66d9ef&#34;&gt;if&lt;/span&gt; (isroot[i]) {
+			root.insert(i);
+		}
+	}
+	vector&lt;span style=&#34;color:#f92672&#34;&gt;&amp;lt;&lt;/span&gt;&lt;span style=&#34;color:#66d9ef&#34;&gt;int&lt;/span&gt;&lt;span style=&#34;color:#f92672&#34;&gt;&amp;gt;&lt;/span&gt; result;
+	&lt;span style=&#34;color:#66d9ef&#34;&gt;for&lt;/span&gt; (&lt;span style=&#34;color:#66d9ef&#34;&gt;int&lt;/span&gt; i &lt;span style=&#34;color:#f92672&#34;&gt;=&lt;/span&gt; &lt;span style=&#34;color:#ae81ff&#34;&gt;1&lt;/span&gt;; i &lt;span style=&#34;color:#f92672&#34;&gt;&amp;lt;=&lt;/span&gt; n; i&lt;span style=&#34;color:#f92672&#34;&gt;++&lt;/span&gt;)
+		&lt;span style=&#34;color:#66d9ef&#34;&gt;if&lt;/span&gt; (father[i] &lt;span style=&#34;color:#f92672&#34;&gt;==&lt;/span&gt; findfather(i))
+			result.push_back(i);
+	&lt;span style=&#34;color:#66d9ef&#34;&gt;for&lt;/span&gt; (&lt;span style=&#34;color:#66d9ef&#34;&gt;auto&lt;/span&gt; it &lt;span style=&#34;color:#f92672&#34;&gt;=&lt;/span&gt; root.begin(); it &lt;span style=&#34;color:#f92672&#34;&gt;!=&lt;/span&gt; root.end(); it&lt;span style=&#34;color:#f92672&#34;&gt;++&lt;/span&gt;) {
+		printf(&lt;span style=&#34;color:#e6db74&#34;&gt;&amp;#34;%d %d&lt;/span&gt;&lt;span style=&#34;color:#ae81ff&#34;&gt;\n&lt;/span&gt;&lt;span style=&#34;color:#e6db74&#34;&gt;&amp;#34;&lt;/span&gt;, &lt;span style=&#34;color:#f92672&#34;&gt;*&lt;/span&gt;it, ans[&lt;span style=&#34;color:#f92672&#34;&gt;*&lt;/span&gt;it]);
+	}
+		
+	&lt;span style=&#34;color:#66d9ef&#34;&gt;return&lt;/span&gt; &lt;span style=&#34;color:#ae81ff&#34;&gt;0&lt;/span&gt;;
+}
+
+&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;p&gt;但是，如果题目要求每个集合的根节点以及对应的子节点的话，就需要用map存储每个跟结点对应的子节点（容易看出，这是&lt;strong&gt;一对多&lt;/strong&gt;，因此，我们用一个vector数组来存所有的子节点）&lt;/p&gt;
+&lt;p&gt;代码如下：&lt;/p&gt;
+&lt;div class=&#34;highlight&#34;&gt;&lt;pre style=&#34;color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4&#34;&gt;&lt;code class=&#34;language-C++&#34; data-lang=&#34;C++&#34;&gt;&lt;span style=&#34;color:#75715e&#34;&gt;#include&lt;/span&gt;&lt;span style=&#34;color:#75715e&#34;&gt;&amp;lt;iostream&amp;gt;&lt;/span&gt;&lt;span style=&#34;color:#75715e&#34;&gt;
+&lt;/span&gt;&lt;span style=&#34;color:#75715e&#34;&gt;#include&lt;/span&gt;&lt;span style=&#34;color:#75715e&#34;&gt;&amp;lt;vector&amp;gt;&lt;/span&gt;&lt;span style=&#34;color:#75715e&#34;&gt;
+&lt;/span&gt;&lt;span style=&#34;color:#75715e&#34;&gt;#include&lt;/span&gt;&lt;span style=&#34;color:#75715e&#34;&gt;&amp;lt;map&amp;gt;&lt;/span&gt;&lt;span style=&#34;color:#75715e&#34;&gt;
+&lt;/span&gt;&lt;span style=&#34;color:#75715e&#34;&gt;&lt;/span&gt;&lt;span style=&#34;color:#66d9ef&#34;&gt;using&lt;/span&gt; &lt;span style=&#34;color:#66d9ef&#34;&gt;namespace&lt;/span&gt; std;
+
+&lt;span style=&#34;color:#66d9ef&#34;&gt;const&lt;/span&gt; &lt;span style=&#34;color:#66d9ef&#34;&gt;int&lt;/span&gt; max_union_find_set &lt;span style=&#34;color:#f92672&#34;&gt;=&lt;/span&gt; &lt;span style=&#34;color:#ae81ff&#34;&gt;110&lt;/span&gt;;
+&lt;span style=&#34;color:#66d9ef&#34;&gt;int&lt;/span&gt; father[max_union_find_set] &lt;span style=&#34;color:#f92672&#34;&gt;=&lt;/span&gt; { &lt;span style=&#34;color:#ae81ff&#34;&gt;0&lt;/span&gt; };
+
+&lt;span style=&#34;color:#75715e&#34;&gt;//初始化
+&lt;/span&gt;&lt;span style=&#34;color:#75715e&#34;&gt;&lt;/span&gt;&lt;span style=&#34;color:#66d9ef&#34;&gt;void&lt;/span&gt; &lt;span style=&#34;color:#a6e22e&#34;&gt;init_father&lt;/span&gt;(&lt;span style=&#34;color:#66d9ef&#34;&gt;int&lt;/span&gt; n) {&lt;span style=&#34;color:#75715e&#34;&gt;//n 表示共有多少个数字
+&lt;/span&gt;&lt;span style=&#34;color:#75715e&#34;&gt;&lt;/span&gt;	&lt;span style=&#34;color:#66d9ef&#34;&gt;for&lt;/span&gt; (&lt;span style=&#34;color:#66d9ef&#34;&gt;int&lt;/span&gt; i &lt;span style=&#34;color:#f92672&#34;&gt;=&lt;/span&gt; &lt;span style=&#34;color:#ae81ff&#34;&gt;1&lt;/span&gt;; i &lt;span style=&#34;color:#f92672&#34;&gt;&amp;lt;=&lt;/span&gt; n;i&lt;span style=&#34;color:#f92672&#34;&gt;++&lt;/span&gt;)
+	{
+		father[i] &lt;span style=&#34;color:#f92672&#34;&gt;=&lt;/span&gt; i;
+	}
+}
+
+&lt;span style=&#34;color:#75715e&#34;&gt;//查找x所在集合的父结点
+&lt;/span&gt;&lt;span style=&#34;color:#75715e&#34;&gt;&lt;/span&gt;&lt;span style=&#34;color:#66d9ef&#34;&gt;int&lt;/span&gt; &lt;span style=&#34;color:#a6e22e&#34;&gt;find_father&lt;/span&gt;(&lt;span style=&#34;color:#66d9ef&#34;&gt;int&lt;/span&gt; x) {
+	&lt;span style=&#34;color:#66d9ef&#34;&gt;int&lt;/span&gt; current_temp &lt;span style=&#34;color:#f92672&#34;&gt;=&lt;/span&gt; x;&lt;span style=&#34;color:#75715e&#34;&gt;//current_temp为最初查找结点
+&lt;/span&gt;&lt;span style=&#34;color:#75715e&#34;&gt;&lt;/span&gt;	&lt;span style=&#34;color:#66d9ef&#34;&gt;while&lt;/span&gt; (x &lt;span style=&#34;color:#f92672&#34;&gt;!=&lt;/span&gt; father[x])
+	{
+		x &lt;span style=&#34;color:#f92672&#34;&gt;=&lt;/span&gt; father[x];
+	}
+	&lt;span style=&#34;color:#75715e&#34;&gt;//当前 x 为根结点
+&lt;/span&gt;&lt;span style=&#34;color:#75715e&#34;&gt;&lt;/span&gt;
+	&lt;span style=&#34;color:#75715e&#34;&gt;//路径压缩
+&lt;/span&gt;&lt;span style=&#34;color:#75715e&#34;&gt;&lt;/span&gt;	&lt;span style=&#34;color:#66d9ef&#34;&gt;while&lt;/span&gt; (current_temp &lt;span style=&#34;color:#f92672&#34;&gt;!=&lt;/span&gt; father[current_temp])
+	{
+		&lt;span style=&#34;color:#66d9ef&#34;&gt;int&lt;/span&gt; temp &lt;span style=&#34;color:#f92672&#34;&gt;=&lt;/span&gt; current_temp;&lt;span style=&#34;color:#75715e&#34;&gt;//临时保存当前结点
+&lt;/span&gt;&lt;span style=&#34;color:#75715e&#34;&gt;&lt;/span&gt;		current_temp &lt;span style=&#34;color:#f92672&#34;&gt;=&lt;/span&gt; father[temp];&lt;span style=&#34;color:#75715e&#34;&gt;//往上查找
+&lt;/span&gt;&lt;span style=&#34;color:#75715e&#34;&gt;&lt;/span&gt;		father[temp] &lt;span style=&#34;color:#f92672&#34;&gt;=&lt;/span&gt; x;&lt;span style=&#34;color:#75715e&#34;&gt;//进行路径压缩
+&lt;/span&gt;&lt;span style=&#34;color:#75715e&#34;&gt;&lt;/span&gt;	}
+	&lt;span style=&#34;color:#66d9ef&#34;&gt;return&lt;/span&gt; x;
+}
+
+&lt;span style=&#34;color:#75715e&#34;&gt;//合并两个元素到一个集合
+&lt;/span&gt;&lt;span style=&#34;color:#75715e&#34;&gt;&lt;/span&gt;&lt;span style=&#34;color:#66d9ef&#34;&gt;void&lt;/span&gt; &lt;span style=&#34;color:#a6e22e&#34;&gt;union_father&lt;/span&gt;(&lt;span style=&#34;color:#66d9ef&#34;&gt;int&lt;/span&gt; a, &lt;span style=&#34;color:#66d9ef&#34;&gt;int&lt;/span&gt; b) {
+	&lt;span style=&#34;color:#66d9ef&#34;&gt;int&lt;/span&gt; father_a &lt;span style=&#34;color:#f92672&#34;&gt;=&lt;/span&gt; find_father(a);
+	&lt;span style=&#34;color:#66d9ef&#34;&gt;int&lt;/span&gt; father_b &lt;span style=&#34;color:#f92672&#34;&gt;=&lt;/span&gt; find_father(b);
+	&lt;span style=&#34;color:#66d9ef&#34;&gt;if&lt;/span&gt; (father_a &lt;span style=&#34;color:#f92672&#34;&gt;!=&lt;/span&gt; father_b)
+	{
+		father[father_a] &lt;span style=&#34;color:#f92672&#34;&gt;=&lt;/span&gt; father_b;
+	}
+}
+
+&lt;span style=&#34;color:#66d9ef&#34;&gt;int&lt;/span&gt; &lt;span style=&#34;color:#a6e22e&#34;&gt;main&lt;/span&gt;() {
+
+	
+	&lt;span style=&#34;color:#66d9ef&#34;&gt;int&lt;/span&gt; n, m;&lt;span style=&#34;color:#75715e&#34;&gt;//n 表示共有多少个数字，m 表示好朋友的组数
+&lt;/span&gt;&lt;span style=&#34;color:#75715e&#34;&gt;&lt;/span&gt;	cin &lt;span style=&#34;color:#f92672&#34;&gt;&amp;gt;&amp;gt;&lt;/span&gt; n &lt;span style=&#34;color:#f92672&#34;&gt;&amp;gt;&amp;gt;&lt;/span&gt; m;
+	&lt;span style=&#34;color:#75715e&#34;&gt;//初始化 father 数组
+&lt;/span&gt;&lt;span style=&#34;color:#75715e&#34;&gt;&lt;/span&gt;	init_father(n);
+	&lt;span style=&#34;color:#66d9ef&#34;&gt;int&lt;/span&gt; a, b;&lt;span style=&#34;color:#75715e&#34;&gt;// a ，b 分别表示输入的具体数字，即 a 和 b 为好朋友
+&lt;/span&gt;&lt;span style=&#34;color:#75715e&#34;&gt;&lt;/span&gt;	&lt;span style=&#34;color:#66d9ef&#34;&gt;for&lt;/span&gt; (&lt;span style=&#34;color:#66d9ef&#34;&gt;int&lt;/span&gt; i &lt;span style=&#34;color:#f92672&#34;&gt;=&lt;/span&gt; &lt;span style=&#34;color:#ae81ff&#34;&gt;0&lt;/span&gt;; i &lt;span style=&#34;color:#f92672&#34;&gt;&amp;lt;&lt;/span&gt; m; i&lt;span style=&#34;color:#f92672&#34;&gt;++&lt;/span&gt;)
+	{
+		cin &lt;span style=&#34;color:#f92672&#34;&gt;&amp;gt;&amp;gt;&lt;/span&gt; a &lt;span style=&#34;color:#f92672&#34;&gt;&amp;gt;&amp;gt;&lt;/span&gt; b;
+		union_father(a, b);&lt;span style=&#34;color:#75715e&#34;&gt;//合并两个数字
+&lt;/span&gt;&lt;span style=&#34;color:#75715e&#34;&gt;&lt;/span&gt;	}
+	map&lt;span style=&#34;color:#f92672&#34;&gt;&amp;lt;&lt;/span&gt;&lt;span style=&#34;color:#66d9ef&#34;&gt;int&lt;/span&gt;, vector&lt;span style=&#34;color:#f92672&#34;&gt;&amp;lt;&lt;/span&gt;&lt;span style=&#34;color:#66d9ef&#34;&gt;int&lt;/span&gt;&lt;span style=&#34;color:#f92672&#34;&gt;&amp;gt;&amp;gt;&lt;/span&gt; root_map;&lt;span style=&#34;color:#75715e&#34;&gt;//保存每个根结点及其子结点
+&lt;/span&gt;&lt;span style=&#34;color:#75715e&#34;&gt;&lt;/span&gt;
+	vector&lt;span style=&#34;color:#f92672&#34;&gt;&amp;lt;&lt;/span&gt;&lt;span style=&#34;color:#66d9ef&#34;&gt;int&lt;/span&gt;&lt;span style=&#34;color:#f92672&#34;&gt;&amp;gt;&lt;/span&gt; result;&lt;span style=&#34;color:#75715e&#34;&gt;// 存放根结点
+&lt;/span&gt;&lt;span style=&#34;color:#75715e&#34;&gt;&lt;/span&gt;
+	&lt;span style=&#34;color:#66d9ef&#34;&gt;for&lt;/span&gt; (&lt;span style=&#34;color:#66d9ef&#34;&gt;int&lt;/span&gt; i &lt;span style=&#34;color:#f92672&#34;&gt;=&lt;/span&gt; &lt;span style=&#34;color:#ae81ff&#34;&gt;1&lt;/span&gt;;i &lt;span style=&#34;color:#f92672&#34;&gt;&amp;lt;=&lt;/span&gt; n;i&lt;span style=&#34;color:#f92672&#34;&gt;++&lt;/span&gt;)
+	{
+		&lt;span style=&#34;color:#66d9ef&#34;&gt;int&lt;/span&gt; root &lt;span style=&#34;color:#f92672&#34;&gt;=&lt;/span&gt; find_father(i);
+		result.push_back(root);&lt;span style=&#34;color:#75715e&#34;&gt;//这里注意重复的元素也要加入result中，因为下面要用map一一对应
+&lt;/span&gt;&lt;span style=&#34;color:#75715e&#34;&gt;&lt;/span&gt;	}
+	&lt;span style=&#34;color:#75715e&#34;&gt;//此处vector&amp;lt;int&amp;gt;::iterator建议改用auto
+&lt;/span&gt;&lt;span style=&#34;color:#75715e&#34;&gt;&lt;/span&gt;	&lt;span style=&#34;color:#66d9ef&#34;&gt;for&lt;/span&gt; (vector&lt;span style=&#34;color:#f92672&#34;&gt;&amp;lt;&lt;/span&gt;&lt;span style=&#34;color:#66d9ef&#34;&gt;int&lt;/span&gt;&lt;span style=&#34;color:#f92672&#34;&gt;&amp;gt;::&lt;/span&gt;iterator it &lt;span style=&#34;color:#f92672&#34;&gt;=&lt;/span&gt; result.begin();it &lt;span style=&#34;color:#f92672&#34;&gt;!=&lt;/span&gt; result.end();it&lt;span style=&#34;color:#f92672&#34;&gt;++&lt;/span&gt;)&lt;span style=&#34;color:#75715e&#34;&gt;//得出根结点和每个根结点对应的子节点
+&lt;/span&gt;&lt;span style=&#34;color:#75715e&#34;&gt;&lt;/span&gt;	{
+		&lt;span style=&#34;color:#66d9ef&#34;&gt;int&lt;/span&gt; root &lt;span style=&#34;color:#f92672&#34;&gt;=&lt;/span&gt; (&lt;span style=&#34;color:#f92672&#34;&gt;*&lt;/span&gt;it);
+		vector&lt;span style=&#34;color:#f92672&#34;&gt;&amp;lt;&lt;/span&gt;&lt;span style=&#34;color:#66d9ef&#34;&gt;int&lt;/span&gt;&lt;span style=&#34;color:#f92672&#34;&gt;&amp;gt;&lt;/span&gt; child;
+		&lt;span style=&#34;color:#66d9ef&#34;&gt;for&lt;/span&gt; (&lt;span style=&#34;color:#66d9ef&#34;&gt;int&lt;/span&gt; i &lt;span style=&#34;color:#f92672&#34;&gt;=&lt;/span&gt; &lt;span style=&#34;color:#ae81ff&#34;&gt;1&lt;/span&gt;;i &lt;span style=&#34;color:#f92672&#34;&gt;&amp;lt;=&lt;/span&gt; n;i&lt;span style=&#34;color:#f92672&#34;&gt;++&lt;/span&gt;)
+		{
+			&lt;span style=&#34;color:#66d9ef&#34;&gt;if&lt;/span&gt; (father[i] &lt;span style=&#34;color:#f92672&#34;&gt;==&lt;/span&gt; root &lt;span style=&#34;color:#f92672&#34;&gt;&amp;amp;&amp;amp;&lt;/span&gt; i &lt;span style=&#34;color:#f92672&#34;&gt;!=&lt;/span&gt; root)&lt;span style=&#34;color:#75715e&#34;&gt;//一定要注明：这里i不能为自身，因为它指的是子节点
+&lt;/span&gt;&lt;span style=&#34;color:#75715e&#34;&gt;&lt;/span&gt;			{
+				child.push_back(i);
+			}
+		}
+		root_map.insert(pair&lt;span style=&#34;color:#f92672&#34;&gt;&amp;lt;&lt;/span&gt;&lt;span style=&#34;color:#66d9ef&#34;&gt;int&lt;/span&gt;, vector&lt;span style=&#34;color:#f92672&#34;&gt;&amp;lt;&lt;/span&gt;&lt;span style=&#34;color:#66d9ef&#34;&gt;int&lt;/span&gt;&lt;span style=&#34;color:#f92672&#34;&gt;&amp;gt;&amp;gt;&lt;/span&gt;(root, child));&lt;span style=&#34;color:#75715e&#34;&gt;//注意map包含里面用的是pair，把这个写法记一下
+&lt;/span&gt;&lt;span style=&#34;color:#75715e&#34;&gt;&lt;/span&gt;	}
+
+	cout &lt;span style=&#34;color:#f92672&#34;&gt;&amp;lt;&amp;lt;&lt;/span&gt; &lt;span style=&#34;color:#e6db74&#34;&gt;&amp;#34;组数为：&amp;#34;&lt;/span&gt; &lt;span style=&#34;color:#f92672&#34;&gt;&amp;lt;&amp;lt;&lt;/span&gt; root_map.size() &lt;span style=&#34;color:#f92672&#34;&gt;&amp;lt;&amp;lt;&lt;/span&gt; endl;
+
+	&lt;span style=&#34;color:#66d9ef&#34;&gt;for&lt;/span&gt; (map&lt;span style=&#34;color:#f92672&#34;&gt;&amp;lt;&lt;/span&gt;&lt;span style=&#34;color:#66d9ef&#34;&gt;int&lt;/span&gt;,vector&lt;span style=&#34;color:#f92672&#34;&gt;&amp;lt;&lt;/span&gt;&lt;span style=&#34;color:#66d9ef&#34;&gt;int&lt;/span&gt;&lt;span style=&#34;color:#f92672&#34;&gt;&amp;gt;&lt;/span&gt; &lt;span style=&#34;color:#f92672&#34;&gt;&amp;gt;::&lt;/span&gt;iterator it &lt;span style=&#34;color:#f92672&#34;&gt;=&lt;/span&gt; root_map.begin();it &lt;span style=&#34;color:#f92672&#34;&gt;!=&lt;/span&gt; root_map.end();it&lt;span style=&#34;color:#f92672&#34;&gt;++&lt;/span&gt;)
+	{
+		cout &lt;span style=&#34;color:#f92672&#34;&gt;&amp;lt;&amp;lt;&lt;/span&gt; &lt;span style=&#34;color:#e6db74&#34;&gt;&amp;#34;根结点为：&amp;#34;&lt;/span&gt; &lt;span style=&#34;color:#f92672&#34;&gt;&amp;lt;&amp;lt;&lt;/span&gt; (&lt;span style=&#34;color:#f92672&#34;&gt;*&lt;/span&gt;it).first &lt;span style=&#34;color:#f92672&#34;&gt;&amp;lt;&amp;lt;&lt;/span&gt; endl;
+		&lt;span style=&#34;color:#66d9ef&#34;&gt;if&lt;/span&gt; ((&lt;span style=&#34;color:#f92672&#34;&gt;*&lt;/span&gt;it).second.size() &lt;span style=&#34;color:#f92672&#34;&gt;!=&lt;/span&gt; &lt;span style=&#34;color:#ae81ff&#34;&gt;0&lt;/span&gt;)&lt;span style=&#34;color:#75715e&#34;&gt;//要存在孩子结点才输出
+&lt;/span&gt;&lt;span style=&#34;color:#75715e&#34;&gt;&lt;/span&gt;		{
+			cout &lt;span style=&#34;color:#f92672&#34;&gt;&amp;lt;&amp;lt;&lt;/span&gt; &lt;span style=&#34;color:#e6db74&#34;&gt;&amp;#34;其子结点分别为：&amp;#34;&lt;/span&gt;;
+		}
+		&lt;span style=&#34;color:#66d9ef&#34;&gt;for&lt;/span&gt; (vector&lt;span style=&#34;color:#f92672&#34;&gt;&amp;lt;&lt;/span&gt;&lt;span style=&#34;color:#66d9ef&#34;&gt;int&lt;/span&gt;&lt;span style=&#34;color:#f92672&#34;&gt;&amp;gt;::&lt;/span&gt;iterator vit &lt;span style=&#34;color:#f92672&#34;&gt;=&lt;/span&gt; (&lt;span style=&#34;color:#f92672&#34;&gt;*&lt;/span&gt;it).second.begin();vit &lt;span style=&#34;color:#f92672&#34;&gt;!=&lt;/span&gt;(&lt;span style=&#34;color:#f92672&#34;&gt;*&lt;/span&gt;it).second.end();vit&lt;span style=&#34;color:#f92672&#34;&gt;++&lt;/span&gt;)&lt;span style=&#34;color:#75715e&#34;&gt;//这里要特别注意，这里的vit可千万不能写成it，我就是在这里犯了个低级错误导致浪费了我好多时间去debug。也要注意这里的写法
+&lt;/span&gt;&lt;span style=&#34;color:#75715e&#34;&gt;&lt;/span&gt;		{
+			cout &lt;span style=&#34;color:#f92672&#34;&gt;&amp;lt;&amp;lt;&lt;/span&gt; (&lt;span style=&#34;color:#f92672&#34;&gt;*&lt;/span&gt;vit) &lt;span style=&#34;color:#f92672&#34;&gt;&amp;lt;&amp;lt;&lt;/span&gt; &lt;span style=&#34;color:#e6db74&#34;&gt;&amp;#34; &amp;#34;&lt;/span&gt;;
+		}
+		cout &lt;span style=&#34;color:#f92672&#34;&gt;&amp;lt;&amp;lt;&lt;/span&gt; endl;
+	}
+	system(&lt;span style=&#34;color:#e6db74&#34;&gt;&amp;#34;pause&amp;#34;&lt;/span&gt;);
+	&lt;span style=&#34;color:#66d9ef&#34;&gt;return&lt;/span&gt; &lt;span style=&#34;color:#ae81ff&#34;&gt;0&lt;/span&gt;;
+}
+&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;p&gt;运行结果图如下：&lt;/p&gt;
+&lt;p&gt;![](C:\Users\Administrator\Pictures\Camera Roll\QQ截图20201005203128.png)&lt;/p&gt;
 </description>
     </item>
     
