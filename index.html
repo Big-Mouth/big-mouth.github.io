@@ -51,7 +51,10 @@
     <h2><a href="/posts/qieqiang/">Qieqiang</a></h2>
   </header>
   <div class="post-description">
+  题解 贴墙   问题的突破口就在于小瓷砖的面积大小，当墙的面积是2的倍数时，则无法将墙壁都贴满，反之一定能够贴满
+ 如果先将墙的面积算出来的话就需要用到long long的数据类型来储存给的值 用int应该也是可以的，就这题而言，相乘溢出是不会改变结果的奇偶性的 代码如下  #include &lt;iostream&gt; using namespace std; int main() { long long h, w; cin &gt;&gt; h &gt;&gt; w; if (h * w % 2 == 0) { // 如果是2的倍数  cout &lt;&lt; &#34;Yes&#34; &lt;&lt; endl; } else { //如果不是2的倍数  cout &lt;&lt; &#34;No&#34; &lt;&lt; endl; } return 0; }  还有一种更好的办法，不难发现两个正整数相乘结果是奇数的充分必要条件是两个正整数都是奇数，固只需要判断两个数是否同时为奇数（即只要有一个偶数就输出Yes）便可（这是本题真正想考的思路） 代码如下    #include &lt;iostream&gt; using namespace std; int main() { int h, w; cin &gt;&gt; h &gt;&gt; w; if (h % 2 == 0 || w % 2 == 0) {//如果其中有一个是偶数  cout &lt;&lt; &#34;Yes&#34; &lt;&lt; endl; } else { cout &lt;&lt; &#34;No&#34; &lt;&lt; endl; } return 0; } 雕像  一道简单的模拟题，需要注意的一个坑就是如果是闰年的2月29日制作的雕像的话，纪念日就要等到闰年才能庆祝一次 代码如下  #include &lt;iostream&gt; using namespace std; int main() { int y1, m1, d1, x, y2, m2, d2; cin &gt;&gt; y1 &gt;&gt; m1 &gt;&gt; d1 &gt;&gt; x &gt;&gt; y2 &gt;&gt; m2 &gt;&gt; d2; int ans; if (m1 == 2 &amp;&amp; d1 == 29) {//如果是闰年的2月29号  ans = x; for (int i = y1 + 1; i &lt;= y2; i++) {//从第二年开始算,算到今年  if (i % 400 == 0 || (i % 4 == 0 &amp;&amp; i % 100 !
   
+  <br /><a class="readmore" href="/posts/qieqiang/"><span class="genericon genericon-reply"></span> Read more�</a>
   
   </div>
 </section>
