@@ -46,6 +46,19 @@
 <section class="post">
   <header class="post-header">
     <p class="post-infos">
+      <time datetime="2020-10-11T10:08:32&#43;08:00">11 Oct 11110, 10:08</time>
+    </p>
+    <h2><a href="/posts/qieqiang/">Qieqiang</a></h2>
+  </header>
+  <div class="post-description">
+  
+  
+  </div>
+</section>
+
+<section class="post">
+  <header class="post-header">
+    <p class="post-infos">
       <time datetime="2020-10-04T11:52:17&#43;08:00">04 Oct 4040, 11:52</time>
     </p>
     <h2><a href="/posts/jjjj/">Jjjj</a></h2>
@@ -123,7 +136,7 @@
     <h2><a href="/posts/update/"></a></h2>
   </header>
   <div class="post-description">
-  cd e:\myblog hugo new post/FileName.mdhugo --theme=hurock --baseUrl=&#34;https://Big-Mouth.github.io&#34; --buildDrafts cd public git add . git commit -m &#34;yyyy/mm/dd-hh:mm&#34; git push -u origin master	如果上面的最后一步报出如下错误：
+  cd e:\myblog hugo new post/FileName.mdhugo --theme=hurocks --baseUrl=&#34;https://Big-Mouth.github.io&#34; --buildDrafts cd public git add . git commit -m &#34;yyyy/mm/dd-hh:mm&#34; git push -u origin master	如果上面的最后一步报出如下错误：
 ! [rejected] master -&gt; master (fetch first) error: failed to push some refs to 出现这个问题的原因是什么呢？
 github中的README.md文件不在本地代码目录中因此，可以通过下面的命令进行代码合并
 git pull --rebase origin master 第二个问题是：
@@ -131,32 +144,6 @@ git pull --rebase origin master 第二个问题是：
 其他问题看这里
 其中 yyyy/mm/dd-hh:mm 为每次提交的名称，引号内可以随意更改，yyyy/mm/dd-hh:mm 是我个人采用的格式，以时间做标记可保证不会重复
 现在刷新GitHub，登陆个人博客查看即可 
-  
-  </div>
-</section>
-
-<section class="post">
-  <header class="post-header">
-    <p class="post-infos">
-      <time datetime="0001-01-01T00:00:00Z">01 Jan 1010, 00:00</time>
-    </p>
-    <h2><a href="/posts/%E7%BB%8F%E5%85%B8%E5%B9%B6%E6%9F%A5%E9%9B%86/"></a></h2>
-  </header>
-  <div class="post-description">
-  经典并查集 在算法笔记上有一道这样的题目
-题目描述 有一个叫作“数码世界”的奇异空间，在数码世界里生活着许许多多的数码宝贝，其中有些数码宝贝之间可能是好朋友。并且数码世界有两条不成文的规定： 第一，数码宝贝A和数码宝贝B是好朋友等价于数码宝贝B和数码宝贝A是好朋友。 第二，如果数码宝贝A和数码宝贝C是好朋友，而数码宝贝B和数码宝贝C也是好朋友，那么A和B也是好朋友。
-现在给出这些数码宝贝中所有好朋友的信息，问：可以把这些数码宝贝分成多少组，满足每组中的任意两只数码宝贝都是好朋友，且任意两组之间的数码宝贝都不是好朋友。
-题目分析 首先，可以看到这是一个分组类型的题目，把相互之间有关系的元素放在一起（并），查询小组数（查）以及合并后的集合（集）
-因此，这就是一个并查集的模型。可以把题目中给出的好友的关系视为两结点之间的边，那么在输入这些好友关系时，就可以同时把他们合并（这就要求我们写一个合并函数）这样处理完毕之后就得到了一些集合，而集合的个数呢，就是我们所要求的组数。
-那集合的个数要怎么求呢？我们通过观察可以很容易发现：对于同一个集合来说，只存在唯一的根节点，且将其作为所属集合的标识
-所以呢，我们只要用一个bool数组来存储根结点即可，当然要考虑一些细节，比如说，可以在给结点编号的同时，初始化isroot数组为false，那什么时候让它为true呢？
-当然是要写一个findfather函数，在此函数中，可以做两件事情：
- 寻找根节点 压缩路径  当然，这个直接套模板即可，毫无技术含量。
-在找到了根节点之后，我们就遍历每一个结点，判断如果它是根节点的话，那么直接让他的bool值为true;
-另外，如果还要求分成的组数（但不要求每个集合的元素）的话，就用一个set存储每个根结点的儿子数（每个集合的元素个数）最后输出即可。代码如下：
-#include&lt;iostream&gt;#include&lt;cstdio&gt;#include&lt;map&gt;#include&lt;set&gt;using namespace std; const int N = 110; int father[N]; bool isroot[N]; int findfather(int x) {//查找每个节点所在集合的根节点 	int a = x;// 	while (x != father[x]) { x = father[x]; } //路径压缩 	while (a != father[a]) { int z = a;//因为a要被father[a]覆盖掉，所以这里先把原来结点存下来，用于修改father[a]的值 	a = father[a];//a不断地回溯父亲结点 	father[z] = x;//将原来结点的父亲结点改为根结点 	} return x; } void Union(int a, int b) { if (findfather(a) == findfather(b)) return; a = findfather(a); b = findfather(b); father[a] = b; } void init(int n) { for (int i = 1; i &lt;= n; i++) { father[i] = i; isroot[i] = false; } } /* 7 5 1 2 2 3 3 1 1 4 5 6 */ int main() { int n, m, a, b; scanf(&#34;%d%d&#34;, &amp;n, &amp;m); init(n); for (int i = 1; i &lt;= m; i++) { scanf(&#34;%d%d&#34;, &amp;a, &amp;b); Union(a, b); } int ans[N] = { 0 }; for (int i = 1; i &lt;= n; i++) { isroot[findfather(i)] = true; } for (int i = 1; i &lt;= n; i++) { if (father[i] == findfather(i)) ans[findfather(i)]++; } set&lt;int&gt; root; for (int i = 1; i &lt;= n; i++) { if (isroot[i]) { root.
-  
-  <br /><a class="readmore" href="/posts/%E7%BB%8F%E5%85%B8%E5%B9%B6%E6%9F%A5%E9%9B%86/"><span class="genericon genericon-reply"></span> Read more�</a>
   
   </div>
 </section>

@@ -231,9 +231,9 @@
 		result.push_back(root);<span style="color:#75715e">//这里注意重复的元素也要加入result中，因为下面要用map一一对应
 </span><span style="color:#75715e"></span>	}
 	<span style="color:#75715e">//此处vector&lt;int&gt;::iterator建议改用auto
-</span><span style="color:#75715e"></span>	<span style="color:#66d9ef">for</span> (vector<span style="color:#f92672">&lt;</span><span style="color:#66d9ef">int</span><span style="color:#f92672">&gt;::</span>iterator it <span style="color:#f92672">=</span> result.begin();it <span style="color:#f92672">!=</span> result.end();it<span style="color:#f92672">++</span>)<span style="color:#75715e">//得出根结点和每个根结点对应的子节点
-</span><span style="color:#75715e"></span>	{
-		<span style="color:#66d9ef">int</span> root <span style="color:#f92672">=</span> (<span style="color:#f92672">*</span>it);
+</span><span style="color:#75715e"></span>	<span style="color:#66d9ef">for</span> (vector<span style="color:#f92672">&lt;</span><span style="color:#66d9ef">int</span><span style="color:#f92672">&gt;::</span>iterator it <span style="color:#f92672">=</span> result.begin();it <span style="color:#f92672">!=</span> result.end();it<span style="color:#f92672">++</span>)    
+	{  <span style="color:#75715e">//得出根结点和每个根结点对应的子节点
+</span><span style="color:#75715e"></span>		<span style="color:#66d9ef">int</span> root <span style="color:#f92672">=</span> (<span style="color:#f92672">*</span>it);
 		vector<span style="color:#f92672">&lt;</span><span style="color:#66d9ef">int</span><span style="color:#f92672">&gt;</span> child;
 		<span style="color:#66d9ef">for</span> (<span style="color:#66d9ef">int</span> i <span style="color:#f92672">=</span> <span style="color:#ae81ff">1</span>;i <span style="color:#f92672">&lt;=</span> n;i<span style="color:#f92672">++</span>)
 		{
@@ -254,7 +254,8 @@
 </span><span style="color:#75715e"></span>		{
 			cout <span style="color:#f92672">&lt;&lt;</span> <span style="color:#e6db74">&#34;其子结点分别为：&#34;</span>;
 		}
-		<span style="color:#66d9ef">for</span> (vector<span style="color:#f92672">&lt;</span><span style="color:#66d9ef">int</span><span style="color:#f92672">&gt;::</span>iterator vit <span style="color:#f92672">=</span> (<span style="color:#f92672">*</span>it).second.begin();vit <span style="color:#f92672">!=</span>(<span style="color:#f92672">*</span>it).second.end();vit<span style="color:#f92672">++</span>)<span style="color:#75715e">//这里要特别注意，这里的vit可千万不能写成it，我就是在这里犯了个低级错误导致浪费了我好多时间去debug。也要注意这里的写法
+		<span style="color:#66d9ef">for</span> (vector<span style="color:#f92672">&lt;</span><span style="color:#66d9ef">int</span><span style="color:#f92672">&gt;::</span>iterator vit <span style="color:#f92672">=</span> (<span style="color:#f92672">*</span>it).second.begin();vit <span style="color:#f92672">!=</span>(<span style="color:#f92672">*</span>it).second.end();vit<span style="color:#f92672">++</span>)
+<span style="color:#75715e">//这里要特别注意，这里的vit可千万不能写成it，我就是在这里犯了个低级错误导致浪费了我好多时间去debug。也要注意这里的写法
 </span><span style="color:#75715e"></span>		{
 			cout <span style="color:#f92672">&lt;&lt;</span> (<span style="color:#f92672">*</span>vit) <span style="color:#f92672">&lt;&lt;</span> <span style="color:#e6db74">&#34; &#34;</span>;
 		}
