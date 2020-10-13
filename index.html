@@ -136,17 +136,20 @@
     <p class="post-infos">
       <time datetime="0001-01-01T00:00:00Z">01 Jan 1010, 00:00</time>
     </p>
-    <h2><a href="/posts/update/"></a></h2>
+    <h2><a href="/posts/poj-2431%E9%A2%98%E8%A7%A3/"></a></h2>
   </header>
   <div class="post-description">
-  cd e:\myblog hugo new post/FileName.mdhugo --theme=hurock --baseUrl=&#34;https://Big-Mouth.github.io&#34; --buildDrafts cd public git add . git commit -m &#34;yyyy/mm/dd-hh:mm&#34; git push -u origin master	如果上面的最后一步报出如下错误：
-! [rejected] master -&gt; master (fetch first) error: failed to push some refs to 出现这个问题的原因是什么呢？
-github中的README.md文件不在本地代码目录中因此，可以通过下面的命令进行代码合并
-git pull --rebase origin master 第二个问题是：
-! [remote rejected] master -&gt; master (pre-receive hook declined)在推送代码时报错如上，网上搜到的方法说是项目的setting中master是受保护的项目，所以开发者无法推送，解决方法是修改protected的设置，或者新建一个分支，推送到自己的分支上。
-其他问题看这里
-其中 yyyy/mm/dd-hh:mm 为每次提交的名称，引号内可以随意更改，yyyy/mm/dd-hh:mm 是我个人采用的格式，以时间做标记可保证不会重复
-现在刷新GitHub，登陆个人博客查看即可 
+  POJ 2431题解 问题链接：POJ 2431
+  问题描述：
+一辆卡车需要经过L单位到达目的地，每单位路程耗1单位的油，共有P单位的油，途中有N个加油站，给出每个加油站距离终点的距离和储备油量，请你求出到达目的地时，最少的加油次数。若无法到达目的地，则输出-1；
+  问题分析：
+  首先，这是一道贪心水题，思路主要是这样的，首先是要对题目给出的每个加油站到终点的距离进行排序，最好是根据每个加油站与起点的距离排序，然后把终点也看作是一个加油站，则最终卡车距离起点的距离应达到最大即A[N]为L，而终点是个假的加油站，所以令终点的汽油量B[N] = 0， 然后从0到N进行遍历，定义好需要的变量ans(结果)， pos(位置)，tank(油箱中汽油量)，每次遍历开始，都要重新计算到下一个站需要走的距离d，并判断用油箱中的tank能否到达下一个站，即比较二者的大小，如果走不到下一站，就要加油，但注意加油时需要借用到一个大顶堆的数据结构，即c++中的优先队列(默认是大顶堆)，将经过的油站作为备用储量存储起来，在P=0(即没油的时候)，便于取出最大储油量的油站进行加油。
+  这是一道很简单的贪心题，但是，我这种题目刷的不多，所以按照挑战书上面的思路就wa了很多次，当然，这个是我自己的问题，题目刷的太少了，又不细心，但是最后的话，我还是用了两种方法A掉了它。
+    下面是两份AC的代码
+这份是参考挑战书上面的，但是挑战书上对这道题做了一点修改，即输入的距离是起点到每个加油站的距离，所以就更加的方便。
+#include&lt;iostream&gt;#include&lt;queue&gt;#include&lt;algorithm&gt;#include&lt;stdio.h&gt; using namespace std; const int maxn = 1000010; int N, L, P; int A[maxn], B[maxn]; //4 25 10 //10 14 20 21 //10 5 2 4  struct Station { int dis; int fuel; }; bool cmp(Station a, Station b) { return a.
+  
+  <br /><a class="readmore" href="/posts/poj-2431%E9%A2%98%E8%A7%A3/"><span class="genericon genericon-reply"></span> Read more�</a>
   
   </div>
 </section>
