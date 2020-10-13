@@ -79,6 +79,32 @@
     <p class="post-infos">
       <time datetime="0001-01-01T00:00:00Z">01 Jan 1010, 00:00</time>
     </p>
+    <h2><a href="/posts/bfu/"></a></h2>
+  </header>
+  <div class="post-description">
+  经典并查集 在算法笔记上有一道这样的题目
+题目描述 有一个叫作“数码世界”的奇异空间，在数码世界里生活着许许多多的数码宝贝，其中有些数码宝贝之间可能是好朋友。并且数码世界有两条不成文的规定： 第一，数码宝贝A和数码宝贝B是好朋友等价于数码宝贝B和数码宝贝A是好朋友。 第二，如果数码宝贝A和数码宝贝C是好朋友，而数码宝贝B和数码宝贝C也是好朋友，那么A和B也是好朋友。
+现在给出这些数码宝贝中所有好朋友的信息，问：可以把这些数码宝贝分成多少组，满足每组中的任意两只数码宝贝都是好朋友，且任意两组之间的数码宝贝都不是好朋友。
+题目分析 首先，可以看到这是一个分组类型的题目，把相互之间有关系的元素放在一起（并），查询小组数（查）以及合并后的集合（集）
+因此，这就是一个并查集的模型。可以把题目中给出的好友的关系视为两结点之间的边，那么在输入这些好友关系时，就可以同时把他们合并（这就要求我们写一个合并函数）这样处理完毕之后就得到了一些集合，而集合的个数呢，就是我们所要求的组数。
+那集合的个数要怎么求呢？我们通过观察可以很容易发现：对于同一个集合来说，只存在唯一的根节点，且将其作为所属集合的标识
+所以呢，我们只要用一个bool数组来存储根结点即可，当然要考虑一些细节，比如说，可以在给结点编号的同时，初始化isroot数组为false，那什么时候让它为true呢？
+当然是要写一个findfather函数，在此函数中，可以做两件事情：
+ 寻找根节点 压缩路径  当然，这个直接套模板即可，毫无技术含量。
+在找到了根节点之后，我们就遍历每一个结点，判断如果它是根节点的话，那么直接让他的bool值为true;
+另外，如果还要求分成的组数（但不要求每个集合的元素）的话，就用一个set存储每个根结点的儿子数（每个集合的元素个数）最后输出即可。代码如下：
+#include&lt;iostream&gt;#include&lt;cstdio&gt;#include&lt;map&gt;#include&lt;set&gt;using namespace std; const int N = 110; int father[N]; bool isroot[N]; int findfather(int x) {//查找每个节点所在集合的根节点 	int a = x;// 	while (x != father[x]) { x = father[x]; } //路径压缩 	while (a != father[a]) { int z = a;//因为a要被father[a]覆盖掉，所以这里先把原来结点存下来，用于修改father[a]的值 	a = father[a];//a不断地回溯父亲结点 	father[z] = x;//将原来结点的父亲结点改为根结点 	} return x; } void Union(int a, int b) { if (findfather(a) == findfather(b)) return; a = findfather(a); b = findfather(b); father[a] = b; } void init(int n) { for (int i = 1; i &lt;= n; i++) { father[i] = i; isroot[i] = false; } } /* 7 5 1 2 2 3 3 1 1 4 5 6 */ int main() { int n, m, a, b; scanf(&#34;%d%d&#34;, &amp;n, &amp;m); init(n); for (int i = 1; i &lt;= m; i++) { scanf(&#34;%d%d&#34;, &amp;a, &amp;b); Union(a, b); } int ans[N] = { 0 }; for (int i = 1; i &lt;= n; i++) { isroot[findfather(i)] = true; } for (int i = 1; i &lt;= n; i++) { if (father[i] == findfather(i)) ans[findfather(i)]++; } set&lt;int&gt; root; for (int i = 1; i &lt;= n; i++) { if (isroot[i]) { root.
+  
+  <br /><a class="readmore" href="/posts/bfu/"><span class="genericon genericon-reply"></span> Read more�</a>
+  
+  </div>
+</section>
+
+<section class="post">
+  <header class="post-header">
+    <p class="post-infos">
+      <time datetime="0001-01-01T00:00:00Z">01 Jan 1010, 00:00</time>
+    </p>
     <h2><a href="/posts/leetcode_5515/"></a></h2>
   </header>
   <div class="post-description">
@@ -127,29 +153,6 @@
  只有同一级别   一级分类  苹果 香蕉 橘子   1.
   
   <br /><a class="readmore" href="/posts/markdown_start/"><span class="genericon genericon-reply"></span> Read more�</a>
-  
-  </div>
-</section>
-
-<section class="post">
-  <header class="post-header">
-    <p class="post-infos">
-      <time datetime="0001-01-01T00:00:00Z">01 Jan 1010, 00:00</time>
-    </p>
-    <h2><a href="/posts/poj-2431%E9%A2%98%E8%A7%A3/"></a></h2>
-  </header>
-  <div class="post-description">
-  POJ 2431题解 问题链接：POJ 2431
-  问题描述：
-一辆卡车需要经过L单位到达目的地，每单位路程耗1单位的油，共有P单位的油，途中有N个加油站，给出每个加油站距离终点的距离和储备油量，请你求出到达目的地时，最少的加油次数。若无法到达目的地，则输出-1；
-  问题分析：
-  首先，这是一道贪心水题，思路主要是这样的，首先是要对题目给出的每个加油站到终点的距离进行排序，最好是根据每个加油站与起点的距离排序，然后把终点也看作是一个加油站，则最终卡车距离起点的距离应达到最大即A[N]为L，而终点是个假的加油站，所以令终点的汽油量B[N] = 0， 然后从0到N进行遍历，定义好需要的变量ans(结果)， pos(位置)，tank(油箱中汽油量)，每次遍历开始，都要重新计算到下一个站需要走的距离d，并判断用油箱中的tank能否到达下一个站，即比较二者的大小，如果走不到下一站，就要加油，但注意加油时需要借用到一个大顶堆的数据结构，即c++中的优先队列(默认是大顶堆)，将经过的油站作为备用储量存储起来，在P=0(即没油的时候)，便于取出最大储油量的油站进行加油。
-  这是一道很简单的贪心题，但是，我这种题目刷的不多，所以按照挑战书上面的思路就wa了很多次，当然，这个是我自己的问题，题目刷的太少了，又不细心，但是最后的话，我还是用了两种方法A掉了它。
-    下面是两份AC的代码
-这份是参考挑战书上面的，但是挑战书上对这道题做了一点修改，即输入的距离是起点到每个加油站的距离，所以就更加的方便。
-#include&lt;iostream&gt;#include&lt;queue&gt;#include&lt;algorithm&gt;#include&lt;stdio.h&gt; using namespace std; const int maxn = 1000010; int N, L, P; int A[maxn], B[maxn]; //4 25 10 //10 14 20 21 //10 5 2 4  struct Station { int dis; int fuel; }; bool cmp(Station a, Station b) { return a.
-  
-  <br /><a class="readmore" href="/posts/poj-2431%E9%A2%98%E8%A7%A3/"><span class="genericon genericon-reply"></span> Read more�</a>
   
   </div>
 </section>

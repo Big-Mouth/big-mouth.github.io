@@ -1,0 +1,226 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <meta charset="utf-8"/>
+  <title></title>
+
+  <meta name="description" content=""/>
+  <meta name="author" content=""/>
+  <meta name="viewport" content="width=device-width, initial-scale=1"/>
+  <base href="https://Big-Mouth.github.io" />
+
+  <link rel="stylesheet" href="css/fonts.css"/>
+  <link rel="stylesheet" href="css/normalize.css"/>
+  <link rel="stylesheet" href="css/skeleton.css"/>
+  <link rel="stylesheet" href="css/custom.css"/>
+  <link rel="stylesheet" href="genericons/genericons.css"/>
+  
+  
+  <link rel="stylesheet" href="highlight/tomorrow-night.css"/>
+
+  <link href="index.xml" rel="alternate" type="application/rss+xml" title="Posts + Links" />
+  <link href="links/index.xml" rel="alternate" type="application/rss+xml" title="Links" />
+  <link href="posts/index.xml" rel="alternate" type="application/rss+xml" title="Posts" />
+
+  
+</head>
+<body>
+
+<div id="flex-container">
+  <input type="checkbox" id="sidebar-menu-checkbox" />
+  <label for="sidebar-menu-checkbox" id="sidebar-menu"></label>
+
+  <div id="fake-sidebar"></div>
+  <div id="container">
+
+
+<div id="post-header">
+  <p class="post-infos">
+    <time>0001-01-01 00:00</time>
+    
+
+  </p>
+  <h1></h1>
+</div>
+
+
+<div class="toc">
+  <small class="toc-label">Contents</small>
+  <nav id="TableOfContents"></nav>
+</div>
+
+
+<div class="post">
+  <h1 id="poj-2431题解">POJ 2431题解</h1>
+<p>问题链接：<a href="http://poj.org/problem?id=2431">POJ 2431</a></p>
+<ul>
+<li>
+<p>问题描述：</p>
+<p>一辆卡车需要经过L单位到达目的地，每单位路程耗1单位的油，共有P单位的油，途中有N个加油站，给出每个加油站距离终点的距离和储备油量，请你求出到达目的地时，最少的加油次数。若无法到达目的地，则输出-1；</p>
+</li>
+<li>
+<p>问题分析：</p>
+<ul>
+<li>
+<p>首先，这是一道贪心水题，思路主要是这样的，首先是要对题目给出的每个加油站到终点的距离进行排序，最好是根据每个加油站与起点的距离排序，然后把终点也看作是一个加油站，则最终卡车距离起点的距离应达到最大即A[N]为L，而终点是个假的加油站，所以令终点的汽油量B[N] = 0， 然后从0到N进行遍历，定义好需要的变量ans(结果)， pos(位置)，tank(油箱中汽油量)，每次遍历开始，都要重新计算到下一个站需要走的距离d，并判断用油箱中的tank能否到达下一个站，即比较二者的大小，如果走不到下一站，就要加油，但注意加油时需要借用到一个大顶堆的数据结构，即c++中的优先队列(默认是大顶堆)，将经过的油站作为备用储量存储起来，在P=0(即没油的时候)，便于取出最大储油量的油站进行加油。</p>
+</li>
+<li>
+<p>这是一道很简单的贪心题，但是，我这种题目刷的不多，所以按照挑战书上面的思路就wa了很多次，当然，这个是我自己的问题，题目刷的太少了，又不细心，但是最后的话，我还是用了两种方法A掉了它。</p>
+</li>
+</ul>
+</li>
+</ul>
+<p>下面是两份AC的代码</p>
+<p>这份是参考挑战书上面的，但是挑战书上对这道题做了一点修改，即输入的距离是起点到每个加油站的距离，所以就更加的方便。</p>
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-C++" data-lang="C++"><span style="color:#75715e">#include</span><span style="color:#75715e">&lt;iostream&gt;</span><span style="color:#75715e">
+</span><span style="color:#75715e">#include</span><span style="color:#75715e">&lt;queue&gt;</span><span style="color:#75715e">
+</span><span style="color:#75715e">#include</span><span style="color:#75715e">&lt;algorithm&gt;</span><span style="color:#75715e">
+</span><span style="color:#75715e">#include</span><span style="color:#75715e">&lt;stdio.h&gt;</span><span style="color:#75715e">
+</span><span style="color:#75715e"></span>
+<span style="color:#66d9ef">using</span> <span style="color:#66d9ef">namespace</span> std;
+<span style="color:#66d9ef">const</span> <span style="color:#66d9ef">int</span> maxn <span style="color:#f92672">=</span> <span style="color:#ae81ff">1000010</span>;
+<span style="color:#66d9ef">int</span> N, L, P;
+<span style="color:#66d9ef">int</span> A[maxn], B[maxn];
+<span style="color:#75715e">//4 25 10
+</span><span style="color:#75715e">//10 14 20 21
+</span><span style="color:#75715e">//10 5 2 4
+</span><span style="color:#75715e"></span>
+<span style="color:#66d9ef">struct</span> <span style="color:#a6e22e">Station</span> {
+	<span style="color:#66d9ef">int</span> dis;
+	<span style="color:#66d9ef">int</span> fuel;
+};
+<span style="color:#66d9ef">bool</span> <span style="color:#a6e22e">cmp</span>(Station a, Station b) {
+	<span style="color:#66d9ef">return</span> a.dis <span style="color:#f92672">&gt;</span> b.dis;
+}
+Station sta[maxn];
+
+<span style="color:#66d9ef">void</span> <span style="color:#a6e22e">solves</span>() {
+	A[N] <span style="color:#f92672">=</span> <span style="color:#ae81ff">0</span>;
+	B[N] <span style="color:#f92672">=</span> <span style="color:#ae81ff">0</span>;
+	N<span style="color:#f92672">++</span>;
+	priority_queue<span style="color:#f92672">&lt;</span><span style="color:#66d9ef">int</span><span style="color:#f92672">&gt;</span> que;
+	<span style="color:#66d9ef">int</span> ans <span style="color:#f92672">=</span> <span style="color:#ae81ff">0</span>, pos <span style="color:#f92672">=</span> L, tank <span style="color:#f92672">=</span> P;
+	<span style="color:#66d9ef">for</span> (<span style="color:#66d9ef">int</span> i <span style="color:#f92672">=</span> <span style="color:#ae81ff">0</span>; i <span style="color:#f92672">&lt;</span> N; i<span style="color:#f92672">++</span>) {
+		<span style="color:#66d9ef">int</span> d <span style="color:#f92672">=</span> pos <span style="color:#f92672">-</span> sta[i].dis;<span style="color:#75715e">//接下来要走的路程
+</span><span style="color:#75715e"></span>		<span style="color:#66d9ef">while</span> (tank <span style="color:#f92672">-</span> d <span style="color:#f92672">&lt;</span> <span style="color:#ae81ff">0</span>) {<span style="color:#75715e">//只要tank走不了d，就需要不断加油
+</span><span style="color:#75715e"></span>			<span style="color:#66d9ef">if</span> (que.empty()) {
+				puts(<span style="color:#e6db74">&#34;-1&#34;</span>);
+				<span style="color:#66d9ef">return</span>;
+			}
+			tank <span style="color:#f92672">+=</span> que.top();
+			que.pop();
+			ans<span style="color:#f92672">++</span>;
+		}
+		tank <span style="color:#f92672">-=</span> d; <span style="color:#75715e">//一共走了d这么长,花费了这么多汽油
+</span><span style="color:#75715e"></span>		pos <span style="color:#f92672">=</span> sta[i].dis;
+		que.push(sta[i].fuel);
+	}
+	printf(<span style="color:#e6db74">&#34;%d</span><span style="color:#ae81ff">\n</span><span style="color:#e6db74">&#34;</span>, ans);
+}
+
+<span style="color:#66d9ef">int</span> <span style="color:#a6e22e">main</span>() {
+	<span style="color:#75715e">//scanf(&#34;%d%d%d&#34;, &amp;N, &amp;L, &amp;P);
+</span><span style="color:#75715e"></span>	scanf_s(<span style="color:#e6db74">&#34;%d&#34;</span>, <span style="color:#f92672">&amp;</span>N);
+	<span style="color:#66d9ef">for</span> (<span style="color:#66d9ef">int</span> i <span style="color:#f92672">=</span> <span style="color:#ae81ff">0</span>; i <span style="color:#f92672">&lt;</span> N; i<span style="color:#f92672">++</span>) {
+		scanf_s(<span style="color:#e6db74">&#34;%d%d&#34;</span>, <span style="color:#f92672">&amp;</span>sta[i].dis, <span style="color:#f92672">&amp;</span>sta[i].fuel);
+	}
+	sort(sta, sta <span style="color:#f92672">+</span> N, cmp);
+	scanf_s(<span style="color:#e6db74">&#34;%d%d&#34;</span>, <span style="color:#f92672">&amp;</span>L, <span style="color:#f92672">&amp;</span>P);
+	priority_queue<span style="color:#f92672">&lt;</span><span style="color:#66d9ef">int</span><span style="color:#f92672">&gt;</span> que;
+	solves();
+	<span style="color:#66d9ef">return</span> <span style="color:#ae81ff">0</span>;
+}
+
+</code></pre></div><p>这一份是参考网上的，思路较清晰</p>
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-c++" data-lang="c++"><span style="color:#66d9ef">int</span> <span style="color:#a6e22e">main</span>() {
+	<span style="color:#75715e">//scanf(&#34;%d%d%d&#34;, &amp;N, &amp;L, &amp;P);
+</span><span style="color:#75715e"></span>	scanf_s(<span style="color:#e6db74">&#34;%d&#34;</span>, <span style="color:#f92672">&amp;</span>N);
+	<span style="color:#66d9ef">for</span> (<span style="color:#66d9ef">int</span> i <span style="color:#f92672">=</span> <span style="color:#ae81ff">0</span>; i <span style="color:#f92672">&lt;</span> N; i<span style="color:#f92672">++</span>) {
+		scanf_s(<span style="color:#e6db74">&#34;%d%d&#34;</span>, <span style="color:#f92672">&amp;</span>sta[i].dis, <span style="color:#f92672">&amp;</span>sta[i].fuel);
+	}
+	sort(sta, sta <span style="color:#f92672">+</span> N, cmp);
+	scanf_s(<span style="color:#e6db74">&#34;%d%d&#34;</span>, <span style="color:#f92672">&amp;</span>L, <span style="color:#f92672">&amp;</span>P);
+	priority_queue<span style="color:#f92672">&lt;</span><span style="color:#66d9ef">int</span><span style="color:#f92672">&gt;</span> que;
+	<span style="color:#66d9ef">int</span> i <span style="color:#f92672">=</span> <span style="color:#ae81ff">0</span>, ans <span style="color:#f92672">=</span> <span style="color:#ae81ff">0</span>;
+	<span style="color:#66d9ef">while</span> (P <span style="color:#f92672">&gt;=</span> <span style="color:#ae81ff">0</span>) {
+		<span style="color:#66d9ef">if</span> (L <span style="color:#f92672">==</span> <span style="color:#ae81ff">0</span>) {
+			cout <span style="color:#f92672">&lt;&lt;</span> ans <span style="color:#f92672">&lt;&lt;</span> endl;
+			<span style="color:#66d9ef">return</span> <span style="color:#ae81ff">0</span>;
+		}
+		<span style="color:#66d9ef">if</span> (P <span style="color:#f92672">==</span> <span style="color:#ae81ff">0</span> <span style="color:#f92672">&amp;&amp;</span> <span style="color:#f92672">!</span>que.empty()) {
+			P <span style="color:#f92672">+=</span> que.top();
+			que.pop();
+			ans<span style="color:#f92672">++</span>;
+		}
+		P<span style="color:#f92672">--</span>;
+		<span style="color:#66d9ef">if</span> (P <span style="color:#f92672">&lt;</span> <span style="color:#ae81ff">0</span>) {
+			cout <span style="color:#f92672">&lt;&lt;</span> <span style="color:#e6db74">&#34;-1&#34;</span> <span style="color:#f92672">&lt;&lt;</span> endl;
+			<span style="color:#66d9ef">return</span> <span style="color:#ae81ff">0</span>;
+		}
+		L<span style="color:#f92672">--</span>;
+		<span style="color:#66d9ef">if</span> (L <span style="color:#f92672">&lt;=</span> sta[i].dis) {
+			que.push(sta[i].fuel);
+			i<span style="color:#f92672">++</span>;
+		}
+	}
+	<span style="color:#66d9ef">return</span> <span style="color:#ae81ff">0</span>;
+}
+
+</code></pre></div><p>所以，还是要多刷题啊啊啊啊啊！多多益善！</p>
+
+</div>
+
+
+
+<footer>
+  <p class="footnote">Copyright &copy; 2020: All rights reserved by <a href="mailto:"></a></p>
+</footer>
+
+  </div>
+  <div id="container-mask"></div>
+<div id="sidebar">
+<div class="sidebar">
+  <div class="sidebar-about">
+    <a href="https://Big-Mouth.github.io">
+      <img src="media/me.jpg" title="" alt="Me" />
+      <h4 class="sidebar-title">My New Hugo Site</h4>
+    </a>
+    <span class="sidebar-tagline"></span>
+  </div>
+  <nav class="sidebar-nav">
+    <ul class="sidebar-nav-list">
+      <li class="sidebar-nav-item nav-home">
+        <span class="genericon genericon-home"></span><a class="sidebar-link" href="https://Big-Mouth.github.io">Home</a>
+      </li>
+      <li class="sidebar-nav-item">
+        <a class="genericon genericon-feed" href="posts/index.xml"></a><a class="sidebar-link" href="posts/">Posts/</a>
+      </li>
+      <li class="sidebar-nav-item">
+        <a class="genericon genericon-feed" href="links/index.xml"></a><a class="sidebar-link" href="links/">Links/</a>
+      </li>
+    </ul>
+  </nav>
+  <div class="sidebar-externals">
+  
+  | <a class="genericon genericon-mail" href="mailto:"></a>
+  </div>
+  <div class="sidebar-bottom">
+    <hr />
+    <p>Powered by <a href="http://gohugo.io">Hugo</a>.</p> <p>Theme: <a href="https://github.com/TiTi/hurock">Hurock</a>.</p>
+    <p>Copyright &copy; 2020.</p> <p>All rights reserved.</p>
+  </div>
+</div>
+</div>
+
+</div>
+
+<script src="highlight/highlight.pack.js"></script>
+<script>hljs.initHighlightingOnLoad();</script>
+
+
+
+
+
+</body>
+</html>
+

@@ -1,0 +1,199 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <meta charset="utf-8"/>
+  <title></title>
+
+  <meta name="description" content=""/>
+  <meta name="author" content=""/>
+  <meta name="viewport" content="width=device-width, initial-scale=1"/>
+  <base href="https://Big-Mouth.github.io" />
+
+  <link rel="stylesheet" href="css/fonts.css"/>
+  <link rel="stylesheet" href="css/normalize.css"/>
+  <link rel="stylesheet" href="css/skeleton.css"/>
+  <link rel="stylesheet" href="css/custom.css"/>
+  <link rel="stylesheet" href="genericons/genericons.css"/>
+  
+  
+  <link rel="stylesheet" href="highlight/tomorrow-night.css"/>
+
+  <link href="index.xml" rel="alternate" type="application/rss+xml" title="Posts + Links" />
+  <link href="links/index.xml" rel="alternate" type="application/rss+xml" title="Links" />
+  <link href="posts/index.xml" rel="alternate" type="application/rss+xml" title="Posts" />
+
+  
+</head>
+<body>
+
+<div id="flex-container">
+  <input type="checkbox" id="sidebar-menu-checkbox" />
+  <label for="sidebar-menu-checkbox" id="sidebar-menu"></label>
+
+  <div id="fake-sidebar"></div>
+  <div id="container">
+
+
+<div id="post-header">
+  <p class="post-infos">
+    <time>0001-01-01 00:00</time>
+    
+
+  </p>
+  <h1></h1>
+</div>
+
+
+<div class="toc">
+  <small class="toc-label">Contents</small>
+  <nav id="TableOfContents">
+  <ul>
+    <li><a href="#贴墙">贴墙</a></li>
+    <li><a href="#雕像">雕像</a></li>
+  </ul>
+</nav>
+</div>
+
+
+<div class="post">
+  <h1 id="题解">题解</h1>
+<h2 id="贴墙">贴墙</h2>
+<ul>
+<li>
+<p>问题的突破口就在于小瓷砖的面积大小，当墙的面积是2的倍数时，则无法将墙壁都贴满，反之一定能够贴满</p>
+<ul>
+<li>如果先将墙的面积算出来的话就需要用到long long的数据类型来储存给的值</li>
+<li>用int应该也是可以的，就这题而言，相乘溢出是不会改变结果的奇偶性的</li>
+<li>代码如下</li>
+</ul>
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-c++" data-lang="c++"><span style="color:#75715e">#include</span> <span style="color:#75715e">&lt;iostream&gt;</span><span style="color:#75715e">
+</span><span style="color:#75715e"></span>
+<span style="color:#66d9ef">using</span> <span style="color:#66d9ef">namespace</span> std;
+
+<span style="color:#66d9ef">int</span> <span style="color:#a6e22e">main</span>() {
+    <span style="color:#66d9ef">long</span> <span style="color:#66d9ef">long</span> h, w;
+    cin <span style="color:#f92672">&gt;&gt;</span> h <span style="color:#f92672">&gt;&gt;</span> w;
+    <span style="color:#66d9ef">if</span> (h <span style="color:#f92672">*</span> w <span style="color:#f92672">%</span> <span style="color:#ae81ff">2</span> <span style="color:#f92672">==</span> <span style="color:#ae81ff">0</span>) { <span style="color:#75715e">// 如果是2的倍数
+</span><span style="color:#75715e"></span>        cout <span style="color:#f92672">&lt;&lt;</span> <span style="color:#e6db74">&#34;Yes&#34;</span> <span style="color:#f92672">&lt;&lt;</span> endl;
+    } <span style="color:#66d9ef">else</span> {              <span style="color:#75715e">//如果不是2的倍数
+</span><span style="color:#75715e"></span>        cout <span style="color:#f92672">&lt;&lt;</span> <span style="color:#e6db74">&#34;No&#34;</span> <span style="color:#f92672">&lt;&lt;</span> endl;
+    }
+    <span style="color:#66d9ef">return</span> <span style="color:#ae81ff">0</span>;
+}
+</code></pre></div><ul>
+<li>还有一种更好的办法，不难发现两个正整数相乘结果是奇数的充分必要条件是两个正整数都是奇数，固只需要判断两个数是否同时为奇数（即只要有一个偶数就输出Yes）便可（这是本题真正想考的思路）</li>
+<li>代码如下</li>
+</ul>
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-c++" data-lang="c++"><span style="color:#75715e">#include</span> <span style="color:#75715e">&lt;iostream&gt;</span><span style="color:#75715e">
+</span><span style="color:#75715e"></span>
+<span style="color:#66d9ef">using</span> <span style="color:#66d9ef">namespace</span> std;
+
+<span style="color:#66d9ef">int</span> <span style="color:#a6e22e">main</span>() {
+    <span style="color:#66d9ef">int</span> h, w;
+    cin <span style="color:#f92672">&gt;&gt;</span> h <span style="color:#f92672">&gt;&gt;</span> w;
+    <span style="color:#66d9ef">if</span> (h <span style="color:#f92672">%</span> <span style="color:#ae81ff">2</span> <span style="color:#f92672">==</span> <span style="color:#ae81ff">0</span> <span style="color:#f92672">||</span> w <span style="color:#f92672">%</span> <span style="color:#ae81ff">2</span> <span style="color:#f92672">==</span> <span style="color:#ae81ff">0</span>) {<span style="color:#75715e">//如果其中有一个是偶数
+</span><span style="color:#75715e"></span>        cout <span style="color:#f92672">&lt;&lt;</span> <span style="color:#e6db74">&#34;Yes&#34;</span> <span style="color:#f92672">&lt;&lt;</span> endl;
+    } <span style="color:#66d9ef">else</span> {
+        cout <span style="color:#f92672">&lt;&lt;</span> <span style="color:#e6db74">&#34;No&#34;</span> <span style="color:#f92672">&lt;&lt;</span> endl;
+    }
+    <span style="color:#66d9ef">return</span> <span style="color:#ae81ff">0</span>;
+}
+</code></pre></div></li>
+</ul>
+<h2 id="雕像">雕像</h2>
+<ul>
+<li>一道简单的模拟题，需要注意的一个坑就是如果是闰年的2月29日制作的雕像的话，纪念日就要等到闰年才能庆祝一次</li>
+<li>代码如下</li>
+</ul>
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-c++" data-lang="c++"><span style="color:#75715e">#include</span> <span style="color:#75715e">&lt;iostream&gt;</span><span style="color:#75715e">
+</span><span style="color:#75715e"></span>
+<span style="color:#66d9ef">using</span> <span style="color:#66d9ef">namespace</span> std;
+
+<span style="color:#66d9ef">int</span> <span style="color:#a6e22e">main</span>() {
+    <span style="color:#66d9ef">int</span> y1, m1, d1, x, y2, m2, d2;
+    cin <span style="color:#f92672">&gt;&gt;</span> y1 <span style="color:#f92672">&gt;&gt;</span> m1 <span style="color:#f92672">&gt;&gt;</span> d1 <span style="color:#f92672">&gt;&gt;</span> x <span style="color:#f92672">&gt;&gt;</span> y2 <span style="color:#f92672">&gt;&gt;</span> m2 <span style="color:#f92672">&gt;&gt;</span> d2;
+    <span style="color:#66d9ef">int</span> ans;
+    <span style="color:#66d9ef">if</span> (m1 <span style="color:#f92672">==</span> <span style="color:#ae81ff">2</span> <span style="color:#f92672">&amp;&amp;</span> d1 <span style="color:#f92672">==</span> <span style="color:#ae81ff">29</span>) {<span style="color:#75715e">//如果是闰年的2月29号
+</span><span style="color:#75715e"></span>        ans <span style="color:#f92672">=</span> x;
+        <span style="color:#66d9ef">for</span> (<span style="color:#66d9ef">int</span> i <span style="color:#f92672">=</span> y1 <span style="color:#f92672">+</span> <span style="color:#ae81ff">1</span>; i <span style="color:#f92672">&lt;=</span> y2; i<span style="color:#f92672">++</span>) {<span style="color:#75715e">//从第二年开始算,算到今年
+</span><span style="color:#75715e"></span>            <span style="color:#66d9ef">if</span> (i <span style="color:#f92672">%</span> <span style="color:#ae81ff">400</span> <span style="color:#f92672">==</span> <span style="color:#ae81ff">0</span> <span style="color:#f92672">||</span> (i <span style="color:#f92672">%</span> <span style="color:#ae81ff">4</span> <span style="color:#f92672">==</span> <span style="color:#ae81ff">0</span> <span style="color:#f92672">&amp;&amp;</span> i <span style="color:#f92672">%</span> <span style="color:#ae81ff">100</span> <span style="color:#f92672">!=</span> <span style="color:#ae81ff">0</span>)) {<span style="color:#75715e">//如果是闰年
+</span><span style="color:#75715e"></span>                ans<span style="color:#f92672">++</span>;<span style="color:#75715e">//答案加一
+</span><span style="color:#75715e"></span>            }
+        }
+        <span style="color:#66d9ef">if</span> (y2 <span style="color:#f92672">%</span> <span style="color:#ae81ff">400</span> <span style="color:#f92672">==</span> <span style="color:#ae81ff">0</span> <span style="color:#f92672">||</span> (y2 <span style="color:#f92672">%</span> <span style="color:#ae81ff">4</span> <span style="color:#f92672">==</span> <span style="color:#ae81ff">0</span> <span style="color:#f92672">&amp;&amp;</span> y2 <span style="color:#f92672">%</span> <span style="color:#ae81ff">100</span> <span style="color:#f92672">!=</span> <span style="color:#ae81ff">0</span>)) {<span style="color:#75715e">//如果今年是闰年
+</span><span style="color:#75715e"></span>            <span style="color:#66d9ef">if</span> (m2 <span style="color:#f92672">==</span> <span style="color:#ae81ff">1</span>) {<span style="color:#75715e">//今年的纪念日还没到
+</span><span style="color:#75715e"></span>                ans<span style="color:#f92672">--</span>;<span style="color:#75715e">//答案减一
+</span><span style="color:#75715e"></span>            }
+            <span style="color:#66d9ef">if</span> (m2 <span style="color:#f92672">==</span> <span style="color:#ae81ff">2</span> <span style="color:#f92672">&amp;&amp;</span> d2 <span style="color:#f92672">&lt;</span> <span style="color:#ae81ff">29</span>) {<span style="color:#75715e">//今年的纪念日还没到
+</span><span style="color:#75715e"></span>                ans<span style="color:#f92672">--</span>;
+            }
+        }
+    } <span style="color:#66d9ef">else</span> {<span style="color:#75715e">//如果不是，则每年都会有一次纪念日
+</span><span style="color:#75715e"></span>        ans <span style="color:#f92672">=</span> x <span style="color:#f92672">+</span> y2 <span style="color:#f92672">-</span> y1;
+        <span style="color:#66d9ef">if</span> (m2 <span style="color:#f92672">&lt;</span> m1) {<span style="color:#75715e">//如果今年的纪念日还没到
+</span><span style="color:#75715e"></span>            ans<span style="color:#f92672">--</span>;
+        }
+        <span style="color:#66d9ef">if</span> (m2 <span style="color:#f92672">==</span> m1 <span style="color:#f92672">&amp;&amp;</span> d2 <span style="color:#f92672">&lt;</span> d1) {<span style="color:#75715e">//如果今年的纪念日还没到
+</span><span style="color:#75715e"></span>            ans<span style="color:#f92672">--</span>;
+        }
+    }
+    cout <span style="color:#f92672">&lt;&lt;</span> ans <span style="color:#f92672">&lt;&lt;</span> endl;
+    <span style="color:#66d9ef">return</span> <span style="color:#ae81ff">0</span>;
+}
+</code></pre></div>
+</div>
+
+
+
+<footer>
+  <p class="footnote">Copyright &copy; 2020: All rights reserved by <a href="mailto:"></a></p>
+</footer>
+
+  </div>
+  <div id="container-mask"></div>
+<div id="sidebar">
+<div class="sidebar">
+  <div class="sidebar-about">
+    <a href="https://Big-Mouth.github.io">
+      <img src="media/me.jpg" title="" alt="Me" />
+      <h4 class="sidebar-title">My New Hugo Site</h4>
+    </a>
+    <span class="sidebar-tagline"></span>
+  </div>
+  <nav class="sidebar-nav">
+    <ul class="sidebar-nav-list">
+      <li class="sidebar-nav-item nav-home">
+        <span class="genericon genericon-home"></span><a class="sidebar-link" href="https://Big-Mouth.github.io">Home</a>
+      </li>
+      <li class="sidebar-nav-item">
+        <a class="genericon genericon-feed" href="posts/index.xml"></a><a class="sidebar-link" href="posts/">Posts/</a>
+      </li>
+      <li class="sidebar-nav-item">
+        <a class="genericon genericon-feed" href="links/index.xml"></a><a class="sidebar-link" href="links/">Links/</a>
+      </li>
+    </ul>
+  </nav>
+  <div class="sidebar-externals">
+  
+  | <a class="genericon genericon-mail" href="mailto:"></a>
+  </div>
+  <div class="sidebar-bottom">
+    <hr />
+    <p>Powered by <a href="http://gohugo.io">Hugo</a>.</p> <p>Theme: <a href="https://github.com/TiTi/hurock">Hurock</a>.</p>
+    <p>Copyright &copy; 2020.</p> <p>All rights reserved.</p>
+  </div>
+</div>
+</div>
+
+</div>
+
+<script src="highlight/highlight.pack.js"></script>
+<script>hljs.initHighlightingOnLoad();</script>
+
+
+
+
+
+</body>
+</html>
+
