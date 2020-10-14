@@ -5,10 +5,135 @@
     <description>Recent content in Posts on My New Hugo Site</description>
     <generator>Hugo -- gohugo.io</generator>
     <language>en-us</language>
-    <lastBuildDate>Tue, 13 Oct 2020 21:10:06 +0800</lastBuildDate>
+    <lastBuildDate>Wed, 14 Oct 2020 16:58:35 +0800</lastBuildDate>
     
         <atom:link href="https://Big-Mouth.github.io/post/index.xml" rel="self" type="application/rss+xml" />
     
+    
+    <item>
+      <title>POJ_2431</title>
+      <link>https://Big-Mouth.github.io/post/poj_2431/</link>
+      <pubDate>Wed, 14 Oct 2020 16:58:35 +0800</pubDate>
+      
+      <guid>https://Big-Mouth.github.io/post/poj_2431/</guid>
+      <description>&lt;h1 id=&#34;poj-2431题解&#34;&gt;POJ 2431题解&lt;/h1&gt;
+&lt;p&gt;问题链接：&lt;a href=&#34;http://poj.org/problem?id=2431&#34;&gt;POJ 2431&lt;/a&gt;&lt;/p&gt;
+&lt;ul&gt;
+&lt;li&gt;
+&lt;p&gt;问题描述：&lt;/p&gt;
+&lt;p&gt;一辆卡车需要经过L单位到达目的地，每单位路程耗1单位的油，共有P单位的油，途中有N个加油站，给出每个加油站距离终点的距离和储备油量，请你求出到达目的地时，最少的加油次数。若无法到达目的地，则输出-1；&lt;/p&gt;
+&lt;/li&gt;
+&lt;li&gt;
+&lt;p&gt;问题分析：&lt;/p&gt;
+&lt;ul&gt;
+&lt;li&gt;
+&lt;p&gt;首先，这是一道贪心水题，思路主要是这样的，首先是要对题目给出的每个加油站到终点的距离进行排序，最好是根据每个加油站与起点的距离排序，然后把终点也看作是一个加油站，则最终卡车距离起点的距离应达到最大即A[N]为L，而终点是个假的加油站，所以令终点的汽油量B[N] = 0， 然后从0到N进行遍历，定义好需要的变量ans(结果)， pos(位置)，tank(油箱中汽油量)，每次遍历开始，都要重新计算到下一个站需要走的距离d，并判断用油箱中的tank能否到达下一个站，即比较二者的大小，如果走不到下一站，就要加油，但注意加油时需要借用到一个大顶堆的数据结构，即c++中的优先队列(默认是大顶堆)，将经过的油站作为备用储量存储起来，在P=0(即没油的时候)，便于取出最大储油量的油站进行加油。&lt;/p&gt;
+&lt;/li&gt;
+&lt;li&gt;
+&lt;p&gt;这是一道很简单的贪心题，但是，我这种题目刷的不多，所以按照挑战书上面的思路就wa了很多次，当然，这个是我自己的问题，题目刷的太少了，又不细心，但是最后的话，我还是用了两种方法A掉了它。&lt;/p&gt;
+&lt;/li&gt;
+&lt;/ul&gt;
+&lt;/li&gt;
+&lt;/ul&gt;
+&lt;p&gt;下面是两份AC的代码&lt;/p&gt;
+&lt;p&gt;这份是参考挑战书上面的，但是挑战书上对这道题做了一点修改，即输入的距离是起点到每个加油站的距离，所以就更加的方便。&lt;/p&gt;
+&lt;div class=&#34;highlight&#34;&gt;&lt;pre style=&#34;color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4&#34;&gt;&lt;code class=&#34;language-C++&#34; data-lang=&#34;C++&#34;&gt;&lt;span style=&#34;color:#75715e&#34;&gt;#include&lt;/span&gt;&lt;span style=&#34;color:#75715e&#34;&gt;&amp;lt;iostream&amp;gt;&lt;/span&gt;&lt;span style=&#34;color:#75715e&#34;&gt;
+&lt;/span&gt;&lt;span style=&#34;color:#75715e&#34;&gt;#include&lt;/span&gt;&lt;span style=&#34;color:#75715e&#34;&gt;&amp;lt;queue&amp;gt;&lt;/span&gt;&lt;span style=&#34;color:#75715e&#34;&gt;
+&lt;/span&gt;&lt;span style=&#34;color:#75715e&#34;&gt;#include&lt;/span&gt;&lt;span style=&#34;color:#75715e&#34;&gt;&amp;lt;algorithm&amp;gt;&lt;/span&gt;&lt;span style=&#34;color:#75715e&#34;&gt;
+&lt;/span&gt;&lt;span style=&#34;color:#75715e&#34;&gt;#include&lt;/span&gt;&lt;span style=&#34;color:#75715e&#34;&gt;&amp;lt;stdio.h&amp;gt;&lt;/span&gt;&lt;span style=&#34;color:#75715e&#34;&gt;
+&lt;/span&gt;&lt;span style=&#34;color:#75715e&#34;&gt;&lt;/span&gt;
+&lt;span style=&#34;color:#66d9ef&#34;&gt;using&lt;/span&gt; &lt;span style=&#34;color:#66d9ef&#34;&gt;namespace&lt;/span&gt; std;
+&lt;span style=&#34;color:#66d9ef&#34;&gt;const&lt;/span&gt; &lt;span style=&#34;color:#66d9ef&#34;&gt;int&lt;/span&gt; maxn &lt;span style=&#34;color:#f92672&#34;&gt;=&lt;/span&gt; &lt;span style=&#34;color:#ae81ff&#34;&gt;1000010&lt;/span&gt;;
+&lt;span style=&#34;color:#66d9ef&#34;&gt;int&lt;/span&gt; N, L, P;
+&lt;span style=&#34;color:#66d9ef&#34;&gt;int&lt;/span&gt; A[maxn], B[maxn];
+&lt;span style=&#34;color:#75715e&#34;&gt;//4 25 10
+&lt;/span&gt;&lt;span style=&#34;color:#75715e&#34;&gt;//10 14 20 21
+&lt;/span&gt;&lt;span style=&#34;color:#75715e&#34;&gt;//10 5 2 4
+&lt;/span&gt;&lt;span style=&#34;color:#75715e&#34;&gt;&lt;/span&gt;
+&lt;span style=&#34;color:#66d9ef&#34;&gt;struct&lt;/span&gt; &lt;span style=&#34;color:#a6e22e&#34;&gt;Station&lt;/span&gt; {
+	&lt;span style=&#34;color:#66d9ef&#34;&gt;int&lt;/span&gt; dis;
+	&lt;span style=&#34;color:#66d9ef&#34;&gt;int&lt;/span&gt; fuel;
+};
+&lt;span style=&#34;color:#66d9ef&#34;&gt;bool&lt;/span&gt; &lt;span style=&#34;color:#a6e22e&#34;&gt;cmp&lt;/span&gt;(Station a, Station b) {
+	&lt;span style=&#34;color:#66d9ef&#34;&gt;return&lt;/span&gt; a.dis &lt;span style=&#34;color:#f92672&#34;&gt;&amp;gt;&lt;/span&gt; b.dis;
+}
+Station sta[maxn];
+
+&lt;span style=&#34;color:#66d9ef&#34;&gt;void&lt;/span&gt; &lt;span style=&#34;color:#a6e22e&#34;&gt;solves&lt;/span&gt;() {
+	A[N] &lt;span style=&#34;color:#f92672&#34;&gt;=&lt;/span&gt; &lt;span style=&#34;color:#ae81ff&#34;&gt;0&lt;/span&gt;;
+	B[N] &lt;span style=&#34;color:#f92672&#34;&gt;=&lt;/span&gt; &lt;span style=&#34;color:#ae81ff&#34;&gt;0&lt;/span&gt;;
+	N&lt;span style=&#34;color:#f92672&#34;&gt;++&lt;/span&gt;;
+	priority_queue&lt;span style=&#34;color:#f92672&#34;&gt;&amp;lt;&lt;/span&gt;&lt;span style=&#34;color:#66d9ef&#34;&gt;int&lt;/span&gt;&lt;span style=&#34;color:#f92672&#34;&gt;&amp;gt;&lt;/span&gt; que;
+	&lt;span style=&#34;color:#66d9ef&#34;&gt;int&lt;/span&gt; ans &lt;span style=&#34;color:#f92672&#34;&gt;=&lt;/span&gt; &lt;span style=&#34;color:#ae81ff&#34;&gt;0&lt;/span&gt;, pos &lt;span style=&#34;color:#f92672&#34;&gt;=&lt;/span&gt; L, tank &lt;span style=&#34;color:#f92672&#34;&gt;=&lt;/span&gt; P;
+	&lt;span style=&#34;color:#66d9ef&#34;&gt;for&lt;/span&gt; (&lt;span style=&#34;color:#66d9ef&#34;&gt;int&lt;/span&gt; i &lt;span style=&#34;color:#f92672&#34;&gt;=&lt;/span&gt; &lt;span style=&#34;color:#ae81ff&#34;&gt;0&lt;/span&gt;; i &lt;span style=&#34;color:#f92672&#34;&gt;&amp;lt;&lt;/span&gt; N; i&lt;span style=&#34;color:#f92672&#34;&gt;++&lt;/span&gt;) {
+		&lt;span style=&#34;color:#66d9ef&#34;&gt;int&lt;/span&gt; d &lt;span style=&#34;color:#f92672&#34;&gt;=&lt;/span&gt; pos &lt;span style=&#34;color:#f92672&#34;&gt;-&lt;/span&gt; sta[i].dis;&lt;span style=&#34;color:#75715e&#34;&gt;//接下来要走的路程
+&lt;/span&gt;&lt;span style=&#34;color:#75715e&#34;&gt;&lt;/span&gt;		&lt;span style=&#34;color:#66d9ef&#34;&gt;while&lt;/span&gt; (tank &lt;span style=&#34;color:#f92672&#34;&gt;-&lt;/span&gt; d &lt;span style=&#34;color:#f92672&#34;&gt;&amp;lt;&lt;/span&gt; &lt;span style=&#34;color:#ae81ff&#34;&gt;0&lt;/span&gt;) {&lt;span style=&#34;color:#75715e&#34;&gt;//只要tank走不了d，就需要不断加油
+&lt;/span&gt;&lt;span style=&#34;color:#75715e&#34;&gt;&lt;/span&gt;			&lt;span style=&#34;color:#66d9ef&#34;&gt;if&lt;/span&gt; (que.empty()) {
+				puts(&lt;span style=&#34;color:#e6db74&#34;&gt;&amp;#34;-1&amp;#34;&lt;/span&gt;);
+				&lt;span style=&#34;color:#66d9ef&#34;&gt;return&lt;/span&gt;;
+			}
+			tank &lt;span style=&#34;color:#f92672&#34;&gt;+=&lt;/span&gt; que.top();
+			que.pop();
+			ans&lt;span style=&#34;color:#f92672&#34;&gt;++&lt;/span&gt;;
+		}
+		tank &lt;span style=&#34;color:#f92672&#34;&gt;-=&lt;/span&gt; d; &lt;span style=&#34;color:#75715e&#34;&gt;//一共走了d这么长,花费了这么多汽油
+&lt;/span&gt;&lt;span style=&#34;color:#75715e&#34;&gt;&lt;/span&gt;		pos &lt;span style=&#34;color:#f92672&#34;&gt;=&lt;/span&gt; sta[i].dis;
+		que.push(sta[i].fuel);
+	}
+	printf(&lt;span style=&#34;color:#e6db74&#34;&gt;&amp;#34;%d&lt;/span&gt;&lt;span style=&#34;color:#ae81ff&#34;&gt;\n&lt;/span&gt;&lt;span style=&#34;color:#e6db74&#34;&gt;&amp;#34;&lt;/span&gt;, ans);
+}
+
+&lt;span style=&#34;color:#66d9ef&#34;&gt;int&lt;/span&gt; &lt;span style=&#34;color:#a6e22e&#34;&gt;main&lt;/span&gt;() {
+	&lt;span style=&#34;color:#75715e&#34;&gt;//scanf(&amp;#34;%d%d%d&amp;#34;, &amp;amp;N, &amp;amp;L, &amp;amp;P);
+&lt;/span&gt;&lt;span style=&#34;color:#75715e&#34;&gt;&lt;/span&gt;	scanf_s(&lt;span style=&#34;color:#e6db74&#34;&gt;&amp;#34;%d&amp;#34;&lt;/span&gt;, &lt;span style=&#34;color:#f92672&#34;&gt;&amp;amp;&lt;/span&gt;N);
+	&lt;span style=&#34;color:#66d9ef&#34;&gt;for&lt;/span&gt; (&lt;span style=&#34;color:#66d9ef&#34;&gt;int&lt;/span&gt; i &lt;span style=&#34;color:#f92672&#34;&gt;=&lt;/span&gt; &lt;span style=&#34;color:#ae81ff&#34;&gt;0&lt;/span&gt;; i &lt;span style=&#34;color:#f92672&#34;&gt;&amp;lt;&lt;/span&gt; N; i&lt;span style=&#34;color:#f92672&#34;&gt;++&lt;/span&gt;) {
+		scanf_s(&lt;span style=&#34;color:#e6db74&#34;&gt;&amp;#34;%d%d&amp;#34;&lt;/span&gt;, &lt;span style=&#34;color:#f92672&#34;&gt;&amp;amp;&lt;/span&gt;sta[i].dis, &lt;span style=&#34;color:#f92672&#34;&gt;&amp;amp;&lt;/span&gt;sta[i].fuel);
+	}
+	sort(sta, sta &lt;span style=&#34;color:#f92672&#34;&gt;+&lt;/span&gt; N, cmp);
+	scanf_s(&lt;span style=&#34;color:#e6db74&#34;&gt;&amp;#34;%d%d&amp;#34;&lt;/span&gt;, &lt;span style=&#34;color:#f92672&#34;&gt;&amp;amp;&lt;/span&gt;L, &lt;span style=&#34;color:#f92672&#34;&gt;&amp;amp;&lt;/span&gt;P);
+	priority_queue&lt;span style=&#34;color:#f92672&#34;&gt;&amp;lt;&lt;/span&gt;&lt;span style=&#34;color:#66d9ef&#34;&gt;int&lt;/span&gt;&lt;span style=&#34;color:#f92672&#34;&gt;&amp;gt;&lt;/span&gt; que;
+	solves();
+	&lt;span style=&#34;color:#66d9ef&#34;&gt;return&lt;/span&gt; &lt;span style=&#34;color:#ae81ff&#34;&gt;0&lt;/span&gt;;
+}
+
+&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;p&gt;这一份是参考网上的，思路较清晰&lt;/p&gt;
+&lt;div class=&#34;highlight&#34;&gt;&lt;pre style=&#34;color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4&#34;&gt;&lt;code class=&#34;language-c++&#34; data-lang=&#34;c++&#34;&gt;&lt;span style=&#34;color:#66d9ef&#34;&gt;int&lt;/span&gt; &lt;span style=&#34;color:#a6e22e&#34;&gt;main&lt;/span&gt;() {
+	&lt;span style=&#34;color:#75715e&#34;&gt;//scanf(&amp;#34;%d%d%d&amp;#34;, &amp;amp;N, &amp;amp;L, &amp;amp;P);
+&lt;/span&gt;&lt;span style=&#34;color:#75715e&#34;&gt;&lt;/span&gt;	scanf_s(&lt;span style=&#34;color:#e6db74&#34;&gt;&amp;#34;%d&amp;#34;&lt;/span&gt;, &lt;span style=&#34;color:#f92672&#34;&gt;&amp;amp;&lt;/span&gt;N);
+	&lt;span style=&#34;color:#66d9ef&#34;&gt;for&lt;/span&gt; (&lt;span style=&#34;color:#66d9ef&#34;&gt;int&lt;/span&gt; i &lt;span style=&#34;color:#f92672&#34;&gt;=&lt;/span&gt; &lt;span style=&#34;color:#ae81ff&#34;&gt;0&lt;/span&gt;; i &lt;span style=&#34;color:#f92672&#34;&gt;&amp;lt;&lt;/span&gt; N; i&lt;span style=&#34;color:#f92672&#34;&gt;++&lt;/span&gt;) {
+		scanf_s(&lt;span style=&#34;color:#e6db74&#34;&gt;&amp;#34;%d%d&amp;#34;&lt;/span&gt;, &lt;span style=&#34;color:#f92672&#34;&gt;&amp;amp;&lt;/span&gt;sta[i].dis, &lt;span style=&#34;color:#f92672&#34;&gt;&amp;amp;&lt;/span&gt;sta[i].fuel);
+	}
+	sort(sta, sta &lt;span style=&#34;color:#f92672&#34;&gt;+&lt;/span&gt; N, cmp);
+	scanf_s(&lt;span style=&#34;color:#e6db74&#34;&gt;&amp;#34;%d%d&amp;#34;&lt;/span&gt;, &lt;span style=&#34;color:#f92672&#34;&gt;&amp;amp;&lt;/span&gt;L, &lt;span style=&#34;color:#f92672&#34;&gt;&amp;amp;&lt;/span&gt;P);
+	priority_queue&lt;span style=&#34;color:#f92672&#34;&gt;&amp;lt;&lt;/span&gt;&lt;span style=&#34;color:#66d9ef&#34;&gt;int&lt;/span&gt;&lt;span style=&#34;color:#f92672&#34;&gt;&amp;gt;&lt;/span&gt; que;
+	&lt;span style=&#34;color:#66d9ef&#34;&gt;int&lt;/span&gt; i &lt;span style=&#34;color:#f92672&#34;&gt;=&lt;/span&gt; &lt;span style=&#34;color:#ae81ff&#34;&gt;0&lt;/span&gt;, ans &lt;span style=&#34;color:#f92672&#34;&gt;=&lt;/span&gt; &lt;span style=&#34;color:#ae81ff&#34;&gt;0&lt;/span&gt;;
+	&lt;span style=&#34;color:#66d9ef&#34;&gt;while&lt;/span&gt; (P &lt;span style=&#34;color:#f92672&#34;&gt;&amp;gt;=&lt;/span&gt; &lt;span style=&#34;color:#ae81ff&#34;&gt;0&lt;/span&gt;) {
+		&lt;span style=&#34;color:#66d9ef&#34;&gt;if&lt;/span&gt; (L &lt;span style=&#34;color:#f92672&#34;&gt;==&lt;/span&gt; &lt;span style=&#34;color:#ae81ff&#34;&gt;0&lt;/span&gt;) {
+			cout &lt;span style=&#34;color:#f92672&#34;&gt;&amp;lt;&amp;lt;&lt;/span&gt; ans &lt;span style=&#34;color:#f92672&#34;&gt;&amp;lt;&amp;lt;&lt;/span&gt; endl;
+			&lt;span style=&#34;color:#66d9ef&#34;&gt;return&lt;/span&gt; &lt;span style=&#34;color:#ae81ff&#34;&gt;0&lt;/span&gt;;
+		}
+		&lt;span style=&#34;color:#66d9ef&#34;&gt;if&lt;/span&gt; (P &lt;span style=&#34;color:#f92672&#34;&gt;==&lt;/span&gt; &lt;span style=&#34;color:#ae81ff&#34;&gt;0&lt;/span&gt; &lt;span style=&#34;color:#f92672&#34;&gt;&amp;amp;&amp;amp;&lt;/span&gt; &lt;span style=&#34;color:#f92672&#34;&gt;!&lt;/span&gt;que.empty()) {
+			P &lt;span style=&#34;color:#f92672&#34;&gt;+=&lt;/span&gt; que.top();
+			que.pop();
+			ans&lt;span style=&#34;color:#f92672&#34;&gt;++&lt;/span&gt;;
+		}
+		P&lt;span style=&#34;color:#f92672&#34;&gt;--&lt;/span&gt;;
+		&lt;span style=&#34;color:#66d9ef&#34;&gt;if&lt;/span&gt; (P &lt;span style=&#34;color:#f92672&#34;&gt;&amp;lt;&lt;/span&gt; &lt;span style=&#34;color:#ae81ff&#34;&gt;0&lt;/span&gt;) {
+			cout &lt;span style=&#34;color:#f92672&#34;&gt;&amp;lt;&amp;lt;&lt;/span&gt; &lt;span style=&#34;color:#e6db74&#34;&gt;&amp;#34;-1&amp;#34;&lt;/span&gt; &lt;span style=&#34;color:#f92672&#34;&gt;&amp;lt;&amp;lt;&lt;/span&gt; endl;
+			&lt;span style=&#34;color:#66d9ef&#34;&gt;return&lt;/span&gt; &lt;span style=&#34;color:#ae81ff&#34;&gt;0&lt;/span&gt;;
+		}
+		L&lt;span style=&#34;color:#f92672&#34;&gt;--&lt;/span&gt;;
+		&lt;span style=&#34;color:#66d9ef&#34;&gt;if&lt;/span&gt; (L &lt;span style=&#34;color:#f92672&#34;&gt;&amp;lt;=&lt;/span&gt; sta[i].dis) {
+			que.push(sta[i].fuel);
+			i&lt;span style=&#34;color:#f92672&#34;&gt;++&lt;/span&gt;;
+		}
+	}
+	&lt;span style=&#34;color:#66d9ef&#34;&gt;return&lt;/span&gt; &lt;span style=&#34;color:#ae81ff&#34;&gt;0&lt;/span&gt;;
+}
+
+&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;p&gt;所以，还是要多刷题啊啊啊啊啊！多多益善！&lt;/p&gt;
+</description>
+    </item>
     
     <item>
       <title>Expedition</title>
