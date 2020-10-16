@@ -2,9 +2,9 @@
 <html>
 <head>
   <meta charset="utf-8"/>
-  <title>Bcj_poj1703</title>
+  <title></title>
 
-  <meta name="description" content="Bcj_poj1703"/>
+  <meta name="description" content=""/>
   <meta name="author" content=""/>
   <meta name="viewport" content="width=device-width, initial-scale=1"/>
   <base href="https://Big-Mouth.github.io" />
@@ -36,11 +36,11 @@
 
 <div id="post-header">
   <p class="post-infos">
-    <time>2020-10-16 15:21</time>
+    <time>0001-01-01 00:00</time>
     
 
   </p>
-  <h1>Bcj_poj1703</h1>
+  <h1></h1>
 </div>
 
 
@@ -51,7 +51,207 @@
 
 
 <div class="post">
-  
+  <h1 id="bcj_poj1703">bcj_poj1703</h1>
+<p>这是困惑我很久的一道并查集，今天终于把他搞定了。</p>
+<p><a href="http://poj.org/problem?id=1703">传送门</a></p>
+<blockquote>
+<p>题目大意是：在一个城市里有两种不同的犯罪团伙。首先输入T表示有T组测试，然后输入N和M，表示有N个罪犯（编号从1到N）而且接下来有M个操作。操作分为两种：</p>
+<ul>
+<li>
+<p>D a b，表示编号为a和b的两个罪犯属于不同的犯罪团伙；</p>
+</li>
+<li>
+<p>A a b，表示询问编号为a和b的两个罪犯是否是同一个犯罪团伙或者不确定。</p>
+</li>
+</ul>
+<p>对于每一个A操作，根据题意都要有相应的回答（输出）。</p>
+</blockquote>
+<p>这道题不能直接套用并查集的模板，因为这有两类，要分敌我，但是我们可以用并查集的思想来解决这道问题，首先想到的一个问题就是对于“我”来说，有敌人，还有敌人的敌人，那我们该怎么样来表示我的敌人和我敌人的敌人呢？我们可以用一个数组v[i]来表示“我的敌人”，用v[i]+n来表示我敌人的敌人，这样就能够解决问题了。下面是代码：</p>
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-C++" data-lang="C++"><span style="color:#75715e">#include</span><span style="color:#75715e">&lt;iostream&gt;</span><span style="color:#75715e">
+</span><span style="color:#75715e">#include</span><span style="color:#75715e">&lt;cstring&gt;</span><span style="color:#75715e">
+</span><span style="color:#75715e">#include</span><span style="color:#75715e">&lt;cstdio&gt;</span><span style="color:#75715e">
+</span><span style="color:#75715e">#include</span><span style="color:#75715e">&lt;cstring&gt;</span><span style="color:#75715e">
+</span><span style="color:#75715e">#include</span><span style="color:#75715e">&lt;algorithm&gt;</span><span style="color:#75715e">
+</span><span style="color:#75715e">#include</span><span style="color:#75715e">&lt;iostream&gt;</span><span style="color:#75715e">
+</span><span style="color:#75715e">#include</span><span style="color:#75715e">&lt;string&gt;</span><span style="color:#75715e">
+</span><span style="color:#75715e">#include</span><span style="color:#75715e">&lt;vector&gt;</span><span style="color:#75715e">
+</span><span style="color:#75715e">#include</span><span style="color:#75715e">&lt;stack&gt;</span><span style="color:#75715e">
+</span><span style="color:#75715e">#include</span><span style="color:#75715e">&lt;bitset&gt;</span><span style="color:#75715e">
+</span><span style="color:#75715e">#include</span><span style="color:#75715e">&lt;cstdlib&gt;</span><span style="color:#75715e">
+</span><span style="color:#75715e">#include</span><span style="color:#75715e">&lt;cmath&gt;</span><span style="color:#75715e">
+</span><span style="color:#75715e">#include</span><span style="color:#75715e">&lt;set&gt;</span><span style="color:#75715e">
+</span><span style="color:#75715e">#include</span><span style="color:#75715e">&lt;list&gt;</span><span style="color:#75715e">
+</span><span style="color:#75715e">#include</span><span style="color:#75715e">&lt;deque&gt;</span><span style="color:#75715e">
+</span><span style="color:#75715e">#include</span><span style="color:#75715e">&lt;map&gt;</span><span style="color:#75715e">
+</span><span style="color:#75715e">#include</span><span style="color:#75715e">&lt;queue&gt;</span><span style="color:#75715e">
+</span><span style="color:#75715e"></span><span style="color:#66d9ef">using</span> <span style="color:#66d9ef">namespace</span> std;
+
+<span style="color:#66d9ef">const</span> <span style="color:#66d9ef">int</span> maxn <span style="color:#f92672">=</span> <span style="color:#ae81ff">200010</span>;
+<span style="color:#66d9ef">int</span> par[<span style="color:#ae81ff">2</span> <span style="color:#f92672">*</span> maxn <span style="color:#f92672">+</span> <span style="color:#ae81ff">10</span>];<span style="color:#75715e">//特别注意，这里的数组要开得和v数组一样大，或者更大，否则提交时，会被判为Runtime error,这就浪费了我好多时间，而且，我发现所有的并查集，只要是需要初始化的一定要注意数组要开得尽可能大，否则到时候，这个错误真的会很蛋疼！
+</span><span style="color:#75715e"></span><span style="color:#66d9ef">int</span> irank[maxn];
+<span style="color:#66d9ef">void</span> <span style="color:#a6e22e">init</span>(<span style="color:#66d9ef">int</span> n) {
+	<span style="color:#66d9ef">for</span> (<span style="color:#66d9ef">int</span> i <span style="color:#f92672">=</span> <span style="color:#ae81ff">0</span>; i <span style="color:#f92672">&lt;</span> n; i<span style="color:#f92672">++</span>) {
+		par[i] <span style="color:#f92672">=</span> i;
+		irank[i] <span style="color:#f92672">=</span> <span style="color:#ae81ff">0</span>;
+	}
+}
+<span style="color:#66d9ef">int</span> <span style="color:#a6e22e">found</span>(<span style="color:#66d9ef">int</span> x) {
+	<span style="color:#66d9ef">int</span> a <span style="color:#f92672">=</span> x;
+	<span style="color:#66d9ef">while</span> (x <span style="color:#f92672">!=</span> par[x]) { x <span style="color:#f92672">=</span> par[x]; }
+	<span style="color:#66d9ef">while</span> (a <span style="color:#f92672">!=</span> par[a]) {
+		<span style="color:#66d9ef">int</span> z <span style="color:#f92672">=</span> a;
+		a <span style="color:#f92672">=</span> par[a];
+		par[z] <span style="color:#f92672">=</span> x;
+	}
+	<span style="color:#66d9ef">return</span> x;
+}
+<span style="color:#66d9ef">void</span> <span style="color:#a6e22e">Union</span>(<span style="color:#66d9ef">int</span> a, <span style="color:#66d9ef">int</span> b) {
+	<span style="color:#66d9ef">if</span> (found(a) <span style="color:#f92672">==</span> found(b)) <span style="color:#66d9ef">return</span>;
+	a <span style="color:#f92672">=</span> found(a);
+	b <span style="color:#f92672">=</span> found(b);
+	<span style="color:#66d9ef">if</span> (irank[a] <span style="color:#f92672">&lt;</span> irank[b]) {
+		par[a] <span style="color:#f92672">=</span> b;
+	}
+	<span style="color:#66d9ef">else</span> {
+		par[b] <span style="color:#f92672">=</span> a;
+		<span style="color:#66d9ef">if</span> (irank[a] <span style="color:#f92672">==</span> irank[b]) {
+			irank[a] <span style="color:#f92672">++</span>;
+		}
+	}
+}
+<span style="color:#66d9ef">bool</span> <span style="color:#a6e22e">same</span>(<span style="color:#66d9ef">int</span> a, <span style="color:#66d9ef">int</span> b) {
+	<span style="color:#66d9ef">return</span> found(a) <span style="color:#f92672">==</span> found(b);
+}
+<span style="color:#75715e">//以上是一个板子，适用于绝大多数的并查集的题目
+</span><span style="color:#75715e"></span><span style="color:#66d9ef">int</span> <span style="color:#a6e22e">main</span>() {
+	<span style="color:#66d9ef">int</span> T;
+	scanf(<span style="color:#e6db74">&#34;%d&#34;</span>, <span style="color:#f92672">&amp;</span>T);
+	<span style="color:#66d9ef">while</span> (T<span style="color:#f92672">--</span>) {
+		<span style="color:#66d9ef">int</span> n, m;
+		scanf(<span style="color:#e6db74">&#34;%d%d&#34;</span>, <span style="color:#f92672">&amp;</span>n, <span style="color:#f92672">&amp;</span>m);
+		init(<span style="color:#ae81ff">2</span> <span style="color:#f92672">*</span> maxn <span style="color:#f92672">+</span> <span style="color:#ae81ff">5</span>);
+		<span style="color:#66d9ef">char</span> c;
+		<span style="color:#66d9ef">int</span> a, b;
+		<span style="color:#66d9ef">int</span> v[maxn];
+		memset(v, <span style="color:#f92672">-</span><span style="color:#ae81ff">1</span>, <span style="color:#66d9ef">sizeof</span>(v));
+		<span style="color:#66d9ef">for</span> (<span style="color:#66d9ef">int</span> i <span style="color:#f92672">=</span> <span style="color:#ae81ff">0</span>; i <span style="color:#f92672">&lt;</span> m; i<span style="color:#f92672">++</span>) {
+		scanf(<span style="color:#e6db74">&#34;</span><span style="color:#ae81ff">\n</span><span style="color:#e6db74">%c%d%d&#34;</span>, <span style="color:#f92672">&amp;</span>c, <span style="color:#f92672">&amp;</span>a, <span style="color:#f92672">&amp;</span>b);
+		<span style="color:#66d9ef">if</span> (c <span style="color:#f92672">==</span> <span style="color:#e6db74">&#39;D&#39;</span>) {
+			Union(a, b);<span style="color:#75715e">//首先要把a,b两个连接，通过这个来判定是否为Not sure yet.
+</span><span style="color:#75715e"></span>			<span style="color:#66d9ef">if</span> (v[a] <span style="color:#f92672">==</span> <span style="color:#f92672">-</span><span style="color:#ae81ff">1</span>) v[a] <span style="color:#f92672">=</span> b;<span style="color:#75715e">//如果a无敌人，则令b为他的敌人
+</span><span style="color:#75715e"></span>			<span style="color:#66d9ef">if</span> (v[b] <span style="color:#f92672">==</span> <span style="color:#f92672">-</span><span style="color:#ae81ff">1</span>) v[b] <span style="color:#f92672">=</span> a;<span style="color:#75715e">//如果b无敌人，则令a为他的敌人
+</span><span style="color:#75715e"></span>			Union(a <span style="color:#f92672">+</span> n, v[b] <span style="color:#f92672">+</span> n);<span style="color:#75715e">//把a的敌人和b的敌人的敌人连接(如等下要判定的2和4是否是In the same gang.)
+</span><span style="color:#75715e"></span>			Union(b <span style="color:#f92672">+</span> n, v[a] <span style="color:#f92672">+</span> n);<span style="color:#75715e">//同上
+</span><span style="color:#75715e"></span>		}
+		<span style="color:#66d9ef">else</span> {
+			<span style="color:#66d9ef">if</span> (same(a, b)) {
+				<span style="color:#66d9ef">if</span> (same(a <span style="color:#f92672">+</span> n, b <span style="color:#f92672">+</span> n)) printf(<span style="color:#e6db74">&#34;In the same gang.</span><span style="color:#ae81ff">\n</span><span style="color:#e6db74">&#34;</span>);
+				<span style="color:#66d9ef">else</span> printf(<span style="color:#e6db74">&#34;In different gangs.</span><span style="color:#ae81ff">\n</span><span style="color:#e6db74">&#34;</span>);
+			}
+			<span style="color:#66d9ef">else</span> printf(<span style="color:#e6db74">&#34;Not sure yet.</span><span style="color:#ae81ff">\n</span><span style="color:#e6db74">&#34;</span>);
+		}
+		}
+		
+	}
+	<span style="color:#66d9ef">return</span> <span style="color:#ae81ff">0</span>;
+}
+</code></pre></div><p>当然这题也可以通过定义一个整型数组表示当前节点与父节点的关系，偶数代表同类，奇数代表异类。同样的，初始化时每一个节点的父节点都为自己，关系数都为0。代码如下：</p>
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-C++" data-lang="C++"><span style="color:#75715e">#include</span> <span style="color:#75715e">&lt;stdio.h&gt;</span><span style="color:#75715e">
+</span><span style="color:#75715e">#define N 100001
+</span><span style="color:#75715e"></span>
+<span style="color:#66d9ef">int</span> bleg[N];    <span style="color:#75715e">//存储父节点
+</span><span style="color:#75715e"></span><span style="color:#66d9ef">int</span> rela[N];    <span style="color:#75715e">//存储与父节点的关系，偶数为同类，奇数异类
+</span><span style="color:#75715e"></span><span style="color:#66d9ef">int</span> t;
+<span style="color:#66d9ef">int</span> n, m;
+<span style="color:#66d9ef">char</span> <span style="color:#f92672">*</span>ns <span style="color:#f92672">=</span> <span style="color:#e6db74">&#34;Not sure yet.&#34;</span>;
+<span style="color:#66d9ef">char</span> <span style="color:#f92672">*</span>dg <span style="color:#f92672">=</span> <span style="color:#e6db74">&#34;In different gangs.&#34;</span>;
+<span style="color:#66d9ef">char</span> <span style="color:#f92672">*</span>sg <span style="color:#f92672">=</span> <span style="color:#e6db74">&#34;In the same gang.&#34;</span>;
+
+<span style="color:#66d9ef">void</span> <span style="color:#a6e22e">Init</span>();        <span style="color:#75715e">//初始化
+</span><span style="color:#75715e"></span>
+<span style="color:#66d9ef">int</span> <span style="color:#a6e22e">Find</span>(<span style="color:#66d9ef">int</span> x);    <span style="color:#75715e">//并查集查找
+</span><span style="color:#75715e"></span>
+<span style="color:#66d9ef">void</span> <span style="color:#a6e22e">Union</span>(<span style="color:#66d9ef">int</span> x, <span style="color:#66d9ef">int</span> y);   <span style="color:#75715e">//并查集合并
+</span><span style="color:#75715e"></span>
+<span style="color:#66d9ef">int</span> <span style="color:#a6e22e">main</span>()
+{
+    <span style="color:#66d9ef">char</span> a;
+    <span style="color:#66d9ef">int</span> x, y;
+    scanf(<span style="color:#e6db74">&#34;%d&#34;</span>, <span style="color:#f92672">&amp;</span>t);
+    <span style="color:#66d9ef">while</span> (t<span style="color:#f92672">--</span>)
+    {
+        scanf(<span style="color:#e6db74">&#34;%d %d&#34;</span>, <span style="color:#f92672">&amp;</span>n, <span style="color:#f92672">&amp;</span>m);
+        Init();
+        <span style="color:#66d9ef">while</span> (m<span style="color:#f92672">--</span>)
+        {
+            scanf(<span style="color:#e6db74">&#34; %c %d %d&#34;</span>, <span style="color:#f92672">&amp;</span>a, <span style="color:#f92672">&amp;</span>x, <span style="color:#f92672">&amp;</span>y);
+            <span style="color:#66d9ef">if</span> (a <span style="color:#f92672">==</span> <span style="color:#e6db74">&#39;D&#39;</span>)
+            {
+                Union(x, y);
+            }
+            <span style="color:#66d9ef">else</span>
+            {
+                <span style="color:#66d9ef">if</span> (Find(x) <span style="color:#f92672">!=</span> Find(y))     <span style="color:#75715e">//如果两节点的根节点不相同，则无法知道两节点的关系
+</span><span style="color:#75715e"></span>                {
+                    puts(ns);
+                }
+                <span style="color:#66d9ef">else</span> <span style="color:#66d9ef">if</span> ((rela[x] <span style="color:#f92672">+</span> rela[y]) <span style="color:#f92672">%</span> <span style="color:#ae81ff">2</span> <span style="color:#f92672">==</span> <span style="color:#ae81ff">0</span>)  <span style="color:#75715e">//推论可得，表示两节点的关系数为两节点与共同的根结点的关系数之和
+</span><span style="color:#75715e"></span>                {
+                    puts(sg);
+                }
+                <span style="color:#66d9ef">else</span>
+                {
+                    puts(dg);
+                }
+            }
+        }
+    }
+    <span style="color:#66d9ef">return</span> <span style="color:#ae81ff">0</span>;
+}
+
+<span style="color:#66d9ef">void</span> <span style="color:#a6e22e">Init</span>()     <span style="color:#75715e">//初始化
+</span><span style="color:#75715e"></span>{
+    <span style="color:#66d9ef">int</span> i;
+    <span style="color:#66d9ef">for</span> (i<span style="color:#f92672">=</span><span style="color:#ae81ff">0</span>; i<span style="color:#f92672">&lt;</span>N; i<span style="color:#f92672">++</span>)
+    {
+        bleg[i] <span style="color:#f92672">=</span> i;
+        rela[i] <span style="color:#f92672">=</span> <span style="color:#ae81ff">0</span>;
+    }
+    <span style="color:#66d9ef">return</span>;
+}
+
+<span style="color:#66d9ef">int</span> <span style="color:#a6e22e">Find</span>(<span style="color:#66d9ef">int</span> x)         <span style="color:#75715e">//并查集查找
+</span><span style="color:#75715e"></span>{
+    <span style="color:#66d9ef">int</span> y <span style="color:#f92672">=</span> bleg[x];
+    <span style="color:#66d9ef">int</span> sum <span style="color:#f92672">=</span> rela[x];
+    <span style="color:#66d9ef">int</span> temp, z;
+    <span style="color:#66d9ef">while</span> (y <span style="color:#f92672">!=</span> bleg[y])    <span style="color:#75715e">//当y不是根节点时
+</span><span style="color:#75715e"></span>    {
+        sum <span style="color:#f92672">+=</span> rela[y];
+        y <span style="color:#f92672">=</span> bleg[y];
+    }
+    <span style="color:#66d9ef">while</span> (x <span style="color:#f92672">!=</span> bleg[x])    <span style="color:#75715e">//路径压缩并将沿途所有节点的关系改成与根节点的关系
+</span><span style="color:#75715e"></span>    {
+        z <span style="color:#f92672">=</span> bleg[x];
+        temp <span style="color:#f92672">=</span> rela[x];
+        rela[x] <span style="color:#f92672">=</span> sum;
+        bleg[x] <span style="color:#f92672">=</span> y;
+        sum <span style="color:#f92672">-=</span> temp;
+        x <span style="color:#f92672">=</span> z;
+    }
+    <span style="color:#66d9ef">return</span> y;
+}
+
+<span style="color:#66d9ef">void</span> <span style="color:#a6e22e">Union</span>(<span style="color:#66d9ef">int</span> x, <span style="color:#66d9ef">int</span> y)    <span style="color:#75715e">//并查集合并
+</span><span style="color:#75715e"></span>{
+    <span style="color:#66d9ef">int</span> fx <span style="color:#f92672">=</span> Find(x);
+    <span style="color:#66d9ef">int</span> fy <span style="color:#f92672">=</span> Find(y);
+    <span style="color:#66d9ef">if</span> (fx <span style="color:#f92672">==</span> fy) <span style="color:#66d9ef">return</span>;
+    bleg[fx] <span style="color:#f92672">=</span> fy;
+    rela[fx] <span style="color:#f92672">=</span> rela[x] <span style="color:#f92672">+</span> rela[y] <span style="color:#f92672">+</span> <span style="color:#ae81ff">1</span>;
+    <span style="color:#66d9ef">return</span>;
+}
+</code></pre></div>
 </div>
 
 

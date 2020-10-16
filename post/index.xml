@@ -5,19 +5,10 @@
     <description>Recent content in Posts on My New Hugo Site</description>
     <generator>Hugo -- gohugo.io</generator>
     <language>en-us</language>
-    <lastBuildDate>Fri, 16 Oct 2020 15:21:16 +0800</lastBuildDate>
+    <lastBuildDate>Wed, 14 Oct 2020 19:09:32 +0800</lastBuildDate>
     
         <atom:link href="https://Big-Mouth.github.io/post/index.xml" rel="self" type="application/rss+xml" />
     
-    
-    <item>
-      <title>Bcj_poj1703</title>
-      <link>https://Big-Mouth.github.io/post/bcj_poj1703/</link>
-      <pubDate>Fri, 16 Oct 2020 15:21:16 +0800</pubDate>
-      
-      <guid>https://Big-Mouth.github.io/post/bcj_poj1703/</guid>
-      <description></description>
-    </item>
     
     <item>
       <title>Bag_problem</title>
@@ -415,6 +406,215 @@ Station sta[maxn];
     }
     cout &lt;span style=&#34;color:#f92672&#34;&gt;&amp;lt;&amp;lt;&lt;/span&gt; ans &lt;span style=&#34;color:#f92672&#34;&gt;&amp;lt;&amp;lt;&lt;/span&gt; endl;
     &lt;span style=&#34;color:#66d9ef&#34;&gt;return&lt;/span&gt; &lt;span style=&#34;color:#ae81ff&#34;&gt;0&lt;/span&gt;;
+}
+&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;</description>
+    </item>
+    
+    <item>
+      <title></title>
+      <link>https://Big-Mouth.github.io/post/bcj_poj1703/</link>
+      <pubDate>Mon, 01 Jan 0001 00:00:00 +0000</pubDate>
+      
+      <guid>https://Big-Mouth.github.io/post/bcj_poj1703/</guid>
+      <description>&lt;h1 id=&#34;bcj_poj1703&#34;&gt;bcj_poj1703&lt;/h1&gt;
+&lt;p&gt;这是困惑我很久的一道并查集，今天终于把他搞定了。&lt;/p&gt;
+&lt;p&gt;&lt;a href=&#34;http://poj.org/problem?id=1703&#34;&gt;传送门&lt;/a&gt;&lt;/p&gt;
+&lt;blockquote&gt;
+&lt;p&gt;题目大意是：在一个城市里有两种不同的犯罪团伙。首先输入T表示有T组测试，然后输入N和M，表示有N个罪犯（编号从1到N）而且接下来有M个操作。操作分为两种：&lt;/p&gt;
+&lt;ul&gt;
+&lt;li&gt;
+&lt;p&gt;D a b，表示编号为a和b的两个罪犯属于不同的犯罪团伙；&lt;/p&gt;
+&lt;/li&gt;
+&lt;li&gt;
+&lt;p&gt;A a b，表示询问编号为a和b的两个罪犯是否是同一个犯罪团伙或者不确定。&lt;/p&gt;
+&lt;/li&gt;
+&lt;/ul&gt;
+&lt;p&gt;对于每一个A操作，根据题意都要有相应的回答（输出）。&lt;/p&gt;
+&lt;/blockquote&gt;
+&lt;p&gt;这道题不能直接套用并查集的模板，因为这有两类，要分敌我，但是我们可以用并查集的思想来解决这道问题，首先想到的一个问题就是对于“我”来说，有敌人，还有敌人的敌人，那我们该怎么样来表示我的敌人和我敌人的敌人呢？我们可以用一个数组v[i]来表示“我的敌人”，用v[i]+n来表示我敌人的敌人，这样就能够解决问题了。下面是代码：&lt;/p&gt;
+&lt;div class=&#34;highlight&#34;&gt;&lt;pre style=&#34;color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4&#34;&gt;&lt;code class=&#34;language-C++&#34; data-lang=&#34;C++&#34;&gt;&lt;span style=&#34;color:#75715e&#34;&gt;#include&lt;/span&gt;&lt;span style=&#34;color:#75715e&#34;&gt;&amp;lt;iostream&amp;gt;&lt;/span&gt;&lt;span style=&#34;color:#75715e&#34;&gt;
+&lt;/span&gt;&lt;span style=&#34;color:#75715e&#34;&gt;#include&lt;/span&gt;&lt;span style=&#34;color:#75715e&#34;&gt;&amp;lt;cstring&amp;gt;&lt;/span&gt;&lt;span style=&#34;color:#75715e&#34;&gt;
+&lt;/span&gt;&lt;span style=&#34;color:#75715e&#34;&gt;#include&lt;/span&gt;&lt;span style=&#34;color:#75715e&#34;&gt;&amp;lt;cstdio&amp;gt;&lt;/span&gt;&lt;span style=&#34;color:#75715e&#34;&gt;
+&lt;/span&gt;&lt;span style=&#34;color:#75715e&#34;&gt;#include&lt;/span&gt;&lt;span style=&#34;color:#75715e&#34;&gt;&amp;lt;cstring&amp;gt;&lt;/span&gt;&lt;span style=&#34;color:#75715e&#34;&gt;
+&lt;/span&gt;&lt;span style=&#34;color:#75715e&#34;&gt;#include&lt;/span&gt;&lt;span style=&#34;color:#75715e&#34;&gt;&amp;lt;algorithm&amp;gt;&lt;/span&gt;&lt;span style=&#34;color:#75715e&#34;&gt;
+&lt;/span&gt;&lt;span style=&#34;color:#75715e&#34;&gt;#include&lt;/span&gt;&lt;span style=&#34;color:#75715e&#34;&gt;&amp;lt;iostream&amp;gt;&lt;/span&gt;&lt;span style=&#34;color:#75715e&#34;&gt;
+&lt;/span&gt;&lt;span style=&#34;color:#75715e&#34;&gt;#include&lt;/span&gt;&lt;span style=&#34;color:#75715e&#34;&gt;&amp;lt;string&amp;gt;&lt;/span&gt;&lt;span style=&#34;color:#75715e&#34;&gt;
+&lt;/span&gt;&lt;span style=&#34;color:#75715e&#34;&gt;#include&lt;/span&gt;&lt;span style=&#34;color:#75715e&#34;&gt;&amp;lt;vector&amp;gt;&lt;/span&gt;&lt;span style=&#34;color:#75715e&#34;&gt;
+&lt;/span&gt;&lt;span style=&#34;color:#75715e&#34;&gt;#include&lt;/span&gt;&lt;span style=&#34;color:#75715e&#34;&gt;&amp;lt;stack&amp;gt;&lt;/span&gt;&lt;span style=&#34;color:#75715e&#34;&gt;
+&lt;/span&gt;&lt;span style=&#34;color:#75715e&#34;&gt;#include&lt;/span&gt;&lt;span style=&#34;color:#75715e&#34;&gt;&amp;lt;bitset&amp;gt;&lt;/span&gt;&lt;span style=&#34;color:#75715e&#34;&gt;
+&lt;/span&gt;&lt;span style=&#34;color:#75715e&#34;&gt;#include&lt;/span&gt;&lt;span style=&#34;color:#75715e&#34;&gt;&amp;lt;cstdlib&amp;gt;&lt;/span&gt;&lt;span style=&#34;color:#75715e&#34;&gt;
+&lt;/span&gt;&lt;span style=&#34;color:#75715e&#34;&gt;#include&lt;/span&gt;&lt;span style=&#34;color:#75715e&#34;&gt;&amp;lt;cmath&amp;gt;&lt;/span&gt;&lt;span style=&#34;color:#75715e&#34;&gt;
+&lt;/span&gt;&lt;span style=&#34;color:#75715e&#34;&gt;#include&lt;/span&gt;&lt;span style=&#34;color:#75715e&#34;&gt;&amp;lt;set&amp;gt;&lt;/span&gt;&lt;span style=&#34;color:#75715e&#34;&gt;
+&lt;/span&gt;&lt;span style=&#34;color:#75715e&#34;&gt;#include&lt;/span&gt;&lt;span style=&#34;color:#75715e&#34;&gt;&amp;lt;list&amp;gt;&lt;/span&gt;&lt;span style=&#34;color:#75715e&#34;&gt;
+&lt;/span&gt;&lt;span style=&#34;color:#75715e&#34;&gt;#include&lt;/span&gt;&lt;span style=&#34;color:#75715e&#34;&gt;&amp;lt;deque&amp;gt;&lt;/span&gt;&lt;span style=&#34;color:#75715e&#34;&gt;
+&lt;/span&gt;&lt;span style=&#34;color:#75715e&#34;&gt;#include&lt;/span&gt;&lt;span style=&#34;color:#75715e&#34;&gt;&amp;lt;map&amp;gt;&lt;/span&gt;&lt;span style=&#34;color:#75715e&#34;&gt;
+&lt;/span&gt;&lt;span style=&#34;color:#75715e&#34;&gt;#include&lt;/span&gt;&lt;span style=&#34;color:#75715e&#34;&gt;&amp;lt;queue&amp;gt;&lt;/span&gt;&lt;span style=&#34;color:#75715e&#34;&gt;
+&lt;/span&gt;&lt;span style=&#34;color:#75715e&#34;&gt;&lt;/span&gt;&lt;span style=&#34;color:#66d9ef&#34;&gt;using&lt;/span&gt; &lt;span style=&#34;color:#66d9ef&#34;&gt;namespace&lt;/span&gt; std;
+
+&lt;span style=&#34;color:#66d9ef&#34;&gt;const&lt;/span&gt; &lt;span style=&#34;color:#66d9ef&#34;&gt;int&lt;/span&gt; maxn &lt;span style=&#34;color:#f92672&#34;&gt;=&lt;/span&gt; &lt;span style=&#34;color:#ae81ff&#34;&gt;200010&lt;/span&gt;;
+&lt;span style=&#34;color:#66d9ef&#34;&gt;int&lt;/span&gt; par[&lt;span style=&#34;color:#ae81ff&#34;&gt;2&lt;/span&gt; &lt;span style=&#34;color:#f92672&#34;&gt;*&lt;/span&gt; maxn &lt;span style=&#34;color:#f92672&#34;&gt;+&lt;/span&gt; &lt;span style=&#34;color:#ae81ff&#34;&gt;10&lt;/span&gt;];&lt;span style=&#34;color:#75715e&#34;&gt;//特别注意，这里的数组要开得和v数组一样大，或者更大，否则提交时，会被判为Runtime error,这就浪费了我好多时间，而且，我发现所有的并查集，只要是需要初始化的一定要注意数组要开得尽可能大，否则到时候，这个错误真的会很蛋疼！
+&lt;/span&gt;&lt;span style=&#34;color:#75715e&#34;&gt;&lt;/span&gt;&lt;span style=&#34;color:#66d9ef&#34;&gt;int&lt;/span&gt; irank[maxn];
+&lt;span style=&#34;color:#66d9ef&#34;&gt;void&lt;/span&gt; &lt;span style=&#34;color:#a6e22e&#34;&gt;init&lt;/span&gt;(&lt;span style=&#34;color:#66d9ef&#34;&gt;int&lt;/span&gt; n) {
+	&lt;span style=&#34;color:#66d9ef&#34;&gt;for&lt;/span&gt; (&lt;span style=&#34;color:#66d9ef&#34;&gt;int&lt;/span&gt; i &lt;span style=&#34;color:#f92672&#34;&gt;=&lt;/span&gt; &lt;span style=&#34;color:#ae81ff&#34;&gt;0&lt;/span&gt;; i &lt;span style=&#34;color:#f92672&#34;&gt;&amp;lt;&lt;/span&gt; n; i&lt;span style=&#34;color:#f92672&#34;&gt;++&lt;/span&gt;) {
+		par[i] &lt;span style=&#34;color:#f92672&#34;&gt;=&lt;/span&gt; i;
+		irank[i] &lt;span style=&#34;color:#f92672&#34;&gt;=&lt;/span&gt; &lt;span style=&#34;color:#ae81ff&#34;&gt;0&lt;/span&gt;;
+	}
+}
+&lt;span style=&#34;color:#66d9ef&#34;&gt;int&lt;/span&gt; &lt;span style=&#34;color:#a6e22e&#34;&gt;found&lt;/span&gt;(&lt;span style=&#34;color:#66d9ef&#34;&gt;int&lt;/span&gt; x) {
+	&lt;span style=&#34;color:#66d9ef&#34;&gt;int&lt;/span&gt; a &lt;span style=&#34;color:#f92672&#34;&gt;=&lt;/span&gt; x;
+	&lt;span style=&#34;color:#66d9ef&#34;&gt;while&lt;/span&gt; (x &lt;span style=&#34;color:#f92672&#34;&gt;!=&lt;/span&gt; par[x]) { x &lt;span style=&#34;color:#f92672&#34;&gt;=&lt;/span&gt; par[x]; }
+	&lt;span style=&#34;color:#66d9ef&#34;&gt;while&lt;/span&gt; (a &lt;span style=&#34;color:#f92672&#34;&gt;!=&lt;/span&gt; par[a]) {
+		&lt;span style=&#34;color:#66d9ef&#34;&gt;int&lt;/span&gt; z &lt;span style=&#34;color:#f92672&#34;&gt;=&lt;/span&gt; a;
+		a &lt;span style=&#34;color:#f92672&#34;&gt;=&lt;/span&gt; par[a];
+		par[z] &lt;span style=&#34;color:#f92672&#34;&gt;=&lt;/span&gt; x;
+	}
+	&lt;span style=&#34;color:#66d9ef&#34;&gt;return&lt;/span&gt; x;
+}
+&lt;span style=&#34;color:#66d9ef&#34;&gt;void&lt;/span&gt; &lt;span style=&#34;color:#a6e22e&#34;&gt;Union&lt;/span&gt;(&lt;span style=&#34;color:#66d9ef&#34;&gt;int&lt;/span&gt; a, &lt;span style=&#34;color:#66d9ef&#34;&gt;int&lt;/span&gt; b) {
+	&lt;span style=&#34;color:#66d9ef&#34;&gt;if&lt;/span&gt; (found(a) &lt;span style=&#34;color:#f92672&#34;&gt;==&lt;/span&gt; found(b)) &lt;span style=&#34;color:#66d9ef&#34;&gt;return&lt;/span&gt;;
+	a &lt;span style=&#34;color:#f92672&#34;&gt;=&lt;/span&gt; found(a);
+	b &lt;span style=&#34;color:#f92672&#34;&gt;=&lt;/span&gt; found(b);
+	&lt;span style=&#34;color:#66d9ef&#34;&gt;if&lt;/span&gt; (irank[a] &lt;span style=&#34;color:#f92672&#34;&gt;&amp;lt;&lt;/span&gt; irank[b]) {
+		par[a] &lt;span style=&#34;color:#f92672&#34;&gt;=&lt;/span&gt; b;
+	}
+	&lt;span style=&#34;color:#66d9ef&#34;&gt;else&lt;/span&gt; {
+		par[b] &lt;span style=&#34;color:#f92672&#34;&gt;=&lt;/span&gt; a;
+		&lt;span style=&#34;color:#66d9ef&#34;&gt;if&lt;/span&gt; (irank[a] &lt;span style=&#34;color:#f92672&#34;&gt;==&lt;/span&gt; irank[b]) {
+			irank[a] &lt;span style=&#34;color:#f92672&#34;&gt;++&lt;/span&gt;;
+		}
+	}
+}
+&lt;span style=&#34;color:#66d9ef&#34;&gt;bool&lt;/span&gt; &lt;span style=&#34;color:#a6e22e&#34;&gt;same&lt;/span&gt;(&lt;span style=&#34;color:#66d9ef&#34;&gt;int&lt;/span&gt; a, &lt;span style=&#34;color:#66d9ef&#34;&gt;int&lt;/span&gt; b) {
+	&lt;span style=&#34;color:#66d9ef&#34;&gt;return&lt;/span&gt; found(a) &lt;span style=&#34;color:#f92672&#34;&gt;==&lt;/span&gt; found(b);
+}
+&lt;span style=&#34;color:#75715e&#34;&gt;//以上是一个板子，适用于绝大多数的并查集的题目
+&lt;/span&gt;&lt;span style=&#34;color:#75715e&#34;&gt;&lt;/span&gt;&lt;span style=&#34;color:#66d9ef&#34;&gt;int&lt;/span&gt; &lt;span style=&#34;color:#a6e22e&#34;&gt;main&lt;/span&gt;() {
+	&lt;span style=&#34;color:#66d9ef&#34;&gt;int&lt;/span&gt; T;
+	scanf(&lt;span style=&#34;color:#e6db74&#34;&gt;&amp;#34;%d&amp;#34;&lt;/span&gt;, &lt;span style=&#34;color:#f92672&#34;&gt;&amp;amp;&lt;/span&gt;T);
+	&lt;span style=&#34;color:#66d9ef&#34;&gt;while&lt;/span&gt; (T&lt;span style=&#34;color:#f92672&#34;&gt;--&lt;/span&gt;) {
+		&lt;span style=&#34;color:#66d9ef&#34;&gt;int&lt;/span&gt; n, m;
+		scanf(&lt;span style=&#34;color:#e6db74&#34;&gt;&amp;#34;%d%d&amp;#34;&lt;/span&gt;, &lt;span style=&#34;color:#f92672&#34;&gt;&amp;amp;&lt;/span&gt;n, &lt;span style=&#34;color:#f92672&#34;&gt;&amp;amp;&lt;/span&gt;m);
+		init(&lt;span style=&#34;color:#ae81ff&#34;&gt;2&lt;/span&gt; &lt;span style=&#34;color:#f92672&#34;&gt;*&lt;/span&gt; maxn &lt;span style=&#34;color:#f92672&#34;&gt;+&lt;/span&gt; &lt;span style=&#34;color:#ae81ff&#34;&gt;5&lt;/span&gt;);
+		&lt;span style=&#34;color:#66d9ef&#34;&gt;char&lt;/span&gt; c;
+		&lt;span style=&#34;color:#66d9ef&#34;&gt;int&lt;/span&gt; a, b;
+		&lt;span style=&#34;color:#66d9ef&#34;&gt;int&lt;/span&gt; v[maxn];
+		memset(v, &lt;span style=&#34;color:#f92672&#34;&gt;-&lt;/span&gt;&lt;span style=&#34;color:#ae81ff&#34;&gt;1&lt;/span&gt;, &lt;span style=&#34;color:#66d9ef&#34;&gt;sizeof&lt;/span&gt;(v));
+		&lt;span style=&#34;color:#66d9ef&#34;&gt;for&lt;/span&gt; (&lt;span style=&#34;color:#66d9ef&#34;&gt;int&lt;/span&gt; i &lt;span style=&#34;color:#f92672&#34;&gt;=&lt;/span&gt; &lt;span style=&#34;color:#ae81ff&#34;&gt;0&lt;/span&gt;; i &lt;span style=&#34;color:#f92672&#34;&gt;&amp;lt;&lt;/span&gt; m; i&lt;span style=&#34;color:#f92672&#34;&gt;++&lt;/span&gt;) {
+		scanf(&lt;span style=&#34;color:#e6db74&#34;&gt;&amp;#34;&lt;/span&gt;&lt;span style=&#34;color:#ae81ff&#34;&gt;\n&lt;/span&gt;&lt;span style=&#34;color:#e6db74&#34;&gt;%c%d%d&amp;#34;&lt;/span&gt;, &lt;span style=&#34;color:#f92672&#34;&gt;&amp;amp;&lt;/span&gt;c, &lt;span style=&#34;color:#f92672&#34;&gt;&amp;amp;&lt;/span&gt;a, &lt;span style=&#34;color:#f92672&#34;&gt;&amp;amp;&lt;/span&gt;b);
+		&lt;span style=&#34;color:#66d9ef&#34;&gt;if&lt;/span&gt; (c &lt;span style=&#34;color:#f92672&#34;&gt;==&lt;/span&gt; &lt;span style=&#34;color:#e6db74&#34;&gt;&amp;#39;D&amp;#39;&lt;/span&gt;) {
+			Union(a, b);&lt;span style=&#34;color:#75715e&#34;&gt;//首先要把a,b两个连接，通过这个来判定是否为Not sure yet.
+&lt;/span&gt;&lt;span style=&#34;color:#75715e&#34;&gt;&lt;/span&gt;			&lt;span style=&#34;color:#66d9ef&#34;&gt;if&lt;/span&gt; (v[a] &lt;span style=&#34;color:#f92672&#34;&gt;==&lt;/span&gt; &lt;span style=&#34;color:#f92672&#34;&gt;-&lt;/span&gt;&lt;span style=&#34;color:#ae81ff&#34;&gt;1&lt;/span&gt;) v[a] &lt;span style=&#34;color:#f92672&#34;&gt;=&lt;/span&gt; b;&lt;span style=&#34;color:#75715e&#34;&gt;//如果a无敌人，则令b为他的敌人
+&lt;/span&gt;&lt;span style=&#34;color:#75715e&#34;&gt;&lt;/span&gt;			&lt;span style=&#34;color:#66d9ef&#34;&gt;if&lt;/span&gt; (v[b] &lt;span style=&#34;color:#f92672&#34;&gt;==&lt;/span&gt; &lt;span style=&#34;color:#f92672&#34;&gt;-&lt;/span&gt;&lt;span style=&#34;color:#ae81ff&#34;&gt;1&lt;/span&gt;) v[b] &lt;span style=&#34;color:#f92672&#34;&gt;=&lt;/span&gt; a;&lt;span style=&#34;color:#75715e&#34;&gt;//如果b无敌人，则令a为他的敌人
+&lt;/span&gt;&lt;span style=&#34;color:#75715e&#34;&gt;&lt;/span&gt;			Union(a &lt;span style=&#34;color:#f92672&#34;&gt;+&lt;/span&gt; n, v[b] &lt;span style=&#34;color:#f92672&#34;&gt;+&lt;/span&gt; n);&lt;span style=&#34;color:#75715e&#34;&gt;//把a的敌人和b的敌人的敌人连接(如等下要判定的2和4是否是In the same gang.)
+&lt;/span&gt;&lt;span style=&#34;color:#75715e&#34;&gt;&lt;/span&gt;			Union(b &lt;span style=&#34;color:#f92672&#34;&gt;+&lt;/span&gt; n, v[a] &lt;span style=&#34;color:#f92672&#34;&gt;+&lt;/span&gt; n);&lt;span style=&#34;color:#75715e&#34;&gt;//同上
+&lt;/span&gt;&lt;span style=&#34;color:#75715e&#34;&gt;&lt;/span&gt;		}
+		&lt;span style=&#34;color:#66d9ef&#34;&gt;else&lt;/span&gt; {
+			&lt;span style=&#34;color:#66d9ef&#34;&gt;if&lt;/span&gt; (same(a, b)) {
+				&lt;span style=&#34;color:#66d9ef&#34;&gt;if&lt;/span&gt; (same(a &lt;span style=&#34;color:#f92672&#34;&gt;+&lt;/span&gt; n, b &lt;span style=&#34;color:#f92672&#34;&gt;+&lt;/span&gt; n)) printf(&lt;span style=&#34;color:#e6db74&#34;&gt;&amp;#34;In the same gang.&lt;/span&gt;&lt;span style=&#34;color:#ae81ff&#34;&gt;\n&lt;/span&gt;&lt;span style=&#34;color:#e6db74&#34;&gt;&amp;#34;&lt;/span&gt;);
+				&lt;span style=&#34;color:#66d9ef&#34;&gt;else&lt;/span&gt; printf(&lt;span style=&#34;color:#e6db74&#34;&gt;&amp;#34;In different gangs.&lt;/span&gt;&lt;span style=&#34;color:#ae81ff&#34;&gt;\n&lt;/span&gt;&lt;span style=&#34;color:#e6db74&#34;&gt;&amp;#34;&lt;/span&gt;);
+			}
+			&lt;span style=&#34;color:#66d9ef&#34;&gt;else&lt;/span&gt; printf(&lt;span style=&#34;color:#e6db74&#34;&gt;&amp;#34;Not sure yet.&lt;/span&gt;&lt;span style=&#34;color:#ae81ff&#34;&gt;\n&lt;/span&gt;&lt;span style=&#34;color:#e6db74&#34;&gt;&amp;#34;&lt;/span&gt;);
+		}
+		}
+		
+	}
+	&lt;span style=&#34;color:#66d9ef&#34;&gt;return&lt;/span&gt; &lt;span style=&#34;color:#ae81ff&#34;&gt;0&lt;/span&gt;;
+}
+&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;p&gt;当然这题也可以通过定义一个整型数组表示当前节点与父节点的关系，偶数代表同类，奇数代表异类。同样的，初始化时每一个节点的父节点都为自己，关系数都为0。代码如下：&lt;/p&gt;
+&lt;div class=&#34;highlight&#34;&gt;&lt;pre style=&#34;color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4&#34;&gt;&lt;code class=&#34;language-C++&#34; data-lang=&#34;C++&#34;&gt;&lt;span style=&#34;color:#75715e&#34;&gt;#include&lt;/span&gt; &lt;span style=&#34;color:#75715e&#34;&gt;&amp;lt;stdio.h&amp;gt;&lt;/span&gt;&lt;span style=&#34;color:#75715e&#34;&gt;
+&lt;/span&gt;&lt;span style=&#34;color:#75715e&#34;&gt;#define N 100001
+&lt;/span&gt;&lt;span style=&#34;color:#75715e&#34;&gt;&lt;/span&gt;
+&lt;span style=&#34;color:#66d9ef&#34;&gt;int&lt;/span&gt; bleg[N];    &lt;span style=&#34;color:#75715e&#34;&gt;//存储父节点
+&lt;/span&gt;&lt;span style=&#34;color:#75715e&#34;&gt;&lt;/span&gt;&lt;span style=&#34;color:#66d9ef&#34;&gt;int&lt;/span&gt; rela[N];    &lt;span style=&#34;color:#75715e&#34;&gt;//存储与父节点的关系，偶数为同类，奇数异类
+&lt;/span&gt;&lt;span style=&#34;color:#75715e&#34;&gt;&lt;/span&gt;&lt;span style=&#34;color:#66d9ef&#34;&gt;int&lt;/span&gt; t;
+&lt;span style=&#34;color:#66d9ef&#34;&gt;int&lt;/span&gt; n, m;
+&lt;span style=&#34;color:#66d9ef&#34;&gt;char&lt;/span&gt; &lt;span style=&#34;color:#f92672&#34;&gt;*&lt;/span&gt;ns &lt;span style=&#34;color:#f92672&#34;&gt;=&lt;/span&gt; &lt;span style=&#34;color:#e6db74&#34;&gt;&amp;#34;Not sure yet.&amp;#34;&lt;/span&gt;;
+&lt;span style=&#34;color:#66d9ef&#34;&gt;char&lt;/span&gt; &lt;span style=&#34;color:#f92672&#34;&gt;*&lt;/span&gt;dg &lt;span style=&#34;color:#f92672&#34;&gt;=&lt;/span&gt; &lt;span style=&#34;color:#e6db74&#34;&gt;&amp;#34;In different gangs.&amp;#34;&lt;/span&gt;;
+&lt;span style=&#34;color:#66d9ef&#34;&gt;char&lt;/span&gt; &lt;span style=&#34;color:#f92672&#34;&gt;*&lt;/span&gt;sg &lt;span style=&#34;color:#f92672&#34;&gt;=&lt;/span&gt; &lt;span style=&#34;color:#e6db74&#34;&gt;&amp;#34;In the same gang.&amp;#34;&lt;/span&gt;;
+
+&lt;span style=&#34;color:#66d9ef&#34;&gt;void&lt;/span&gt; &lt;span style=&#34;color:#a6e22e&#34;&gt;Init&lt;/span&gt;();        &lt;span style=&#34;color:#75715e&#34;&gt;//初始化
+&lt;/span&gt;&lt;span style=&#34;color:#75715e&#34;&gt;&lt;/span&gt;
+&lt;span style=&#34;color:#66d9ef&#34;&gt;int&lt;/span&gt; &lt;span style=&#34;color:#a6e22e&#34;&gt;Find&lt;/span&gt;(&lt;span style=&#34;color:#66d9ef&#34;&gt;int&lt;/span&gt; x);    &lt;span style=&#34;color:#75715e&#34;&gt;//并查集查找
+&lt;/span&gt;&lt;span style=&#34;color:#75715e&#34;&gt;&lt;/span&gt;
+&lt;span style=&#34;color:#66d9ef&#34;&gt;void&lt;/span&gt; &lt;span style=&#34;color:#a6e22e&#34;&gt;Union&lt;/span&gt;(&lt;span style=&#34;color:#66d9ef&#34;&gt;int&lt;/span&gt; x, &lt;span style=&#34;color:#66d9ef&#34;&gt;int&lt;/span&gt; y);   &lt;span style=&#34;color:#75715e&#34;&gt;//并查集合并
+&lt;/span&gt;&lt;span style=&#34;color:#75715e&#34;&gt;&lt;/span&gt;
+&lt;span style=&#34;color:#66d9ef&#34;&gt;int&lt;/span&gt; &lt;span style=&#34;color:#a6e22e&#34;&gt;main&lt;/span&gt;()
+{
+    &lt;span style=&#34;color:#66d9ef&#34;&gt;char&lt;/span&gt; a;
+    &lt;span style=&#34;color:#66d9ef&#34;&gt;int&lt;/span&gt; x, y;
+    scanf(&lt;span style=&#34;color:#e6db74&#34;&gt;&amp;#34;%d&amp;#34;&lt;/span&gt;, &lt;span style=&#34;color:#f92672&#34;&gt;&amp;amp;&lt;/span&gt;t);
+    &lt;span style=&#34;color:#66d9ef&#34;&gt;while&lt;/span&gt; (t&lt;span style=&#34;color:#f92672&#34;&gt;--&lt;/span&gt;)
+    {
+        scanf(&lt;span style=&#34;color:#e6db74&#34;&gt;&amp;#34;%d %d&amp;#34;&lt;/span&gt;, &lt;span style=&#34;color:#f92672&#34;&gt;&amp;amp;&lt;/span&gt;n, &lt;span style=&#34;color:#f92672&#34;&gt;&amp;amp;&lt;/span&gt;m);
+        Init();
+        &lt;span style=&#34;color:#66d9ef&#34;&gt;while&lt;/span&gt; (m&lt;span style=&#34;color:#f92672&#34;&gt;--&lt;/span&gt;)
+        {
+            scanf(&lt;span style=&#34;color:#e6db74&#34;&gt;&amp;#34; %c %d %d&amp;#34;&lt;/span&gt;, &lt;span style=&#34;color:#f92672&#34;&gt;&amp;amp;&lt;/span&gt;a, &lt;span style=&#34;color:#f92672&#34;&gt;&amp;amp;&lt;/span&gt;x, &lt;span style=&#34;color:#f92672&#34;&gt;&amp;amp;&lt;/span&gt;y);
+            &lt;span style=&#34;color:#66d9ef&#34;&gt;if&lt;/span&gt; (a &lt;span style=&#34;color:#f92672&#34;&gt;==&lt;/span&gt; &lt;span style=&#34;color:#e6db74&#34;&gt;&amp;#39;D&amp;#39;&lt;/span&gt;)
+            {
+                Union(x, y);
+            }
+            &lt;span style=&#34;color:#66d9ef&#34;&gt;else&lt;/span&gt;
+            {
+                &lt;span style=&#34;color:#66d9ef&#34;&gt;if&lt;/span&gt; (Find(x) &lt;span style=&#34;color:#f92672&#34;&gt;!=&lt;/span&gt; Find(y))     &lt;span style=&#34;color:#75715e&#34;&gt;//如果两节点的根节点不相同，则无法知道两节点的关系
+&lt;/span&gt;&lt;span style=&#34;color:#75715e&#34;&gt;&lt;/span&gt;                {
+                    puts(ns);
+                }
+                &lt;span style=&#34;color:#66d9ef&#34;&gt;else&lt;/span&gt; &lt;span style=&#34;color:#66d9ef&#34;&gt;if&lt;/span&gt; ((rela[x] &lt;span style=&#34;color:#f92672&#34;&gt;+&lt;/span&gt; rela[y]) &lt;span style=&#34;color:#f92672&#34;&gt;%&lt;/span&gt; &lt;span style=&#34;color:#ae81ff&#34;&gt;2&lt;/span&gt; &lt;span style=&#34;color:#f92672&#34;&gt;==&lt;/span&gt; &lt;span style=&#34;color:#ae81ff&#34;&gt;0&lt;/span&gt;)  &lt;span style=&#34;color:#75715e&#34;&gt;//推论可得，表示两节点的关系数为两节点与共同的根结点的关系数之和
+&lt;/span&gt;&lt;span style=&#34;color:#75715e&#34;&gt;&lt;/span&gt;                {
+                    puts(sg);
+                }
+                &lt;span style=&#34;color:#66d9ef&#34;&gt;else&lt;/span&gt;
+                {
+                    puts(dg);
+                }
+            }
+        }
+    }
+    &lt;span style=&#34;color:#66d9ef&#34;&gt;return&lt;/span&gt; &lt;span style=&#34;color:#ae81ff&#34;&gt;0&lt;/span&gt;;
+}
+
+&lt;span style=&#34;color:#66d9ef&#34;&gt;void&lt;/span&gt; &lt;span style=&#34;color:#a6e22e&#34;&gt;Init&lt;/span&gt;()     &lt;span style=&#34;color:#75715e&#34;&gt;//初始化
+&lt;/span&gt;&lt;span style=&#34;color:#75715e&#34;&gt;&lt;/span&gt;{
+    &lt;span style=&#34;color:#66d9ef&#34;&gt;int&lt;/span&gt; i;
+    &lt;span style=&#34;color:#66d9ef&#34;&gt;for&lt;/span&gt; (i&lt;span style=&#34;color:#f92672&#34;&gt;=&lt;/span&gt;&lt;span style=&#34;color:#ae81ff&#34;&gt;0&lt;/span&gt;; i&lt;span style=&#34;color:#f92672&#34;&gt;&amp;lt;&lt;/span&gt;N; i&lt;span style=&#34;color:#f92672&#34;&gt;++&lt;/span&gt;)
+    {
+        bleg[i] &lt;span style=&#34;color:#f92672&#34;&gt;=&lt;/span&gt; i;
+        rela[i] &lt;span style=&#34;color:#f92672&#34;&gt;=&lt;/span&gt; &lt;span style=&#34;color:#ae81ff&#34;&gt;0&lt;/span&gt;;
+    }
+    &lt;span style=&#34;color:#66d9ef&#34;&gt;return&lt;/span&gt;;
+}
+
+&lt;span style=&#34;color:#66d9ef&#34;&gt;int&lt;/span&gt; &lt;span style=&#34;color:#a6e22e&#34;&gt;Find&lt;/span&gt;(&lt;span style=&#34;color:#66d9ef&#34;&gt;int&lt;/span&gt; x)         &lt;span style=&#34;color:#75715e&#34;&gt;//并查集查找
+&lt;/span&gt;&lt;span style=&#34;color:#75715e&#34;&gt;&lt;/span&gt;{
+    &lt;span style=&#34;color:#66d9ef&#34;&gt;int&lt;/span&gt; y &lt;span style=&#34;color:#f92672&#34;&gt;=&lt;/span&gt; bleg[x];
+    &lt;span style=&#34;color:#66d9ef&#34;&gt;int&lt;/span&gt; sum &lt;span style=&#34;color:#f92672&#34;&gt;=&lt;/span&gt; rela[x];
+    &lt;span style=&#34;color:#66d9ef&#34;&gt;int&lt;/span&gt; temp, z;
+    &lt;span style=&#34;color:#66d9ef&#34;&gt;while&lt;/span&gt; (y &lt;span style=&#34;color:#f92672&#34;&gt;!=&lt;/span&gt; bleg[y])    &lt;span style=&#34;color:#75715e&#34;&gt;//当y不是根节点时
+&lt;/span&gt;&lt;span style=&#34;color:#75715e&#34;&gt;&lt;/span&gt;    {
+        sum &lt;span style=&#34;color:#f92672&#34;&gt;+=&lt;/span&gt; rela[y];
+        y &lt;span style=&#34;color:#f92672&#34;&gt;=&lt;/span&gt; bleg[y];
+    }
+    &lt;span style=&#34;color:#66d9ef&#34;&gt;while&lt;/span&gt; (x &lt;span style=&#34;color:#f92672&#34;&gt;!=&lt;/span&gt; bleg[x])    &lt;span style=&#34;color:#75715e&#34;&gt;//路径压缩并将沿途所有节点的关系改成与根节点的关系
+&lt;/span&gt;&lt;span style=&#34;color:#75715e&#34;&gt;&lt;/span&gt;    {
+        z &lt;span style=&#34;color:#f92672&#34;&gt;=&lt;/span&gt; bleg[x];
+        temp &lt;span style=&#34;color:#f92672&#34;&gt;=&lt;/span&gt; rela[x];
+        rela[x] &lt;span style=&#34;color:#f92672&#34;&gt;=&lt;/span&gt; sum;
+        bleg[x] &lt;span style=&#34;color:#f92672&#34;&gt;=&lt;/span&gt; y;
+        sum &lt;span style=&#34;color:#f92672&#34;&gt;-=&lt;/span&gt; temp;
+        x &lt;span style=&#34;color:#f92672&#34;&gt;=&lt;/span&gt; z;
+    }
+    &lt;span style=&#34;color:#66d9ef&#34;&gt;return&lt;/span&gt; y;
+}
+
+&lt;span style=&#34;color:#66d9ef&#34;&gt;void&lt;/span&gt; &lt;span style=&#34;color:#a6e22e&#34;&gt;Union&lt;/span&gt;(&lt;span style=&#34;color:#66d9ef&#34;&gt;int&lt;/span&gt; x, &lt;span style=&#34;color:#66d9ef&#34;&gt;int&lt;/span&gt; y)    &lt;span style=&#34;color:#75715e&#34;&gt;//并查集合并
+&lt;/span&gt;&lt;span style=&#34;color:#75715e&#34;&gt;&lt;/span&gt;{
+    &lt;span style=&#34;color:#66d9ef&#34;&gt;int&lt;/span&gt; fx &lt;span style=&#34;color:#f92672&#34;&gt;=&lt;/span&gt; Find(x);
+    &lt;span style=&#34;color:#66d9ef&#34;&gt;int&lt;/span&gt; fy &lt;span style=&#34;color:#f92672&#34;&gt;=&lt;/span&gt; Find(y);
+    &lt;span style=&#34;color:#66d9ef&#34;&gt;if&lt;/span&gt; (fx &lt;span style=&#34;color:#f92672&#34;&gt;==&lt;/span&gt; fy) &lt;span style=&#34;color:#66d9ef&#34;&gt;return&lt;/span&gt;;
+    bleg[fx] &lt;span style=&#34;color:#f92672&#34;&gt;=&lt;/span&gt; fy;
+    rela[fx] &lt;span style=&#34;color:#f92672&#34;&gt;=&lt;/span&gt; rela[x] &lt;span style=&#34;color:#f92672&#34;&gt;+&lt;/span&gt; rela[y] &lt;span style=&#34;color:#f92672&#34;&gt;+&lt;/span&gt; &lt;span style=&#34;color:#ae81ff&#34;&gt;1&lt;/span&gt;;
+    &lt;span style=&#34;color:#66d9ef&#34;&gt;return&lt;/span&gt;;
 }
 &lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;</description>
     </item>
