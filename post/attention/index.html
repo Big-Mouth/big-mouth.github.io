@@ -1,0 +1,153 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <meta charset="utf-8"/>
+  <title>Attention</title>
+
+  <meta name="description" content="Attention"/>
+  <meta name="author" content=""/>
+  <meta name="viewport" content="width=device-width, initial-scale=1"/>
+  <base href="https://Big-Mouth.github.io" />
+
+  <link rel="stylesheet" href="css/fonts.css"/>
+  <link rel="stylesheet" href="css/normalize.css"/>
+  <link rel="stylesheet" href="css/skeleton.css"/>
+  <link rel="stylesheet" href="css/custom.css"/>
+  <link rel="stylesheet" href="genericons/genericons.css"/>
+  
+  
+  <link rel="stylesheet" href="highlight/tomorrow-night.css"/>
+
+  <link href="index.xml" rel="alternate" type="application/rss+xml" title="Posts + Links" />
+  <link href="links/index.xml" rel="alternate" type="application/rss+xml" title="Links" />
+  <link href="posts/index.xml" rel="alternate" type="application/rss+xml" title="Posts" />
+
+  
+</head>
+<body>
+
+<div id="flex-container">
+  <input type="checkbox" id="sidebar-menu-checkbox" />
+  <label for="sidebar-menu-checkbox" id="sidebar-menu"></label>
+
+  <div id="fake-sidebar"></div>
+  <div id="container">
+
+
+<div id="post-header">
+  <p class="post-infos">
+    <time>2020-10-20 14:29</time>
+    
+
+  </p>
+  <h1>Attention</h1>
+</div>
+
+
+<div class="toc">
+  <small class="toc-label">Contents</small>
+  <nav id="TableOfContents"></nav>
+</div>
+
+
+<div class="post">
+  <p>Pay attention!!!</p>
+<h1 id="presentation-error问题">presentation error问题</h1>
+<p>题目要求格式必须正确，如果在输出结果中，多了或少了<strong>不必要的空格</strong>或者<strong>回车</strong>或者其他，就会有这种错误。</p>
+<p>常见解决办法如下：</p>
+<p>最后输入必须换行：</p>
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-C++" data-lang="C++"><span style="color:#66d9ef">int</span> count <span style="color:#f92672">=</span> <span style="color:#ae81ff">0</span>;
+<span style="color:#66d9ef">if</span>(<span style="color:#960050;background-color:#1e0010">满足题目要求</span>) count<span style="color:#f92672">++</span>;
+<span style="color:#960050;background-color:#1e0010">最终输出：</span>
+    <span style="color:#66d9ef">if</span>(count <span style="color:#f92672">&gt;</span> <span style="color:#ae81ff">0</span>) printf(<span style="color:#e6db74">&#34; &#34;</span>);
+	printf(<span style="color:#e6db74">&#34;%d&#34;</span>, ans);<span style="color:#75715e">//此处无需加空格
+</span><span style="color:#75715e"></span>	<span style="color:#66d9ef">else</span> <span style="color:#a6e22e">if</span>(count <span style="color:#f92672">==</span> <span style="color:#ae81ff">0</span>) printf(<span style="color:#e6db74">&#34;xxx&#34;</span>);<span style="color:#75715e">//根据题目要求输出，比如no
+</span><span style="color:#75715e"></span><span style="color:#960050;background-color:#1e0010">一般最后还需要换行。</span>
+</code></pre></div><p>比如下面这道水仙花的题目的这样一个presentation error 就让我debug好久，因此，这里记录一下，以免下次又遇到类似的问题无从下手。</p>
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-C++" data-lang="C++"><span style="color:#75715e">#include</span><span style="color:#75715e">&lt;iostream&gt;</span><span style="color:#75715e">
+</span><span style="color:#75715e">#include</span><span style="color:#75715e">&lt;vector&gt;</span><span style="color:#75715e">
+</span><span style="color:#75715e">#include</span><span style="color:#75715e">&lt;algorithm&gt;</span><span style="color:#75715e">
+</span><span style="color:#75715e">#include</span><span style="color:#75715e">&lt;math.h&gt;</span><span style="color:#75715e">
+</span><span style="color:#75715e"></span><span style="color:#66d9ef">using</span> <span style="color:#66d9ef">namespace</span> std;
+<span style="color:#66d9ef">float</span> a[<span style="color:#ae81ff">1005</span>];
+<span style="color:#75715e">#define PI 3.1415927
+</span><span style="color:#75715e"></span>
+
+<span style="color:#66d9ef">int</span> <span style="color:#a6e22e">main</span>() {
+	<span style="color:#66d9ef">int</span> m, n;
+	
+	<span style="color:#66d9ef">while</span> (<span style="color:#f92672">~</span>scanf(<span style="color:#e6db74">&#34;%d%d&#34;</span>, <span style="color:#f92672">&amp;</span>m, <span style="color:#f92672">&amp;</span>n)) {
+		<span style="color:#66d9ef">bool</span> ok <span style="color:#f92672">=</span> false;
+		<span style="color:#66d9ef">int</span> count <span style="color:#f92672">=</span> <span style="color:#ae81ff">0</span>;
+		<span style="color:#66d9ef">for</span> (<span style="color:#66d9ef">int</span> i <span style="color:#f92672">=</span> m; i <span style="color:#f92672">&lt;=</span> n; i<span style="color:#f92672">++</span>) {
+			<span style="color:#66d9ef">int</span> hun <span style="color:#f92672">=</span> i <span style="color:#f92672">/</span> <span style="color:#ae81ff">100</span>;
+			<span style="color:#66d9ef">int</span> ten <span style="color:#f92672">=</span> (i <span style="color:#f92672">-</span> hun <span style="color:#f92672">*</span> <span style="color:#ae81ff">100</span>) <span style="color:#f92672">/</span> <span style="color:#ae81ff">10</span>;
+			<span style="color:#66d9ef">int</span> ind <span style="color:#f92672">=</span> i <span style="color:#f92672">%</span> <span style="color:#ae81ff">10</span>;
+			<span style="color:#66d9ef">if</span> ((hun<span style="color:#f92672">*</span>hun<span style="color:#f92672">*</span>hun)<span style="color:#f92672">+</span>(ten<span style="color:#f92672">*</span>ten<span style="color:#f92672">*</span>ten)<span style="color:#f92672">+</span>(ind<span style="color:#f92672">*</span>ind<span style="color:#f92672">*</span>ind) <span style="color:#f92672">==</span> i) {
+				<span style="color:#66d9ef">if</span> (count <span style="color:#f92672">&gt;</span> <span style="color:#ae81ff">0</span>) printf(<span style="color:#e6db74">&#34; &#34;</span>);
+				printf(<span style="color:#e6db74">&#34;%d&#34;</span>, i);
+				ok <span style="color:#f92672">=</span> true;
+				count<span style="color:#f92672">++</span>;
+			}
+		}<span style="color:#66d9ef">if</span> (count <span style="color:#f92672">==</span> <span style="color:#ae81ff">0</span>) printf(<span style="color:#e6db74">&#34;no&#34;</span>);
+		printf(<span style="color:#e6db74">&#34;</span><span style="color:#ae81ff">\n</span><span style="color:#e6db74">&#34;</span>);
+	}
+	<span style="color:#66d9ef">return</span> <span style="color:#ae81ff">0</span>;
+}
+</code></pre></div>
+</div>
+
+
+
+<footer>
+  <p class="footnote">Copyright &copy; 2020: All rights reserved by <a href="mailto:"></a></p>
+</footer>
+
+  </div>
+  <div id="container-mask"></div>
+<div id="sidebar">
+<div class="sidebar">
+  <div class="sidebar-about">
+    <a href="https://Big-Mouth.github.io">
+      <img src="media/me.jpg" title="" alt="Me" />
+      <h4 class="sidebar-title">My New Hugo Site</h4>
+    </a>
+    <span class="sidebar-tagline"></span>
+  </div>
+  <nav class="sidebar-nav">
+    <ul class="sidebar-nav-list">
+      <li class="sidebar-nav-item nav-home">
+        <span class="genericon genericon-home"></span><a class="sidebar-link" href="https://Big-Mouth.github.io">Home</a>
+      </li>
+      <li class="sidebar-nav-item">
+        <a class="genericon genericon-feed" href="posts/index.xml"></a><a class="sidebar-link" href="posts/">Posts/</a>
+      </li>
+      <li class="sidebar-nav-item">
+        <a class="genericon genericon-feed" href="links/index.xml"></a><a class="sidebar-link" href="links/">Links/</a>
+      </li>
+    </ul>
+  </nav>
+  <div class="sidebar-externals">
+  
+  | <a class="genericon genericon-mail" href="mailto:"></a>
+  </div>
+  <div class="sidebar-bottom">
+    <hr />
+    <p>Powered by <a href="http://gohugo.io">Hugo</a>.</p> <p>Theme: <a href="https://github.com/TiTi/hurock">Hurock</a>.</p>
+    <p>Copyright &copy; 2020.</p> <p>All rights reserved.</p>
+  </div>
+</div>
+</div>
+
+</div>
+
+<script src="highlight/highlight.pack.js"></script>
+<script>hljs.initHighlightingOnLoad();</script>
+
+
+
+
+
+</body>
+</html>
+
