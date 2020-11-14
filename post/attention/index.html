@@ -94,6 +94,60 @@
 	}
 	<span style="color:#66d9ef">return</span> <span style="color:#ae81ff">0</span>;
 }
+</code></pre></div><blockquote>
+<p>第二个技巧：巧用i作为判断条件</p>
+</blockquote>
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-C++" data-lang="C++"><span style="color:#66d9ef">for</span> (<span style="color:#66d9ef">int</span> i <span style="color:#f92672">=</span> <span style="color:#ae81ff">0</span>; i <span style="color:#f92672">&lt;</span> num; i<span style="color:#f92672">++</span>)
+        {
+            <span style="color:#66d9ef">if</span> (i <span style="color:#f92672">!=</span> <span style="color:#ae81ff">0</span>)        <span style="color:#75715e">//有一个调整格式避免presentation error的技巧
+</span><span style="color:#75715e"></span>                cout <span style="color:#f92672">&lt;&lt;</span> <span style="color:#e6db74">&#34; &#34;</span>; 
+            cout <span style="color:#f92672">&lt;&lt;</span> s[i];
+        }
+</code></pre></div><blockquote>
+<p>第三个技巧：多组输入，对应的值不能为0</p>
+<p>比如下面这道水题， 开始一直presentation error 后来我在多组输入while循环里面加了一个&amp;&amp; n （表示n）不能为0，立马就A了。</p>
+</blockquote>
+<blockquote>
+<p>错误示范</p>
+<p>while (~scanf(&quot;%d&quot;, &amp;n) )</p>
+</blockquote>
+<blockquote>
+<p>正确示范</p>
+<p>while (~scanf(&quot;%d&quot;, &amp;n) &amp;&amp; n)</p>
+</blockquote>
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-C++" data-lang="C++"><span style="color:#75715e">#include</span><span style="color:#75715e">&lt;iostream&gt;</span><span style="color:#75715e">
+</span><span style="color:#75715e">#include</span><span style="color:#75715e">&lt;vector&gt;</span><span style="color:#75715e">
+</span><span style="color:#75715e">#include</span><span style="color:#75715e">&lt;algorithm&gt;</span><span style="color:#75715e">
+</span><span style="color:#75715e">#include</span><span style="color:#75715e">&lt;math.h&gt;</span><span style="color:#75715e">
+</span><span style="color:#75715e">#include</span><span style="color:#75715e">&lt;stdio.h&gt;</span><span style="color:#75715e">
+</span><span style="color:#75715e"></span><span style="color:#66d9ef">using</span> <span style="color:#66d9ef">namespace</span> std;
+<span style="color:#66d9ef">int</span> a[<span style="color:#ae81ff">1005</span>], b[<span style="color:#ae81ff">108</span>];
+<span style="color:#66d9ef">int</span> sum, cnt;
+<span style="color:#75715e">#define PI 3.1415927
+</span><span style="color:#75715e"></span>
+<span style="color:#66d9ef">bool</span> <span style="color:#a6e22e">cmp</span>(<span style="color:#66d9ef">int</span> a, <span style="color:#66d9ef">int</span> b) {
+	<span style="color:#66d9ef">return</span> a <span style="color:#f92672">&gt;</span> b;
+}
+<span style="color:#66d9ef">int</span> <span style="color:#a6e22e">main</span>() {
+	<span style="color:#66d9ef">int</span> n;
+	<span style="color:#66d9ef">while</span> (<span style="color:#f92672">~</span>scanf(<span style="color:#e6db74">&#34;%d&#34;</span>, <span style="color:#f92672">&amp;</span>n) <span style="color:#f92672">&amp;&amp;</span> n) {
+		<span style="color:#66d9ef">for</span> (<span style="color:#66d9ef">int</span> i <span style="color:#f92672">=</span> <span style="color:#ae81ff">0</span>; i <span style="color:#f92672">&lt;</span> n; i<span style="color:#f92672">++</span>) {
+			scanf(<span style="color:#e6db74">&#34;%d&#34;</span>, <span style="color:#f92672">&amp;</span>a[i]);
+			b[i] <span style="color:#f92672">=</span> abs(a[i]);
+		}
+		sort(b, b <span style="color:#f92672">+</span> n, cmp);
+		<span style="color:#66d9ef">int</span> count <span style="color:#f92672">=</span> <span style="color:#ae81ff">0</span>;
+		<span style="color:#66d9ef">for</span> (<span style="color:#66d9ef">int</span> i <span style="color:#f92672">=</span> <span style="color:#ae81ff">0</span>; i <span style="color:#f92672">&lt;</span> n; i<span style="color:#f92672">++</span>) {
+			<span style="color:#66d9ef">for</span>(<span style="color:#66d9ef">int</span> j <span style="color:#f92672">=</span> <span style="color:#ae81ff">0</span>; j <span style="color:#f92672">&lt;</span> n; j<span style="color:#f92672">++</span>)
+				<span style="color:#66d9ef">if</span> (b[i] <span style="color:#f92672">==</span> abs(a[j])) {
+					<span style="color:#66d9ef">if</span> (i <span style="color:#f92672">!=</span> <span style="color:#ae81ff">0</span>) printf(<span style="color:#e6db74">&#34; &#34;</span>);
+					printf(<span style="color:#e6db74">&#34;%d&#34;</span>, a[j]);
+			}
+		}
+		printf(<span style="color:#e6db74">&#34;</span><span style="color:#ae81ff">\n</span><span style="color:#e6db74">&#34;</span>);
+	}
+	<span style="color:#66d9ef">return</span> <span style="color:#ae81ff">0</span>;
+}
 </code></pre></div>
 </div>
 

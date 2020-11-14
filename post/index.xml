@@ -5,10 +5,19 @@
     <description>Recent content in Posts on My New Hugo Site</description>
     <generator>Hugo -- gohugo.io</generator>
     <language>en-us</language>
-    <lastBuildDate>Tue, 20 Oct 2020 14:29:44 +0800</lastBuildDate>
+    <lastBuildDate>Sat, 14 Nov 2020 22:41:00 +0800</lastBuildDate>
     
         <atom:link href="https://Big-Mouth.github.io/post/index.xml" rel="self" type="application/rss+xml" />
     
+    
+    <item>
+      <title>Changejinzhi</title>
+      <link>https://Big-Mouth.github.io/post/changejinzhi/</link>
+      <pubDate>Sat, 14 Nov 2020 22:41:00 +0800</pubDate>
+      
+      <guid>https://Big-Mouth.github.io/post/changejinzhi/</guid>
+      <description></description>
+    </item>
     
     <item>
       <title>Attention</title>
@@ -55,6 +64,60 @@
 				count&lt;span style=&#34;color:#f92672&#34;&gt;++&lt;/span&gt;;
 			}
 		}&lt;span style=&#34;color:#66d9ef&#34;&gt;if&lt;/span&gt; (count &lt;span style=&#34;color:#f92672&#34;&gt;==&lt;/span&gt; &lt;span style=&#34;color:#ae81ff&#34;&gt;0&lt;/span&gt;) printf(&lt;span style=&#34;color:#e6db74&#34;&gt;&amp;#34;no&amp;#34;&lt;/span&gt;);
+		printf(&lt;span style=&#34;color:#e6db74&#34;&gt;&amp;#34;&lt;/span&gt;&lt;span style=&#34;color:#ae81ff&#34;&gt;\n&lt;/span&gt;&lt;span style=&#34;color:#e6db74&#34;&gt;&amp;#34;&lt;/span&gt;);
+	}
+	&lt;span style=&#34;color:#66d9ef&#34;&gt;return&lt;/span&gt; &lt;span style=&#34;color:#ae81ff&#34;&gt;0&lt;/span&gt;;
+}
+&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;blockquote&gt;
+&lt;p&gt;第二个技巧：巧用i作为判断条件&lt;/p&gt;
+&lt;/blockquote&gt;
+&lt;div class=&#34;highlight&#34;&gt;&lt;pre style=&#34;color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4&#34;&gt;&lt;code class=&#34;language-C++&#34; data-lang=&#34;C++&#34;&gt;&lt;span style=&#34;color:#66d9ef&#34;&gt;for&lt;/span&gt; (&lt;span style=&#34;color:#66d9ef&#34;&gt;int&lt;/span&gt; i &lt;span style=&#34;color:#f92672&#34;&gt;=&lt;/span&gt; &lt;span style=&#34;color:#ae81ff&#34;&gt;0&lt;/span&gt;; i &lt;span style=&#34;color:#f92672&#34;&gt;&amp;lt;&lt;/span&gt; num; i&lt;span style=&#34;color:#f92672&#34;&gt;++&lt;/span&gt;)
+        {
+            &lt;span style=&#34;color:#66d9ef&#34;&gt;if&lt;/span&gt; (i &lt;span style=&#34;color:#f92672&#34;&gt;!=&lt;/span&gt; &lt;span style=&#34;color:#ae81ff&#34;&gt;0&lt;/span&gt;)        &lt;span style=&#34;color:#75715e&#34;&gt;//有一个调整格式避免presentation error的技巧
+&lt;/span&gt;&lt;span style=&#34;color:#75715e&#34;&gt;&lt;/span&gt;                cout &lt;span style=&#34;color:#f92672&#34;&gt;&amp;lt;&amp;lt;&lt;/span&gt; &lt;span style=&#34;color:#e6db74&#34;&gt;&amp;#34; &amp;#34;&lt;/span&gt;; 
+            cout &lt;span style=&#34;color:#f92672&#34;&gt;&amp;lt;&amp;lt;&lt;/span&gt; s[i];
+        }
+&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;blockquote&gt;
+&lt;p&gt;第三个技巧：多组输入，对应的值不能为0&lt;/p&gt;
+&lt;p&gt;比如下面这道水题， 开始一直presentation error 后来我在多组输入while循环里面加了一个&amp;amp;&amp;amp; n （表示n）不能为0，立马就A了。&lt;/p&gt;
+&lt;/blockquote&gt;
+&lt;blockquote&gt;
+&lt;p&gt;错误示范&lt;/p&gt;
+&lt;p&gt;while (~scanf(&amp;quot;%d&amp;quot;, &amp;amp;n) )&lt;/p&gt;
+&lt;/blockquote&gt;
+&lt;blockquote&gt;
+&lt;p&gt;正确示范&lt;/p&gt;
+&lt;p&gt;while (~scanf(&amp;quot;%d&amp;quot;, &amp;amp;n) &amp;amp;&amp;amp; n)&lt;/p&gt;
+&lt;/blockquote&gt;
+&lt;div class=&#34;highlight&#34;&gt;&lt;pre style=&#34;color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4&#34;&gt;&lt;code class=&#34;language-C++&#34; data-lang=&#34;C++&#34;&gt;&lt;span style=&#34;color:#75715e&#34;&gt;#include&lt;/span&gt;&lt;span style=&#34;color:#75715e&#34;&gt;&amp;lt;iostream&amp;gt;&lt;/span&gt;&lt;span style=&#34;color:#75715e&#34;&gt;
+&lt;/span&gt;&lt;span style=&#34;color:#75715e&#34;&gt;#include&lt;/span&gt;&lt;span style=&#34;color:#75715e&#34;&gt;&amp;lt;vector&amp;gt;&lt;/span&gt;&lt;span style=&#34;color:#75715e&#34;&gt;
+&lt;/span&gt;&lt;span style=&#34;color:#75715e&#34;&gt;#include&lt;/span&gt;&lt;span style=&#34;color:#75715e&#34;&gt;&amp;lt;algorithm&amp;gt;&lt;/span&gt;&lt;span style=&#34;color:#75715e&#34;&gt;
+&lt;/span&gt;&lt;span style=&#34;color:#75715e&#34;&gt;#include&lt;/span&gt;&lt;span style=&#34;color:#75715e&#34;&gt;&amp;lt;math.h&amp;gt;&lt;/span&gt;&lt;span style=&#34;color:#75715e&#34;&gt;
+&lt;/span&gt;&lt;span style=&#34;color:#75715e&#34;&gt;#include&lt;/span&gt;&lt;span style=&#34;color:#75715e&#34;&gt;&amp;lt;stdio.h&amp;gt;&lt;/span&gt;&lt;span style=&#34;color:#75715e&#34;&gt;
+&lt;/span&gt;&lt;span style=&#34;color:#75715e&#34;&gt;&lt;/span&gt;&lt;span style=&#34;color:#66d9ef&#34;&gt;using&lt;/span&gt; &lt;span style=&#34;color:#66d9ef&#34;&gt;namespace&lt;/span&gt; std;
+&lt;span style=&#34;color:#66d9ef&#34;&gt;int&lt;/span&gt; a[&lt;span style=&#34;color:#ae81ff&#34;&gt;1005&lt;/span&gt;], b[&lt;span style=&#34;color:#ae81ff&#34;&gt;108&lt;/span&gt;];
+&lt;span style=&#34;color:#66d9ef&#34;&gt;int&lt;/span&gt; sum, cnt;
+&lt;span style=&#34;color:#75715e&#34;&gt;#define PI 3.1415927
+&lt;/span&gt;&lt;span style=&#34;color:#75715e&#34;&gt;&lt;/span&gt;
+&lt;span style=&#34;color:#66d9ef&#34;&gt;bool&lt;/span&gt; &lt;span style=&#34;color:#a6e22e&#34;&gt;cmp&lt;/span&gt;(&lt;span style=&#34;color:#66d9ef&#34;&gt;int&lt;/span&gt; a, &lt;span style=&#34;color:#66d9ef&#34;&gt;int&lt;/span&gt; b) {
+	&lt;span style=&#34;color:#66d9ef&#34;&gt;return&lt;/span&gt; a &lt;span style=&#34;color:#f92672&#34;&gt;&amp;gt;&lt;/span&gt; b;
+}
+&lt;span style=&#34;color:#66d9ef&#34;&gt;int&lt;/span&gt; &lt;span style=&#34;color:#a6e22e&#34;&gt;main&lt;/span&gt;() {
+	&lt;span style=&#34;color:#66d9ef&#34;&gt;int&lt;/span&gt; n;
+	&lt;span style=&#34;color:#66d9ef&#34;&gt;while&lt;/span&gt; (&lt;span style=&#34;color:#f92672&#34;&gt;~&lt;/span&gt;scanf(&lt;span style=&#34;color:#e6db74&#34;&gt;&amp;#34;%d&amp;#34;&lt;/span&gt;, &lt;span style=&#34;color:#f92672&#34;&gt;&amp;amp;&lt;/span&gt;n) &lt;span style=&#34;color:#f92672&#34;&gt;&amp;amp;&amp;amp;&lt;/span&gt; n) {
+		&lt;span style=&#34;color:#66d9ef&#34;&gt;for&lt;/span&gt; (&lt;span style=&#34;color:#66d9ef&#34;&gt;int&lt;/span&gt; i &lt;span style=&#34;color:#f92672&#34;&gt;=&lt;/span&gt; &lt;span style=&#34;color:#ae81ff&#34;&gt;0&lt;/span&gt;; i &lt;span style=&#34;color:#f92672&#34;&gt;&amp;lt;&lt;/span&gt; n; i&lt;span style=&#34;color:#f92672&#34;&gt;++&lt;/span&gt;) {
+			scanf(&lt;span style=&#34;color:#e6db74&#34;&gt;&amp;#34;%d&amp;#34;&lt;/span&gt;, &lt;span style=&#34;color:#f92672&#34;&gt;&amp;amp;&lt;/span&gt;a[i]);
+			b[i] &lt;span style=&#34;color:#f92672&#34;&gt;=&lt;/span&gt; abs(a[i]);
+		}
+		sort(b, b &lt;span style=&#34;color:#f92672&#34;&gt;+&lt;/span&gt; n, cmp);
+		&lt;span style=&#34;color:#66d9ef&#34;&gt;int&lt;/span&gt; count &lt;span style=&#34;color:#f92672&#34;&gt;=&lt;/span&gt; &lt;span style=&#34;color:#ae81ff&#34;&gt;0&lt;/span&gt;;
+		&lt;span style=&#34;color:#66d9ef&#34;&gt;for&lt;/span&gt; (&lt;span style=&#34;color:#66d9ef&#34;&gt;int&lt;/span&gt; i &lt;span style=&#34;color:#f92672&#34;&gt;=&lt;/span&gt; &lt;span style=&#34;color:#ae81ff&#34;&gt;0&lt;/span&gt;; i &lt;span style=&#34;color:#f92672&#34;&gt;&amp;lt;&lt;/span&gt; n; i&lt;span style=&#34;color:#f92672&#34;&gt;++&lt;/span&gt;) {
+			&lt;span style=&#34;color:#66d9ef&#34;&gt;for&lt;/span&gt;(&lt;span style=&#34;color:#66d9ef&#34;&gt;int&lt;/span&gt; j &lt;span style=&#34;color:#f92672&#34;&gt;=&lt;/span&gt; &lt;span style=&#34;color:#ae81ff&#34;&gt;0&lt;/span&gt;; j &lt;span style=&#34;color:#f92672&#34;&gt;&amp;lt;&lt;/span&gt; n; j&lt;span style=&#34;color:#f92672&#34;&gt;++&lt;/span&gt;)
+				&lt;span style=&#34;color:#66d9ef&#34;&gt;if&lt;/span&gt; (b[i] &lt;span style=&#34;color:#f92672&#34;&gt;==&lt;/span&gt; abs(a[j])) {
+					&lt;span style=&#34;color:#66d9ef&#34;&gt;if&lt;/span&gt; (i &lt;span style=&#34;color:#f92672&#34;&gt;!=&lt;/span&gt; &lt;span style=&#34;color:#ae81ff&#34;&gt;0&lt;/span&gt;) printf(&lt;span style=&#34;color:#e6db74&#34;&gt;&amp;#34; &amp;#34;&lt;/span&gt;);
+					printf(&lt;span style=&#34;color:#e6db74&#34;&gt;&amp;#34;%d&amp;#34;&lt;/span&gt;, a[j]);
+			}
+		}
 		printf(&lt;span style=&#34;color:#e6db74&#34;&gt;&amp;#34;&lt;/span&gt;&lt;span style=&#34;color:#ae81ff&#34;&gt;\n&lt;/span&gt;&lt;span style=&#34;color:#e6db74&#34;&gt;&amp;#34;&lt;/span&gt;);
 	}
 	&lt;span style=&#34;color:#66d9ef&#34;&gt;return&lt;/span&gt; &lt;span style=&#34;color:#ae81ff&#34;&gt;0&lt;/span&gt;;
