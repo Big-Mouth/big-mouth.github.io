@@ -46,6 +46,25 @@
 <section class="post">
   <header class="post-header">
     <p class="post-infos">
+      <time datetime="2021-03-09T14:47:24&#43;08:00">09 Mar 9090, 14:47</time>
+    </p>
+    <h2><a href="/posts/bag_problem/">Bag_problem</a></h2>
+  </header>
+  <div class="post-description">
+  Bag_problem ​	背包问题有很多种，因此，很有必要给他来一个分类。相信很多同学对背包问题都存在着不少误区，想要吃透它却又不知道重何下口，那么，今天，它来了！这篇文章，百分百干货，相信你看完之后，一定收获满满！
+首先登场的是：01背包问题  题意：有n件物品和一个容量为m的背包，第i件物品消耗的容量为vi，价值为wi，求解放入哪些物品可以使得背包中总价值最大。注意：每件物品只能选0次或者1次，因此叫做01背包问题。
+ 对于这类问题，很显然就是用dp，那么就按照闫氏dp分析法，先画一个图：
+于是，代码应该马上就能码出来了：
+#include&lt;iostream&gt;using namespace std; const int N = 1010; int n, m; int f[N]; int w[N], v[N]; int main(){ scanf(&#34;%d%d&#34;, &amp;n, &amp;m); for(int i = 1; i &lt;= n; i++){ scanf(&#34;%d%d&#34;, &amp;v[i], &amp;w[i]); } for(int i = 1; i &lt;= n; i ++){ for(int j = m; j &gt;= v[i]; j--){//这里要特别注意，由于v[i]&gt;0，因此，j-v[i]&lt;j,由于原来的二维等式为：f[i][j]=max(f[i-1][j],f[i-1][j-v[i]]+w[i]),如果我们从大到小开始算的话，那么我们在用f[j]的时候，f[j-1]一定没有算过，即我们得到的一定是f[i-1]的状态。  f[j] = max(f[j], f[j - v[i]] + w[i]); } } printf(&#34;%d&#34;, f[m]); return 0; } 有小伙伴可能问，啊这里好像没有初始化呀，而且为啥是j要倒过来遍历呢？
+  
+  <br /><a class="readmore" href="/posts/bag_problem/"><span class="genericon genericon-reply"></span> Read more�</a>
+  
+  </div>
+</section>
+
+<section class="post">
+  <header class="post-header">
+    <p class="post-infos">
       <time datetime="2020-10-11T10:08:32&#43;08:00">11 Oct 11110, 10:08</time>
     </p>
     <h2><a href="/posts/qieqiang/">Qieqiang</a></h2>
@@ -118,49 +137,10 @@
   </div>
 </section>
 
-<section class="post">
-  <header class="post-header">
-    <p class="post-infos">
-      <time datetime="0001-01-01T00:00:00Z">01 Jan 1010, 00:00</time>
-    </p>
-    <h2><a href="/posts/markdown_start/"></a></h2>
-  </header>
-  <div class="post-description">
-  markdown的简介  markdown是一种轻量级的标记语言 理念Mark
-超级文本标签
- 标题 百度一下
- ctrl+数字+1-5可以快速选中文字变成对应的标题
- ctrl+加号对标题进行加   段落  语法：直接进行文字编辑 如需直接换行或在段落中回车
- 2.字体
- 语法：
-1.粗体： 这是粗体
-2.删除线：用一对双票号进行包裹
-这是一对删除线 ~~   这是一对删除线
-这是一条下划线 加粗 ctrl + B
-斜体 ctrl + I
-下划线 ctrl+ u
- 这是加粗ctrl+B
-这是斜体 ctrl+I
-这是下划线 ctrl+u  下面给大家讲一下分隔符
-分割线
-语法：
-分割线： 三个减号回车
- --- + enter  3.脚注的注释
-[^键入文本] 效果：
-这是一个技术1
- 四、列表 1、无序列表
-* 空格 效果：
- 只有同一级别   一级分类  苹果 香蕉 橘子   1.
-  
-  <br /><a class="readmore" href="/posts/markdown_start/"><span class="genericon genericon-reply"></span> Read more�</a>
-  
-  </div>
-</section>
-
 </div>
 
 <footer>
-  <p class="footnote">Copyright &copy; 2020: All rights reserved by <a href="mailto:"></a></p>
+  <p class="footnote">Copyright &copy; 2021: All rights reserved by <a href="mailto:"></a></p>
 </footer>
 
   </div>
@@ -194,7 +174,7 @@
   <div class="sidebar-bottom">
     <hr />
     <p>Powered by <a href="http://gohugo.io">Hugo</a>.</p> <p>Theme: <a href="https://github.com/TiTi/hurock">Hurock</a>.</p>
-    <p>Copyright &copy; 2020.</p> <p>All rights reserved.</p>
+    <p>Copyright &copy; 2021.</p> <p>All rights reserved.</p>
   </div>
 </div>
 </div>

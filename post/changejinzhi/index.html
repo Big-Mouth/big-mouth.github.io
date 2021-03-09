@@ -51,13 +51,155 @@
 
 
 <div class="post">
-  
+  <ol>
+<li>下面我把相互转换的所有类型都写出来了。实际上都是通过十进制中转的，这样比较简单，写出X进制转成十进制和从十进制转成X进制的两份代码直接拷贝就完成了剩余的部分。哦，对，自己封装了一个charToDigit函数，主要是将字符转为数字用的。</li>
+<li>十六进制转十进制转八进制：<img src="https://images2018.cnblogs.com/blog/929887/201803/929887-20180323185117260-187329915.png" alt="img"></li>
+<li>其他同理</li>
+</ol>
+<p><strong>代码结构图</strong></p>
+<p><img src="https://images2018.cnblogs.com/blog/929887/201803/929887-20180323183637130-1152712908.png" alt="img"></p>
+<p><strong>全部代码：</strong></p>
+<pre><code>#include &lt;iostream&gt;
+#include &lt;math.h&gt;
+#include &lt;sstream&gt;//使用该库函数的ostringstream，将int变成string
+using namespace std;
+
+//字符转数字
+int charToDigit(char c)
+{
+    if(c=='A')
+        return 10;
+    else if(c=='B')
+        return 11;
+    else if(c=='C')
+        return 12;
+    else if(c=='D')
+        return 13;
+    else if(c=='E')
+        return 14;
+    else if(c=='F')
+        return 15;
+    else
+        return c-'0';
+}
+
+int jinzhi16to10(string pre)
+{
+    int length=pre.size();
+    int result=0;
+    for(int i=0; i&lt;length; i++)
+    {
+        result+=((charToDigit(pre[i]))*pow(16,length-1-i));
+    }
+    return result;
+}
+
+int jinzhi8to10(string pre) {
+    int length=pre.size();
+    int result=0;
+    for(int i=0; i&lt;length; i++)
+    {
+        result+=((charToDigit(pre[i]))*pow(8,length-1-i));
+    }
+    return result;
+}
+
+int jinzhi2to10(string pre)
+{
+    // 在此处可以添加验证是否为二进制数字的逻辑
+    int length=pre.size();
+    int result=0;
+    for(int i=0; i&lt;length; i++)
+    {
+        result+=((charToDigit(pre[i]))*pow(2,length-1-i));
+    }
+    return result;
+}
+
+string jinzhi10to2(int pre) {
+    ostringstream oss;
+    while(pre!=0){
+        oss&lt;&lt;pre%2;
+        pre/=2;
+    }
+    string res=oss.str();
+    oss.str(&quot;&quot;);//清空原数据流
+    for(int i=0;i&lt;res.length();i++){
+        oss&lt;&lt;res[res.length()-i-1];
+    }
+    return oss.str();
+}
+string jinzhi10to8(int pre) {
+    ostringstream oss;
+    while(pre!=0){
+        oss&lt;&lt;pre%8;
+        pre/=8;
+    }
+    string res=oss.str();
+    oss.str(&quot;&quot;);//清空原数据流
+    for(int i=0;i&lt;res.length();i++){
+        oss&lt;&lt;res[res.length()-i-1];
+    }
+    return oss.str();
+}
+char Digittochar(ll m){
+    if(m == 10) return 'A';
+    if(m == 11) return 'B';
+    if(m == 12) return 'C';
+    if(m == 13) return 'D';
+    if(m == 14) return 'E';
+    if(m == 15) return 'F';
+    else return m+'0';
+}
+string jinzhi10to16(ll pre){
+    ostringstream oss;
+    while(pre != 0){
+        oss &lt;&lt; Digittochar(pre%16);
+        pre /= 16;
+    }
+    string ans = oss.str();
+    oss.str(&quot;&quot;);
+    for(int i = 0; i &lt; ans.size(); i++){
+        oss &lt;&lt; ans[ans.size()-1 - i];
+    }
+    return oss.str();
+}
+int main()
+{
+    /**
+    用于从控制台获取字符串A
+       int n;
+       cin&gt;&gt;n;
+       string *A=new string[n];
+       for(int i=0;i&lt;n;i++){
+           cin&gt;&gt;A[i];
+       }*/
+
+    cout&lt;&lt;jinzhi10to2(jinzhi16to10(&quot;A2&quot;));
+}
+</code></pre><blockquote>
+<p>4.stringstream通常是用来做数据转换的。</p>
+<p>比c库安全、自动、直接。</p>
+</blockquote>
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-C++" data-lang="C++"><span style="color:#75715e">#include</span> <span style="color:#75715e">&lt;sstream&gt; </span><span style="color:#75715e">
+</span><span style="color:#75715e">#include</span> <span style="color:#75715e">&lt;iostream&gt;  </span><span style="color:#75715e">
+</span><span style="color:#75715e"></span>
+<span style="color:#66d9ef">int</span> <span style="color:#a6e22e">main</span>() 
+{ 
+std<span style="color:#f92672">::</span>stringstream stream; 
+<span style="color:#66d9ef">char</span> result[<span style="color:#ae81ff">8</span>] ; 
+stream <span style="color:#f92672">&lt;&lt;</span> <span style="color:#ae81ff">8888</span>; <span style="color:#75715e">//向stream中插入8888 （stream必须放在变量之前）
+</span><span style="color:#75715e"></span>stream <span style="color:#f92672">&gt;&gt;</span> result; <span style="color:#75715e">//抽取stream中的值到result （stream必须放在变量之前）
+</span><span style="color:#75715e"></span>std<span style="color:#f92672">::</span>cout <span style="color:#f92672">&lt;&lt;</span> result <span style="color:#f92672">&lt;&lt;</span> std<span style="color:#f92672">::</span>endl; <span style="color:#75715e">// 屏幕显示 &#34;8888&#34; 
+</span><span style="color:#75715e"></span>} 
+</code></pre></div><p><em><strong>六进制对于研究素数是很有用的，因为所有的素数，除了2和3以外，在六进制下的个位数都是1或5。</strong></em></p>
+
 </div>
 
 
 
 <footer>
-  <p class="footnote">Copyright &copy; 2020: All rights reserved by <a href="mailto:"></a></p>
+  <p class="footnote">Copyright &copy; 2021: All rights reserved by <a href="mailto:"></a></p>
 </footer>
 
   </div>
@@ -91,7 +233,7 @@
   <div class="sidebar-bottom">
     <hr />
     <p>Powered by <a href="http://gohugo.io">Hugo</a>.</p> <p>Theme: <a href="https://github.com/TiTi/hurock">Hurock</a>.</p>
-    <p>Copyright &copy; 2020.</p> <p>All rights reserved.</p>
+    <p>Copyright &copy; 2021.</p> <p>All rights reserved.</p>
   </div>
 </div>
 </div>

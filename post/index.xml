@@ -5,10 +5,19 @@
     <description>Recent content in Posts on My New Hugo Site</description>
     <generator>Hugo -- gohugo.io</generator>
     <language>en-us</language>
-    <lastBuildDate>Sat, 14 Nov 2020 22:41:00 +0800</lastBuildDate>
+    <lastBuildDate>Tue, 09 Mar 2021 14:43:31 +0800</lastBuildDate>
     
         <atom:link href="https://Big-Mouth.github.io/post/index.xml" rel="self" type="application/rss+xml" />
     
+    
+    <item>
+      <title>FileName</title>
+      <link>https://Big-Mouth.github.io/post/filename/</link>
+      <pubDate>Tue, 09 Mar 2021 14:43:31 +0800</pubDate>
+      
+      <guid>https://Big-Mouth.github.io/post/filename/</guid>
+      <description></description>
+    </item>
     
     <item>
       <title>Changejinzhi</title>
@@ -16,7 +25,149 @@
       <pubDate>Sat, 14 Nov 2020 22:41:00 +0800</pubDate>
       
       <guid>https://Big-Mouth.github.io/post/changejinzhi/</guid>
-      <description></description>
+      <description>&lt;ol&gt;
+&lt;li&gt;下面我把相互转换的所有类型都写出来了。实际上都是通过十进制中转的，这样比较简单，写出X进制转成十进制和从十进制转成X进制的两份代码直接拷贝就完成了剩余的部分。哦，对，自己封装了一个charToDigit函数，主要是将字符转为数字用的。&lt;/li&gt;
+&lt;li&gt;十六进制转十进制转八进制：&lt;img src=&#34;https://images2018.cnblogs.com/blog/929887/201803/929887-20180323185117260-187329915.png&#34; alt=&#34;img&#34;&gt;&lt;/li&gt;
+&lt;li&gt;其他同理&lt;/li&gt;
+&lt;/ol&gt;
+&lt;p&gt;&lt;strong&gt;代码结构图&lt;/strong&gt;&lt;/p&gt;
+&lt;p&gt;&lt;img src=&#34;https://images2018.cnblogs.com/blog/929887/201803/929887-20180323183637130-1152712908.png&#34; alt=&#34;img&#34;&gt;&lt;/p&gt;
+&lt;p&gt;&lt;strong&gt;全部代码：&lt;/strong&gt;&lt;/p&gt;
+&lt;pre&gt;&lt;code&gt;#include &amp;lt;iostream&amp;gt;
+#include &amp;lt;math.h&amp;gt;
+#include &amp;lt;sstream&amp;gt;//使用该库函数的ostringstream，将int变成string
+using namespace std;
+
+//字符转数字
+int charToDigit(char c)
+{
+    if(c==&#39;A&#39;)
+        return 10;
+    else if(c==&#39;B&#39;)
+        return 11;
+    else if(c==&#39;C&#39;)
+        return 12;
+    else if(c==&#39;D&#39;)
+        return 13;
+    else if(c==&#39;E&#39;)
+        return 14;
+    else if(c==&#39;F&#39;)
+        return 15;
+    else
+        return c-&#39;0&#39;;
+}
+
+int jinzhi16to10(string pre)
+{
+    int length=pre.size();
+    int result=0;
+    for(int i=0; i&amp;lt;length; i++)
+    {
+        result+=((charToDigit(pre[i]))*pow(16,length-1-i));
+    }
+    return result;
+}
+
+int jinzhi8to10(string pre) {
+    int length=pre.size();
+    int result=0;
+    for(int i=0; i&amp;lt;length; i++)
+    {
+        result+=((charToDigit(pre[i]))*pow(8,length-1-i));
+    }
+    return result;
+}
+
+int jinzhi2to10(string pre)
+{
+    // 在此处可以添加验证是否为二进制数字的逻辑
+    int length=pre.size();
+    int result=0;
+    for(int i=0; i&amp;lt;length; i++)
+    {
+        result+=((charToDigit(pre[i]))*pow(2,length-1-i));
+    }
+    return result;
+}
+
+string jinzhi10to2(int pre) {
+    ostringstream oss;
+    while(pre!=0){
+        oss&amp;lt;&amp;lt;pre%2;
+        pre/=2;
+    }
+    string res=oss.str();
+    oss.str(&amp;quot;&amp;quot;);//清空原数据流
+    for(int i=0;i&amp;lt;res.length();i++){
+        oss&amp;lt;&amp;lt;res[res.length()-i-1];
+    }
+    return oss.str();
+}
+string jinzhi10to8(int pre) {
+    ostringstream oss;
+    while(pre!=0){
+        oss&amp;lt;&amp;lt;pre%8;
+        pre/=8;
+    }
+    string res=oss.str();
+    oss.str(&amp;quot;&amp;quot;);//清空原数据流
+    for(int i=0;i&amp;lt;res.length();i++){
+        oss&amp;lt;&amp;lt;res[res.length()-i-1];
+    }
+    return oss.str();
+}
+char Digittochar(ll m){
+    if(m == 10) return &#39;A&#39;;
+    if(m == 11) return &#39;B&#39;;
+    if(m == 12) return &#39;C&#39;;
+    if(m == 13) return &#39;D&#39;;
+    if(m == 14) return &#39;E&#39;;
+    if(m == 15) return &#39;F&#39;;
+    else return m+&#39;0&#39;;
+}
+string jinzhi10to16(ll pre){
+    ostringstream oss;
+    while(pre != 0){
+        oss &amp;lt;&amp;lt; Digittochar(pre%16);
+        pre /= 16;
+    }
+    string ans = oss.str();
+    oss.str(&amp;quot;&amp;quot;);
+    for(int i = 0; i &amp;lt; ans.size(); i++){
+        oss &amp;lt;&amp;lt; ans[ans.size()-1 - i];
+    }
+    return oss.str();
+}
+int main()
+{
+    /**
+    用于从控制台获取字符串A
+       int n;
+       cin&amp;gt;&amp;gt;n;
+       string *A=new string[n];
+       for(int i=0;i&amp;lt;n;i++){
+           cin&amp;gt;&amp;gt;A[i];
+       }*/
+
+    cout&amp;lt;&amp;lt;jinzhi10to2(jinzhi16to10(&amp;quot;A2&amp;quot;));
+}
+&lt;/code&gt;&lt;/pre&gt;&lt;blockquote&gt;
+&lt;p&gt;4.stringstream通常是用来做数据转换的。&lt;/p&gt;
+&lt;p&gt;比c库安全、自动、直接。&lt;/p&gt;
+&lt;/blockquote&gt;
+&lt;div class=&#34;highlight&#34;&gt;&lt;pre style=&#34;color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4&#34;&gt;&lt;code class=&#34;language-C++&#34; data-lang=&#34;C++&#34;&gt;&lt;span style=&#34;color:#75715e&#34;&gt;#include&lt;/span&gt; &lt;span style=&#34;color:#75715e&#34;&gt;&amp;lt;sstream&amp;gt; &lt;/span&gt;&lt;span style=&#34;color:#75715e&#34;&gt;
+&lt;/span&gt;&lt;span style=&#34;color:#75715e&#34;&gt;#include&lt;/span&gt; &lt;span style=&#34;color:#75715e&#34;&gt;&amp;lt;iostream&amp;gt;  &lt;/span&gt;&lt;span style=&#34;color:#75715e&#34;&gt;
+&lt;/span&gt;&lt;span style=&#34;color:#75715e&#34;&gt;&lt;/span&gt;
+&lt;span style=&#34;color:#66d9ef&#34;&gt;int&lt;/span&gt; &lt;span style=&#34;color:#a6e22e&#34;&gt;main&lt;/span&gt;() 
+{ 
+std&lt;span style=&#34;color:#f92672&#34;&gt;::&lt;/span&gt;stringstream stream; 
+&lt;span style=&#34;color:#66d9ef&#34;&gt;char&lt;/span&gt; result[&lt;span style=&#34;color:#ae81ff&#34;&gt;8&lt;/span&gt;] ; 
+stream &lt;span style=&#34;color:#f92672&#34;&gt;&amp;lt;&amp;lt;&lt;/span&gt; &lt;span style=&#34;color:#ae81ff&#34;&gt;8888&lt;/span&gt;; &lt;span style=&#34;color:#75715e&#34;&gt;//向stream中插入8888 （stream必须放在变量之前）
+&lt;/span&gt;&lt;span style=&#34;color:#75715e&#34;&gt;&lt;/span&gt;stream &lt;span style=&#34;color:#f92672&#34;&gt;&amp;gt;&amp;gt;&lt;/span&gt; result; &lt;span style=&#34;color:#75715e&#34;&gt;//抽取stream中的值到result （stream必须放在变量之前）
+&lt;/span&gt;&lt;span style=&#34;color:#75715e&#34;&gt;&lt;/span&gt;std&lt;span style=&#34;color:#f92672&#34;&gt;::&lt;/span&gt;cout &lt;span style=&#34;color:#f92672&#34;&gt;&amp;lt;&amp;lt;&lt;/span&gt; result &lt;span style=&#34;color:#f92672&#34;&gt;&amp;lt;&amp;lt;&lt;/span&gt; std&lt;span style=&#34;color:#f92672&#34;&gt;::&lt;/span&gt;endl; &lt;span style=&#34;color:#75715e&#34;&gt;// 屏幕显示 &amp;#34;8888&amp;#34; 
+&lt;/span&gt;&lt;span style=&#34;color:#75715e&#34;&gt;&lt;/span&gt;} 
+&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;p&gt;&lt;em&gt;&lt;strong&gt;六进制对于研究素数是很有用的，因为所有的素数，除了2和3以外，在六进制下的个位数都是1或5。&lt;/strong&gt;&lt;/em&gt;&lt;/p&gt;
+</description>
     </item>
     
     <item>
@@ -840,6 +991,49 @@ Station sta[maxn];
     bleg[fx] &lt;span style=&#34;color:#f92672&#34;&gt;=&lt;/span&gt; fy;
     rela[fx] &lt;span style=&#34;color:#f92672&#34;&gt;=&lt;/span&gt; rela[x] &lt;span style=&#34;color:#f92672&#34;&gt;+&lt;/span&gt; rela[y] &lt;span style=&#34;color:#f92672&#34;&gt;+&lt;/span&gt; &lt;span style=&#34;color:#ae81ff&#34;&gt;1&lt;/span&gt;;
     &lt;span style=&#34;color:#66d9ef&#34;&gt;return&lt;/span&gt;;
+}
+&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;</description>
+    </item>
+    
+    <item>
+      <title></title>
+      <link>https://Big-Mouth.github.io/post/%E5%85%B3%E4%BA%8En%E7%9A%84%E9%97%AE%E9%A2%98/</link>
+      <pubDate>Mon, 01 Jan 0001 00:00:00 +0000</pubDate>
+      
+      <guid>https://Big-Mouth.github.io/post/%E5%85%B3%E4%BA%8En%E7%9A%84%E9%97%AE%E9%A2%98/</guid>
+      <description>&lt;h1 id=&#34;关于n的问题&#34;&gt;关于n!的问题&lt;/h1&gt;
+&lt;p&gt;先上题目：&lt;/p&gt;
+&lt;p&gt;链接：https://ac.nowcoder.com/acm/contest/9692/D
+来源：牛客网&lt;/p&gt;
+&lt;p&gt;给定数n，求n!的p进制下有多少个后导零。非常简单。&lt;/p&gt;
+&lt;p&gt;为了简化问题，p保证为素数。&lt;/p&gt;
+&lt;h2 id=&#34;输入描述&#34;&gt;输入描述:&lt;/h2&gt;
+&lt;pre&gt;&lt;code&gt;第一行给定一个数t，表示有t组输入
+接下来t行，每行给定两个数n,p；意义如题所示；
+输入范围：(t&amp;lt;=1000)  (1&amp;lt;=n&amp;lt;=1000000 ） (2&amp;lt;=p&amp;lt;=1000000)
+&lt;/code&gt;&lt;/pre&gt;&lt;h2 id=&#34;输出描述&#34;&gt;输出描述:&lt;/h2&gt;
+&lt;pre&gt;&lt;code&gt;对于每一组输入，输出单独的一行表示答案。
+&lt;/code&gt;&lt;/pre&gt;&lt;p&gt;示例1&lt;/p&gt;
+&lt;h2 id=&#34;输入&#34;&gt;输入&lt;/h2&gt;
+&lt;p&gt;&lt;a href=&#34;&#34;&gt;复制&lt;/a&gt;&lt;/p&gt;
+&lt;pre&gt;&lt;code&gt;2
+2 2
+3 2
+&lt;/code&gt;&lt;/pre&gt;&lt;h2 id=&#34;输出&#34;&gt;输出&lt;/h2&gt;
+&lt;p&gt;&lt;a href=&#34;&#34;&gt;复制&lt;/a&gt;&lt;/p&gt;
+&lt;pre&gt;&lt;code&gt;1
+1
+&lt;/code&gt;&lt;/pre&gt;&lt;p&gt;这是一场新生赛的题目，我花了好久时间一直在搞那个进制转换的模板，但是结果是我WA了5发。比完赛后补题的时候才发现原来这是一个简单的数学问题。&lt;/p&gt;
+&lt;p&gt;题中所说:&amp;ldquo;求n!的p进制下有多少个后导零&amp;rdquo;，要产生后导零就必须用质因数的个数，比如说：求6的阶乘的3进制下有多少个后导零，6的阶乘显然是6 * 5 * 4 * 3 * 2 * 1 将其转化为6进制后有多少个零就相当于看这个1~6中质因子3的倍数的个数，而n!中质因子p的个数，实际上等于1~n中p的倍数的个数n/p +（n/p）！，于是可以看到递归的影子，递归版本如下：&lt;/p&gt;
+&lt;pre&gt;&lt;code&gt;int cal(int n, int p){
+	if(n &amp;lt; p) return 0;
+	return n / p + cal(n/p, p);
+}
+&lt;/code&gt;&lt;/pre&gt;&lt;p&gt;而当然亦可以用循环来代替递归：&lt;/p&gt;
+&lt;div class=&#34;highlight&#34;&gt;&lt;pre style=&#34;color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4&#34;&gt;&lt;code class=&#34;language-C++&#34; data-lang=&#34;C++&#34;&gt;&lt;span style=&#34;color:#66d9ef&#34;&gt;long&lt;/span&gt; &lt;span style=&#34;color:#66d9ef&#34;&gt;long&lt;/span&gt; res;
+&lt;span style=&#34;color:#66d9ef&#34;&gt;while&lt;/span&gt;(n &lt;span style=&#34;color:#f92672&#34;&gt;&amp;gt;=&lt;/span&gt; p){
+    res &lt;span style=&#34;color:#f92672&#34;&gt;+=&lt;/span&gt; n&lt;span style=&#34;color:#f92672&#34;&gt;/&lt;/span&gt;p;
+    n &lt;span style=&#34;color:#f92672&#34;&gt;/=&lt;/span&gt; p;
 }
 &lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;</description>
     </item>
