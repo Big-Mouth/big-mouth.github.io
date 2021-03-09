@@ -46,6 +46,30 @@
 <section class="post">
   <header class="post-header">
     <p class="post-infos">
+      <time datetime="2021-03-09T22:29:53&#43;08:00">09 Mar 9090, 22:29</time>
+    </p>
+    <h2><a href="/posts/%E7%89%9B%E7%89%9B%E7%9A%84%E5%B9%82%E8%BF%90%E7%AE%97/">牛牛的幂运算</a></h2>
+  </header>
+  <div class="post-description">
+  链接：https://ac.nowcoder.com/acm/problem/21578 来源：牛客网
+ 题目描述 牛牛在做一道数学题，他发现自己不怎么会做，请你帮帮他 求有多少a,b,c,d满足a [^b] = c [^ d]， 1&lt;=a,b,c,d&lt;=n, 模 109+7 输入描述: 输入一个整数n (1 ≤ n ≤ 109) 输出描述: 输出一个整数
+ 示例1
+输入 2 输出 6
+  示例2 输入 100 输出 21620
+  示例3 输入 22306 输出 68467
+  备注: 子任务一30分：n&lt;=10000 子任务二30分：n&lt;=1000000 子任务三40分：n&lt;=1000000000
+ 思路：
+这道题对于刚学数论的我来说还是有点难的，所以我就请教了余伟豪，他也想了一上午，于是，在午休的时候，他过掉了这道题，然后跟我讲了他的解题思路。
+ 首先，我们要清楚题目问我们的是方案的数目，给我们的限制是1&lt;=a,b,c,d&lt;=n，n&lt;=1e9，这个范围较大，于是我们开始摸索：对于a [^b] = c [^ d]，我们先讨论两边的底数，很容易发现，a和c的所有因子必须相等，比如，如果a = 4, c = 6;则a的因子有1， 2；而c的因子有1,2,3，即a和b两数的因子不完全相同，因此，两边无论如何都不可能相等。既然这样，我们不妨假设：a = x[^i], b = x[^j],于是，题目就转化成了求满足条件i * a = j * b的等式的个数，我们先讨论一下i和j的取值范围，由于i,j分别为a和c转化为 **x[^i], x[^j]**之后的指数，而1&lt;a,c &lt;1e9，因此x&gt;=1(当然这个我们等下单独计算)，因此，除掉1之后x&gt;=2，则此时1&lt;i,j&lt;31,然后就是对于我们给定的n，1&lt; x[^i], x[^j]&lt;n，那么中间一定有min{$$ \sqrt[i]{n} $$ ,$$ \sqrt[j]{n} $$}个x，这就对应了x个结果，因为确定了底数之后，对于给定的n，结果一定就只有min{$$ \sqrt[i]{n} $$ ,$$ \sqrt[j]{n} $$}个，比如，假设i = 2, j = 3，n = 100，那么x &lt;= 4（自己想一下为什么），想到这里这一切就结束了吗？然而并没有，不要忘记：当gcd(i,j) !
+  
+  <br /><a class="readmore" href="/posts/%E7%89%9B%E7%89%9B%E7%9A%84%E5%B9%82%E8%BF%90%E7%AE%97/"><span class="genericon genericon-reply"></span> Read more�</a>
+  
+  </div>
+</section>
+
+<section class="post">
+  <header class="post-header">
+    <p class="post-infos">
       <time datetime="2021-03-09T14:47:24&#43;08:00">09 Mar 9090, 14:47</time>
     </p>
     <h2><a href="/posts/bag_problem/">Bag_problem</a></h2>
@@ -115,24 +139,6 @@
 #include&lt;iostream&gt;#include&lt;cstdio&gt;#include&lt;map&gt;#include&lt;set&gt;using namespace std; const int N = 110; int father[N]; bool isroot[N]; int findfather(int x) {//查找每个节点所在集合的根节点 	int a = x;// 	while (x != father[x]) { x = father[x]; } //路径压缩 	while (a != father[a]) { int z = a;//因为a要被father[a]覆盖掉，所以这里先把原来结点存下来，用于修改father[a]的值 	a = father[a];//a不断地回溯父亲结点 	father[z] = x;//将原来结点的父亲结点改为根结点 	} return x; } void Union(int a, int b) { if (findfather(a) == findfather(b)) return; a = findfather(a); b = findfather(b); father[a] = b; } void init(int n) { for (int i = 1; i &lt;= n; i++) { father[i] = i; isroot[i] = false; } } /* 7 5 1 2 2 3 3 1 1 4 5 6 */ int main() { int n, m, a, b; scanf(&#34;%d%d&#34;, &amp;n, &amp;m); init(n); for (int i = 1; i &lt;= m; i++) { scanf(&#34;%d%d&#34;, &amp;a, &amp;b); Union(a, b); } int ans[N] = { 0 }; for (int i = 1; i &lt;= n; i++) { isroot[findfather(i)] = true; } for (int i = 1; i &lt;= n; i++) { if (father[i] == findfather(i)) ans[findfather(i)]++; } set&lt;int&gt; root; for (int i = 1; i &lt;= n; i++) { if (isroot[i]) { root.
   
   <br /><a class="readmore" href="/posts/bfu/"><span class="genericon genericon-reply"></span> Read more�</a>
-  
-  </div>
-</section>
-
-<section class="post">
-  <header class="post-header">
-    <p class="post-infos">
-      <time datetime="0001-01-01T00:00:00Z">01 Jan 1010, 00:00</time>
-    </p>
-    <h2><a href="/posts/leetcode_5515/"></a></h2>
-  </header>
-  <div class="post-description">
-  请你给一个停车场设计一个停车系统。停车场总共有三种不同大小的车位：大，中和小，每种尺寸分别有固定数目的车位。
-请你实现 ParkingSystem 类：
- ParkingSystem(int big, int medium, int small) 初始化 ParkingSystem 类，三个参数分别对应每种停车位的数目。 bool addCar(int carType) 检车是否有 carType 对应的停车位。 carType 有三种类型：大，中，小，分别用数字 1， 2 和 3 表示。一辆车只能停在 carType 对应尺寸的停车位中。如果没有空车位，请返回 false ，否则将该车停入车位并返回 true 。  来源：力扣（LeetCode） 链接：https://leetcode-cn.com/problems/design-parking-system
-输入： [&#34;ParkingSystem&#34;, &#34;addCar&#34;, &#34;addCar&#34;, &#34;addCar&#34;, &#34;addCar&#34;] [[1, 1, 0], [1], [2], [3], [1]] 输出： [null, true, true, false, false] 解释： ParkingSystem parkingSystem = new ParkingSystem(1, 1, 0); parkingSystem.addCar(1); // 返回 true ，因为有 1 个空的大车位 parkingSystem.
-  
-  <br /><a class="readmore" href="/posts/leetcode_5515/"><span class="genericon genericon-reply"></span> Read more�</a>
   
   </div>
 </section>

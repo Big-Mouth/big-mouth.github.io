@@ -1,0 +1,204 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <meta charset="utf-8"/>
+  <title>牛牛的幂运算</title>
+
+  <meta name="description" content="牛牛的幂运算"/>
+  <meta name="author" content=""/>
+  <meta name="viewport" content="width=device-width, initial-scale=1"/>
+  <base href="https://Big-Mouth.github.io" />
+
+  <link rel="stylesheet" href="css/fonts.css"/>
+  <link rel="stylesheet" href="css/normalize.css"/>
+  <link rel="stylesheet" href="css/skeleton.css"/>
+  <link rel="stylesheet" href="css/custom.css"/>
+  <link rel="stylesheet" href="genericons/genericons.css"/>
+  
+  
+  <link rel="stylesheet" href="highlight/tomorrow-night.css"/>
+
+  <link href="index.xml" rel="alternate" type="application/rss+xml" title="Posts + Links" />
+  <link href="links/index.xml" rel="alternate" type="application/rss+xml" title="Links" />
+  <link href="posts/index.xml" rel="alternate" type="application/rss+xml" title="Posts" />
+
+  
+</head>
+<body>
+
+<div id="flex-container">
+  <input type="checkbox" id="sidebar-menu-checkbox" />
+  <label for="sidebar-menu-checkbox" id="sidebar-menu"></label>
+
+  <div id="fake-sidebar"></div>
+  <div id="container">
+
+
+<div id="post-header">
+  <p class="post-infos">
+    <time>2021-03-09 22:29</time>
+    
+
+  </p>
+  <h1>牛牛的幂运算</h1>
+</div>
+
+
+<div class="toc">
+  <small class="toc-label">Contents</small>
+  <nav id="TableOfContents"></nav>
+</div>
+
+
+<div class="post">
+  <blockquote>
+<p>链接：<a href="">https://ac.nowcoder.com/acm/problem/21578</a>
+来源：牛客网</p>
+</blockquote>
+<p>题目描述
+牛牛在做一道数学题，他发现自己不怎么会做，请你帮帮他
+求有多少a,b,c,d满足a [^b] = c [^ d]， 1&lt;=a,b,c,d&lt;=n, 模 109+7
+输入描述:
+输入一个整数n (1 ≤ n ≤ 109)
+输出描述:
+输出一个整数</p>
+<blockquote>
+<p><strong>示例1</strong></p>
+<p><strong>输入</strong>
+<strong>2</strong>
+<strong>输出</strong>
+<strong>6</strong></p>
+</blockquote>
+<blockquote>
+<p><strong>示例2</strong>
+<strong>输入</strong>
+<strong>100</strong>
+<strong>输出</strong>
+<strong>21620</strong></p>
+</blockquote>
+<blockquote>
+<p><strong>示例3</strong>
+<strong>输入</strong>
+<strong>22306</strong>
+<strong>输出</strong>
+<strong>68467</strong></p>
+</blockquote>
+<blockquote>
+<p>备注:
+子任务一30分：n&lt;=10000
+子任务二30分：n&lt;=1000000
+子任务三40分：n&lt;=1000000000</p>
+</blockquote>
+<p>思路：</p>
+<p>这道题对于刚学数论的我来说还是有点难的，所以我就请教了余伟豪，他也想了一上午，于是，在午休的时候，他过掉了这道题，然后跟我讲了他的解题思路。</p>
+<blockquote>
+<p>首先，我们要清楚题目问我们的是方案的数目，给我们的限制是1&lt;=a,b,c,d&lt;=n，n&lt;=1e9，这个范围较大，于是我们开始摸索：对于a [^b] = c [^ d]，我们先讨论两边的底数，很容易发现，a和c的所有因子必须相等，比如，如果a = 4, c = 6;则a的因子有1， 2；而c的因子有1,2,3，即a和b两数的因子不完全相同，因此，两边无论如何都不可能相等。既然这样，我们不妨假设：<strong>a = x[^i], b = x[^j]</strong>,于是，题目就转化成了求满足条件i * a = j * b的等式的个数，我们先讨论一下i和j的取值范围，由于i,j分别为a和c转化为  **x[^i], x[^j]**之后的指数，而1&lt;a,c &lt;1e9，因此x&gt;=1(当然这个我们等下单独计算)，因此，除掉1之后x&gt;=2，则此时1&lt;i,j&lt;31,然后就是对于我们给定的n，1&lt;  <strong>x[^i], x[^j]</strong>&lt;n，那么中间一定有min{$$ \sqrt[i]{n} $$ ,$$ \sqrt[j]{n} $$}个x，这就对应了x个结果，因为确定了底数之后，对于给定的n，结果一定就只有min{$$ \sqrt[i]{n} $$ ,$$ \sqrt[j]{n} $$}个，比如，假设i = 2, j = 3，n = 100，那么x &lt;= 4（自己想一下为什么），想到这里这一切就结束了吗？然而并没有，不要忘记：当gcd(i,j) != 1时，会有多对不同的i,j对应一个相同的x,这就出现了重复的现象，因此，我们在循环遍历i,j的时候，先要判定i,j是否互质，互质的时候才计算，写到这里，计算出来的还不是最终答案。while(qpow(aa,i) &lt;= a) aa++; aa&ndash;;这个手动不精度就好了，因为不加精度会产生误差，所以应该是1/i产生的精度误差。</p>
+</blockquote>
+<p>下面给出AC代码：</p>
+<pre><code>#include&lt;iostream&gt;
+#include&lt;algorithm&gt;
+using namespace std;
+
+typedef long long ll;
+const ll mod = 1e9+7;
+int main(){
+    ll n; cin &gt;&gt; n;
+    ll a, b, c, d;
+    a = b = c = d = n;
+    ll ans = n*n%mod;//当a=c=1时
+    for(int i = 1; i &lt;= 32; i++)
+        for(int j = 1; j &lt;= 32; j++)
+            if(__gcd(i,j) == 1){
+                ll x = pow(a, 1.0/i);
+                ll y = pow(c, 1.0/j);
+                while(pow(x, i) &lt;= n) x++; x--;
+                while(pow(y, j) &lt;= n) y++; y--;
+                ans = (ans + min(n/i, n/j)*min(x-1,y-1))%mod;
+            }
+    printf(&quot;%lld&quot;, ans);
+}
+
+</code></pre><pre><code>另外一种方法：
+#include &lt;iostream&gt;
+#include&lt;algorithm&gt;
+using namespace std;
+typedef long long ll;
+const ll mod = 1e9 + 7;
+int main()
+{
+    ios::sync_with_stdio(false); cin.tie(0);cout.tie(0);
+    
+    int n; cin &gt;&gt; n;
+    ll ans = 0;
+    ans = ((n%mod)*(n%mod))%mod;
+    ans += ((n%mod)*((n-1)%mod))%mod;
+    ll m = sqrt(n);
+    for(ll a = 2; a &lt;= m; a++){
+        for(ll x = a*a, b = 2; x &lt;= n; x *= a, b++){
+            for(ll d = 1; d &lt; b; d++){
+                if(__gcd(d, b) == 1){
+                    ans = (ans + ((n/b)*2)%mod)%mod;
+                }
+            }
+        }
+    }
+    cout &lt;&lt; ans &lt;&lt; endl;
+    return 0;
+}
+</code></pre>
+</div>
+
+
+
+<footer>
+  <p class="footnote">Copyright &copy; 2021: All rights reserved by <a href="mailto:"></a></p>
+</footer>
+
+  </div>
+  <div id="container-mask"></div>
+<div id="sidebar">
+<div class="sidebar">
+  <div class="sidebar-about">
+    <a href="https://Big-Mouth.github.io">
+      <img src="media/me.jpg" title="" alt="Me" />
+      <h4 class="sidebar-title">My New Hugo Site</h4>
+    </a>
+    <span class="sidebar-tagline"></span>
+  </div>
+  <nav class="sidebar-nav">
+    <ul class="sidebar-nav-list">
+      <li class="sidebar-nav-item nav-home">
+        <span class="genericon genericon-home"></span><a class="sidebar-link" href="https://Big-Mouth.github.io">Home</a>
+      </li>
+      <li class="sidebar-nav-item">
+        <a class="genericon genericon-feed" href="posts/index.xml"></a><a class="sidebar-link" href="posts/">Posts/</a>
+      </li>
+      <li class="sidebar-nav-item">
+        <a class="genericon genericon-feed" href="links/index.xml"></a><a class="sidebar-link" href="links/">Links/</a>
+      </li>
+    </ul>
+  </nav>
+  <div class="sidebar-externals">
+  
+  | <a class="genericon genericon-mail" href="mailto:"></a>
+  </div>
+  <div class="sidebar-bottom">
+    <hr />
+    <p>Powered by <a href="http://gohugo.io">Hugo</a>.</p> <p>Theme: <a href="https://github.com/TiTi/hurock">Hurock</a>.</p>
+    <p>Copyright &copy; 2021.</p> <p>All rights reserved.</p>
+  </div>
+</div>
+</div>
+
+</div>
+
+<script src="highlight/highlight.pack.js"></script>
+<script>hljs.initHighlightingOnLoad();</script>
+
+
+
+
+
+</body>
+</html>
+
